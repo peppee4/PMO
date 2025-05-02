@@ -10,12 +10,13 @@ public class Main {
         window.setTitle("The Pyros Stone");               // Titolo della finestra
 
         GamePanel gamePanel = new GamePanel();                  // Creiamo il pannello
-        window.add(gamePanel);                                  // Aggiungiamo il pannello al frame
-
+        window.add(gamePanel);                               // Aggiungiamo il pannello al frame
+        
         window.pack();                                          // Ridimendiona la finestra del pannello
 
         window.setLocationRelativeTo(null);                   // Impostiamo la posizione iniziale della finestra al centro dello schermo
         window.setVisible(true);
+        gamePanel.startGameThread();
 
     }
 }
