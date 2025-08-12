@@ -1,3 +1,5 @@
+package main;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -10,10 +12,9 @@ public class KeyHandler implements KeyListener{
     @Override
     public void keyTyped(KeyEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
     }
 
-    // Funzione per dire cosa fare quando viene premuto un bottone
+    // Metodo per dire cosa fare quando viene premuto un bottone
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
@@ -29,7 +30,7 @@ public class KeyHandler implements KeyListener{
         }
     }
 
-    // Funzione per dire cosa fare quando viene rilasciato un bottone 
+    // Metodo per dire cosa fare quando viene rilasciato un bottone 
     @Override
     public void keyReleased(KeyEvent e) {
         int code = e.getKeyCode();
