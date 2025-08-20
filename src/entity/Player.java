@@ -44,6 +44,7 @@ public class Player extends Entity{
 			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
 			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
 			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
+			stop = ImageIO.read(getClass().getResourceAsStream("/player/player.png"));
 		}catch(IOException e) {
 			System.out.println(e);
 		}
@@ -52,31 +53,36 @@ public class Player extends Entity{
 	// Metodo per la gestione del movimento del player
 	public void update() {
 		
-		// Gestione dell'input
-		if(keyH.upPressed == true){
-			direction = "up";
-            y -= speed;
-        }else if(keyH.downPressed == true){
-        	direction = "down";
-            y += speed;
-        }else if(keyH.leftPressed == true){
-        	direction = "left";
-            x -= speed;
-        }else if(keyH.rightPressed == true){
-        	direction = "right";
-            x += speed;
-        }
-		
-		// Gestione degli sprite
-		spriteCounter++;
-		if(spriteCounter > 10) {
-			if(spriteNum == 1) {
-				spriteNum = 2;
-			}else if(spriteNum == 2) {
-				spriteNum = 1;
+		if(keyH.upPressed == true || keyH.downPressed == true 
+				|| keyH.leftPressed == true || keyH.rightPressed == true) {
+			// Gestione dell'input
+			if(keyH.upPressed == true){
+				direction = "up";
+				y -= speed;
+			}else if(keyH.downPressed == true){
+				direction = "down";
+				y += speed;
+			}else if(keyH.leftPressed == true){
+				direction = "left";
+				x -= speed;
+			}else if(keyH.rightPressed == true){
+				direction = "right";
+				x += speed;
 			}
+		
+			// Gestione degli sprite
+			spriteCounter++;
+			if(spriteCounter > 10) {
+				if(spriteNum == 1) {
+					spriteNum = 2;
+				}else if(spriteNum == 2) {
+					spriteNum = 1;
+				}
 			
-			spriteCounter = 0;
+				spriteCounter = 0;
+			}
+		}else {
+			direction = "stop";
 		}
 	}
 	
@@ -112,6 +118,9 @@ public class Player extends Entity{
 				}else if(spriteNum == 2) {
 					image = right2;
 				}
+				break;
+			default:
+				image = stop;
 				break;
 		}
 		

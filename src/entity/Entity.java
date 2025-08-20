@@ -22,7 +22,8 @@ public abstract class Entity {
 					     left1, 
 					     left2, 
 					     right1, 
-					     right2;
+					     right2,
+					     stop;
 	public String direction;		// Direzione corrente
 	public int spriteCounter = 0;	// Contatore per avanzare l’animazione
 	public int spriteNum = 1;		// Indice del frame corrente
