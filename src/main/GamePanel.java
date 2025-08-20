@@ -6,7 +6,7 @@ import entity.Player;
 
 public class GamePanel extends JPanel implements Runnable{
 
-    // Impostazione della finestra
+    // Impostazioni della finestra
 	final int originalTileSize = 16;                        // 16x16 tile
 	final int scale = 3;
 
@@ -15,7 +15,11 @@ public class GamePanel extends JPanel implements Runnable{
 	final int maxScreenRow = 12 ;
 	final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
 	final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
-
+	
+	// Impostazioni della Mappa
+	public final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
+	public final int maxWorldRow = 50;						// Dimensioni delle righe della mappa
+	
 	// FPS
 	int FPS = 60;
 	
