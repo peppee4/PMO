@@ -10,9 +10,11 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 	
-	public int x, 		// Coordinata orizzontale
-			   y;		// Coordinata verticale
+	public int worldX, 		// Coordinata orizzontale
+			   worldY;		// Coordinata verticale
 	public int speed;	// Velocità di movimento
+	
+	
 	
 	// Frame dell’animazione per ciascuna direzione
 	public BufferedImage up1, 
@@ -27,4 +29,14 @@ public abstract class Entity {
 	public String direction;		// Direzione corrente
 	public int spriteCounter = 0;	// Contatore per avanzare l’animazione
 	public int spriteNum = 1;		// Indice del frame corrente
+	
+	public int getWorldX() {
+		
+		return this.worldX;
+	}
+	
+	public int getWorldY() {
+		
+		return this.worldY;
+	}
 }

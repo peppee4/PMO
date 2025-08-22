@@ -15,10 +15,16 @@ public class Player extends Entity{
 	GamePanel gp;		// Pannello
 	KeyHandler keyH;	// Variabile per la gestione dell'input dell'untete
 	
+	public final int screenX;
+	public final int screenY;
+	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
 		this.keyH = keyH;
+		
+		screenX = gp.screenWidth/2 - (gp.tileSize/2);
+		screenY = gp.screenHeight/2 - (gp.tileSize/2);
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -26,9 +32,9 @@ public class Player extends Entity{
 	
 	// Metodo per inizializzare il player
 	public void setDefaultValues() {
-		x = 100;				// Coordinata x iniziale del Player
-		y = 100;				// Coordinata y iniziale del Player
-		speed = 4;				// Velocità iniziale del Player
+		worldX = 200;				// Coordinata x iniziale del Player
+		worldY = 200;				// Coordinata y iniziale del Player
+		speed = 3;				                // Velocità iniziale del Player
 		direction = "right";
 		
 	}
@@ -58,16 +64,16 @@ public class Player extends Entity{
 			// Gestione dell'input
 			if(keyH.upPressed == true){
 				direction = "up";
-				y -= speed;
+				worldY -= speed;
 			}else if(keyH.downPressed == true){
 				direction = "down";
-				y += speed;
+				worldY += speed;
 			}else if(keyH.leftPressed == true){
 				direction = "left";
-				x -= speed;
+				worldX -= speed;
 			}else if(keyH.rightPressed == true){
 				direction = "right";
-				x += speed;
+				worldX += speed;
 			}
 		
 			// Gestione degli sprite
@@ -88,6 +94,7 @@ public class Player extends Entity{
 	
 	// Metodo per ridisegnare il player
 	public void draw(Graphics2D g2) {
+		
 		BufferedImage image = null;
 		
 		switch(direction) {
@@ -124,6 +131,6 @@ public class Player extends Entity{
 				break;
 		}
 		
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
 	}
 }

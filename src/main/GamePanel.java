@@ -3,6 +3,7 @@ package main;
 import java.awt.*;
 import javax.swing.JPanel;
 import entity.Player;
+import map.TileMap;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -11,10 +12,10 @@ public class GamePanel extends JPanel implements Runnable{
 	final int scale = 3;
 
 	public final int tileSize = originalTileSize * scale;   // 48 * 48
-	final int maxScreenCol = 16 ;
-	final int maxScreenRow = 12 ;
-	final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
-	final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
+	public final int maxScreenCol = 16 ;
+	public final int maxScreenRow = 12 ;
+	public final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
+	public final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
 	
 	// Impostazioni della Mappa
 	public final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
@@ -23,19 +24,14 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-    // Creazione di un gestore degli eventi della tastiera
-    KeyHandler keyH = new KeyHandler();
+	TileMap tileM = new TileMap(this);
+    KeyHandler keyH = new KeyHandler(this); // Creazione di un gestore degli eventi della tastiera
 
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
 	
 	// Creiamo il Player
-	Player player = new Player(this,keyH);
-	
-    // Impostiamo il player nella posizione iniziale e impostiamo la sua velocità iniziale
-    int playerX = 100;
-    int playerY = 100;
-    int playerSpeed = 4;
+	public Player player = new Player(this,keyH);
 
     // Costruttore della classe
     public GamePanel() {
@@ -88,8 +84,12 @@ public class GamePanel extends JPanel implements Runnable{
 	
     // Metodo per ridisegnare il player
 	public void paintComponent(Graphics g){
+		
         super.paintComponent(g);
+        
         Graphics2D g2 = (Graphics2D)g;
+        
+        tileM.draw(g2);
 
         player.draw(g2);
         
