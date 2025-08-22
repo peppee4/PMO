@@ -10,9 +10,9 @@ import java.awt.image.BufferedImage;
 
 public abstract class Entity {
 	
-	public int worldX, 		// Coordinata orizzontale
-			   worldY;		// Coordinata verticale
-	public int speed;	// Velocità di movimento
+	private int worldX, 		// Coordinata orizzontale
+			    worldY;		    // Coordinata verticale
+	public int speed;	        // Velocità di movimento
 	
 	
 	
@@ -38,5 +38,15 @@ public abstract class Entity {
 	public int getWorldY() {
 		
 		return this.worldY;
+	}
+	
+	public void setWorldY(int value) {
+		
+		this.worldY = value;
+	}
+	
+	public void setWorldX(int value) {
+		
+		this.worldX = value;
 	}
 }

@@ -11,15 +11,15 @@ public class GamePanel extends JPanel implements Runnable{
 	final int originalTileSize = 16;                        // 16x16 tile
 	final int scale = 3;
 
-	public final int tileSize = originalTileSize * scale;   // 48 * 48
-	public final int maxScreenCol = 16 ;
-	public final int maxScreenRow = 12 ;
-	public final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
-	public final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
+	private final int tileSize = originalTileSize * scale;   // 48 * 48
+	private final int maxScreenCol = 16 ;
+	private final int maxScreenRow = 12 ;
+	private final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
+	private final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
 	
 	// Impostazioni della Mappa
-	public final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
-	public final int maxWorldRow = 50;						// Dimensioni delle righe della mappa
+	private final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
+	private final int maxWorldRow = 50;						// Dimensioni delle righe della mappa
 	
 	// FPS
 	int FPS = 60;
@@ -95,4 +95,29 @@ public class GamePanel extends JPanel implements Runnable{
         
         g2.dispose();
 	} 
+	
+	public int getMaxWorldCol() {
+		
+		return this.maxWorldCol;
+	}
+	
+	public int getMaxWorldRow() {
+		
+		return this.maxWorldRow;
+	}
+	
+	public int getTileSize() {
+		
+		return this.tileSize;
+	}
+	
+	public int getScreenWidth() {
+		
+		return this.screenWidth;
+	}
+	
+	public int getScreenHeight() {
+		
+		return this.screenHeight;
+	}
 }

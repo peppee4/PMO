@@ -23,8 +23,8 @@ public class Player extends Entity{
 		this.gp = gp;
 		this.keyH = keyH;
 		
-		screenX = gp.screenWidth/2 - (gp.tileSize/2);
-		screenY = gp.screenHeight/2 - (gp.tileSize/2);
+		screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
+		screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -32,9 +32,9 @@ public class Player extends Entity{
 	
 	// Metodo per inizializzare il player
 	public void setDefaultValues() {
-		worldX = 200;				// Coordinata x iniziale del Player
-		worldY = 200;				// Coordinata y iniziale del Player
-		speed = 3;				                // Velocità iniziale del Player
+		setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
+		setWorldY(gp.getTileSize() * 23); 	// Coordinata y iniziale del Player
+		speed = 8;				                // Velocità iniziale del Player
 		direction = "right";
 		
 	}
@@ -59,21 +59,23 @@ public class Player extends Entity{
 	// Metodo per la gestione del movimento del player
 	public void update() {
 		
+		int worldX = getWorldX();
+		int worldY = getWorldY();
 		if(keyH.upPressed == true || keyH.downPressed == true 
 				|| keyH.leftPressed == true || keyH.rightPressed == true) {
 			// Gestione dell'input
 			if(keyH.upPressed == true){
 				direction = "up";
-				worldY -= speed;
+				setWorldY(worldY -= speed);
 			}else if(keyH.downPressed == true){
 				direction = "down";
-				worldY += speed;
+				setWorldY(worldY += speed);
 			}else if(keyH.leftPressed == true){
 				direction = "left";
-				worldX -= speed;
+				setWorldX(worldX -= speed);
 			}else if(keyH.rightPressed == true){
 				direction = "right";
-				worldX += speed;
+				setWorldX(worldX += speed);
 			}
 		
 			// Gestione degli sprite
@@ -131,6 +133,6 @@ public class Player extends Entity{
 				break;
 		}
 		
-		g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, screenX, screenY, gp.getTileSize(), gp.getTileSize(), null);
 	}
 }
