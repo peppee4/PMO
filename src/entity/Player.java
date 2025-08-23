@@ -30,8 +30,8 @@ public class Player extends Entity{
 		setSolidAreaX(8);
 		setSolidAreaY(8);
 		
-		setSolidAreaWidth(32);
-		setSolidAreaHeight(32);
+		setSolidAreaWidth(26);
+		setSolidAreaHeight(26);
 		
 		setSolidAreaDefaultX(getSolidArea().x);
 		setSolidAreaDefaultY(getSolidArea().y);
@@ -52,15 +52,15 @@ public class Player extends Entity{
 	// Metodo per caricare le sprite del player
 	public void getPlayerImage() {
 		try {
-			this.setBufferedImage("up1", ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png")));;
-			this.setBufferedImage("up2", ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png")));
-			this.setBufferedImage("down1", ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png")));
-			this.setBufferedImage("down2", ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png")));
-			this.setBufferedImage("left1", ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png")));
-			this.setBufferedImage("left2", ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png")));
-			this.setBufferedImage("right1", ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png")));
-			this.setBufferedImage("right2", ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png")));
-			this.setBufferedImage("stop", ImageIO.read(getClass().getResourceAsStream("/player/player.png")));
+			up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
+			stop = ImageIO.read(getClass().getResourceAsStream("/player/player.png"));
 		}catch(IOException e) {
 			System.out.println(e);
 		}
@@ -133,38 +133,38 @@ public class Player extends Entity{
 		switch(this.getDirection()) {
 			case "up":
 				if(this.getSpriteNum() == 1) {
-					image = getBufferedImage("up1");
+					image = up1;
 				}else if(this.getSpriteNum() == 2) {
-					image = getBufferedImage("up2");
+					image = up2;
 				}
 				break;
 			case "down":
 				if(this.getSpriteNum() == 1) {
-					image = getBufferedImage("down1");
+					image = down1;
 				}else if(this.getSpriteNum() == 2) {
-					image = getBufferedImage("down2");
+					image = down2;
 				}
 				break;
 			case "left":
 				if(this.getSpriteNum() == 1) {
-					image = getBufferedImage("left1");
+					image = left1;
 				}else if(this.getSpriteNum() == 2) {
-					image = getBufferedImage("left2");
+					image = left2;
 				}
 				break;
 			case "right":
 				if(this.getSpriteNum() == 1) {
-					image = getBufferedImage("right1");
+					image = right1;
 				}else if(this.getSpriteNum() == 2) {
-					image = getBufferedImage("right2");
+					image = right2;
 				}
 				break;
 			default:
-				image = getBufferedImage("stop");
+				image = stop;
 				break;
 		}
 		
-		g2.drawImage(image, centerX, centerY, gp.getTileSize(), gp.getTileSize(), null);
+		g2.drawImage(image, centerX, centerY, 35, 35, null);
 	}
 
 	// Metodi getter per ottenere le coordinate centrali dello schermo

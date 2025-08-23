@@ -8,18 +8,18 @@ import map.TileMap;
 public class GamePanel extends JPanel implements Runnable{
 
     // Impostazioni della finestra
-	final int originalTileSize = 16;                        // 16x16 tile
+	final int originalTileSize = 25;                            // 16x16 tile
 	final int scale = 3;
 
-	private final int tileSize = originalTileSize * scale;   // 48 * 48
-	private final int maxScreenCol = 16 ;
+	private final int tileSize = originalTileSize * scale;      // 48 * 48
+	private final int maxScreenCol = 20 ;
 	private final int maxScreenRow = 12 ;
-	private final int screenWidth = tileSize * maxScreenCol;        // 768 pixels
-	private final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
+	private final int screenWidth = tileSize * maxScreenCol;    // 768 pixels
+	private final int screenHeight = tileSize * maxScreenRow;   // 576 pixels 
 	
 	// Impostazioni della Mappa
-	private final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
-	private final int maxWorldRow = 50;						// Dimensioni delle righe della mappa
+	private final int maxWorldCol = 50;                         // Dimensioni delle colonne della mappa
+	private final int maxWorldRow = 50;						    // Dimensioni delle righe della mappa
 	
 	// FPS
 	int FPS = 60;

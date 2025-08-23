@@ -20,7 +20,7 @@ public class Entity {
 	public boolean collisionOn = false;
 	
 	// Frame dell’animazione per ciascuna direzione
-	private BufferedImage up1, 
+	protected BufferedImage up1, 
 					      up2, 
 					      down1, 
 					      down2, 
@@ -155,64 +155,5 @@ public class Entity {
 
 	public void setCollisionOn(boolean collisionOn) {
 	    this.collisionOn = collisionOn;
-	}
-
-	
-	public void setBufferedImage(String direction, BufferedImage b) {
-		if(direction == "up1") {
-			this.up1 = b;
-		}else if(direction == "up2") {
-				this.up2 = b;
-		}else if(direction == "down1") {
-			this.down1 = b;
-		}else if(direction == "down2") {
-			this.down2 = b;	
-		}else if(direction == "left1") {
-			this.left1 = b;	
-		}else if(direction == "left2") {
-			this.left2 = b;
-		}else if(direction == "right1") {
-			this.right1 = b;
-		}else if(direction == "right2") {
-			this.right2 = b;
-		}else if(direction == "stop") {
-			this.stop = b;
-		}
-	}
-
-	public BufferedImage getBufferedImage(String direction) {
-		BufferedImage image = null;
-
-		switch (direction) {
-			case "up1":
-				image = up1;
-				break;
-			case "up2":
-				image = up2;
-				break;
-			case "down1":
-				image = down1;
-				break;
-			case "down2":
-				image = down2;
-				break;
-			case "left1":
-				image = left1;
-				break;
-			case "left2":
-				image = left2;
-				break;
-			case "right1":
-				image = right1;
-				break;
-			case "right2":
-				image = right2;
-				break;
-			case "stop":
-				image = stop;
-				break;
-		}
-
-		return image;
 	}
 }
