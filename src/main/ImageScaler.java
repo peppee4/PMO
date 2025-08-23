@@ -22,6 +22,7 @@ public class ImageScaler {
 		g2.dispose();
 		
 		g2.dispose();
+		
 		return scaledImage;
 	}
 }

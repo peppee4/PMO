@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -12,19 +11,19 @@ import main.KeyHandler;
 
 // Classe che rappresenta il personaggio 
 public class Player extends Entity{
-	GamePanel gp;		// Pannello
-	KeyHandler keyH;	// Variabile per la gestione dell'input dell'untete
+	private GamePanel gp;		// Pannello
+	private KeyHandler keyH;	// Variabile per la gestione dell'input dell'untete
 	
-	public final int screenX;
-	public final int screenY;
+	private final int centerX;	// Coordinate centrali dello schermo
+	private final int centerY;	// Coordinate centrali dello schermo
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
 		this.keyH = keyH;
 		
-		screenX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
-		screenY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
+		this.centerX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
+		this.centerY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -32,25 +31,25 @@ public class Player extends Entity{
 	
 	// Metodo per inizializzare il player
 	public void setDefaultValues() {
-		setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
-		setWorldY(gp.getTileSize() * 23); 	// Coordinata y iniziale del Player
-		speed = 8;				                // Velocità iniziale del Player
-		direction = "right";
+		this.setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
+		this.setWorldY(gp.getTileSize() * 23); 				// Coordinata y iniziale del Player
+		this.setSpeed(8);				            	// Velocità iniziale del Player
+		this.setDirection("right");				// Direzione iniziale del Player
 		
 	}
 	
 	// Metodo per caricare le sprite del player
 	public void getPlayerImage() {
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
-			stop = ImageIO.read(getClass().getResourceAsStream("/player/player.png"));
+			this.setBufferedImage("up1", ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png")));;
+			this.setBufferedImage("up2", ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png")));
+			this.setBufferedImage("down1", ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png")));
+			this.setBufferedImage("down2", ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png")));
+			this.setBufferedImage("left1", ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png")));
+			this.setBufferedImage("left2", ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png")));
+			this.setBufferedImage("right1", ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png")));
+			this.setBufferedImage("right2", ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png")));
+			this.setBufferedImage("stop", ImageIO.read(getClass().getResourceAsStream("/player/player.png")));
 		}catch(IOException e) {
 			System.out.println(e);
 		}
@@ -59,38 +58,41 @@ public class Player extends Entity{
 	// Metodo per la gestione del movimento del player
 	public void update() {
 		
+		// Ottiene le coordinate attuali del player
 		int worldX = getWorldX();
 		int worldY = getWorldY();
+
 		if(keyH.upPressed == true || keyH.downPressed == true 
 				|| keyH.leftPressed == true || keyH.rightPressed == true) {
+
 			// Gestione dell'input
 			if(keyH.upPressed == true){
-				direction = "up";
-				setWorldY(worldY -= speed);
+				this.setDirection("up");
+				setWorldY(worldY -= getSpeed());
 			}else if(keyH.downPressed == true){
-				direction = "down";
-				setWorldY(worldY += speed);
+				this.setDirection("down");
+				setWorldY(worldY += getSpeed());
 			}else if(keyH.leftPressed == true){
-				direction = "left";
-				setWorldX(worldX -= speed);
+				this.setDirection("left");
+				setWorldX(worldX -= getSpeed());
 			}else if(keyH.rightPressed == true){
-				direction = "right";
-				setWorldX(worldX += speed);
+				this.setDirection("right");
+				setWorldX(worldX += getSpeed());
 			}
 		
 			// Gestione degli sprite
-			spriteCounter++;
-			if(spriteCounter > 10) {
-				if(spriteNum == 1) {
-					spriteNum = 2;
-				}else if(spriteNum == 2) {
-					spriteNum = 1;
+			this.setSpriteCounter(this.getSpriteCounter() + 1);
+			if(this.getSpriteCounter() > 10) {
+				if(this.getSpriteNum() == 1) {
+					this.setSpriteNum(2);
+				}else if(this.getSpriteNum() == 2) {
+					this.setSpriteNum(1);
 				}
 			
-				spriteCounter = 0;
+				this.setSpriteCounter(0);
 			}
 		}else {
-			direction = "stop";
+			this.setDirection("stop");
 		}
 	}
 	
@@ -99,40 +101,49 @@ public class Player extends Entity{
 		
 		BufferedImage image = null;
 		
-		switch(direction) {
+		switch(this.getDirection()) {
 			case "up":
-				if(spriteNum == 1) {
-					image = up1;
-				}else if(spriteNum == 2) {
-					image = up2;
+				if(this.getSpriteNum() == 1) {
+					image = getBufferedImage("up1");
+				}else if(this.getSpriteNum() == 2) {
+					image = getBufferedImage("up2");
 				}
 				break;
 			case "down":
-				if(spriteNum == 1) {
-					image = down1;
-				}else if(spriteNum == 2) {
-					image = down2;
+				if(this.getSpriteNum() == 1) {
+					image = getBufferedImage("down1");
+				}else if(this.getSpriteNum() == 2) {
+					image = getBufferedImage("down2");
 				}
 				break;
 			case "left":
-				if(spriteNum == 1) {
-					image = left1;
-				}else if(spriteNum == 2) {
-					image = left2;
+				if(this.getSpriteNum() == 1) {
+					image = getBufferedImage("left1");
+				}else if(this.getSpriteNum() == 2) {
+					image = getBufferedImage("left2");
 				}
 				break;
 			case "right":
-				if(spriteNum == 1) {
-					image = right1;
-				}else if(spriteNum == 2) {
-					image = right2;
+				if(this.getSpriteNum() == 1) {
+					image = getBufferedImage("right1");
+				}else if(this.getSpriteNum() == 2) {
+					image = getBufferedImage("right2");
 				}
 				break;
 			default:
-				image = stop;
+				image = getBufferedImage("stop");
 				break;
 		}
 		
-		g2.drawImage(image, screenX, screenY, gp.getTileSize(), gp.getTileSize(), null);
+		g2.drawImage(image, centerX, centerY, gp.getTileSize(), gp.getTileSize(), null);
+	}
+
+	// Metodi getter per ottenere le coordinate centrali dello schermo
+	public int getCenterX() {
+		return this.centerX;
+	}
+
+	public int getCenterY() {
+		return this.centerY;
 	}
 }

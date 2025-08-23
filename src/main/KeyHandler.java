@@ -16,9 +16,11 @@ public class KeyHandler implements KeyListener{
     	
     	this.gp = gp;
     }
+
+     
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
+       
     }
 
     // Metodo per dire cosa fare quando viene premuto un bottone
