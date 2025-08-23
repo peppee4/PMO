@@ -18,8 +18,8 @@ public class GamePanel extends JPanel implements Runnable{
 	private final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
 	
 	// Impostazioni della Mappa
-	private final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
-	private final int maxWorldRow = 50;						// Dimensioni delle righe della mappa
+	private final int maxWorldCol = 35;                      // Dimensioni delle colonne della mappa
+	private final int maxWorldRow = 35;						// Dimensioni delle righe della mappa
 	
 	// FPS
 	int FPS = 60;

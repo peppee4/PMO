@@ -28,7 +28,7 @@ public class TileMap {
 																	  			si trova in quella posizione. */
 		
 		getTileImage();
-		loadMap("/maps/lago.txt");
+		loadMap("/maps/finalMap1.txt");
 	}
 	
 	public void setup(int index, String imageName, boolean collision) {
