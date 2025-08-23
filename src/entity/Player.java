@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -25,6 +26,16 @@ public class Player extends Entity{
 		this.centerX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
 		this.centerY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
 		
+		setSolidArea(new Rectangle());
+		setSolidAreaX(8);
+		setSolidAreaY(8);
+		
+		setSolidAreaWidth(32);
+		setSolidAreaHeight(32);
+		
+		setSolidAreaDefaultX(getSolidArea().x);
+		setSolidAreaDefaultY(getSolidArea().y);
+		
 		setDefaultValues();
 		getPlayerImage();
 	}
@@ -32,7 +43,7 @@ public class Player extends Entity{
 	// Metodo per inizializzare il player
 	public void setDefaultValues() {
 		this.setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
-		this.setWorldY(gp.getTileSize() * 23); 				// Coordinata y iniziale del Player
+		this.setWorldY(gp.getTileSize() * 24); 				// Coordinata y iniziale del Player
 		this.setSpeed(8);				            	// Velocità iniziale del Player
 		this.setDirection("right");				// Direzione iniziale del Player
 		
@@ -67,17 +78,35 @@ public class Player extends Entity{
 
 			// Gestione dell'input
 			if(keyH.upPressed == true){
-				this.setDirection("up");
-				setWorldY(worldY -= getSpeed());
+				this.setDirection("up");				
 			}else if(keyH.downPressed == true){
-				this.setDirection("down");
-				setWorldY(worldY += getSpeed());
+				this.setDirection("down");				
 			}else if(keyH.leftPressed == true){
-				this.setDirection("left");
-				setWorldX(worldX -= getSpeed());
+				this.setDirection("left");				
 			}else if(keyH.rightPressed == true){
 				this.setDirection("right");
-				setWorldX(worldX += getSpeed());
+			}
+			
+			// Controllo per la collisione con i tile della mappa(muri)
+			collisionOn = false;
+			gp.cChecker.checkTile(this);
+			
+			// Se il player non tocca Nessun tile "solido può muoversi
+			if(collisionOn == false) {
+				switch(this.getDirection()) {
+					case "up": 
+						setWorldY(worldY -= getSpeed());
+						break;
+					case "down": 
+						setWorldY(worldY += getSpeed());
+						break;
+					case "left":
+						setWorldX(worldX -= getSpeed());
+						break;
+					case "right":
+						setWorldX(worldX += getSpeed());
+						break;
+				}
 			}
 		
 			// Gestione degli sprite

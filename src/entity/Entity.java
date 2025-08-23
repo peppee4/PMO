@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 /**
@@ -14,7 +15,9 @@ public class Entity {
 			    worldY;		    // Coordinata verticale
 	private int speed;	        // Velocità di movimento
 	
-	
+	private Rectangle solidArea = new Rectangle(0,0,48,48);
+	private int solidAreaDefaultX,solidAreaDefaultY;
+	public boolean collisionOn = false;
 	
 	// Frame dell’animazione per ciascuna direzione
 	private BufferedImage up1, 
@@ -90,6 +93,70 @@ public class Entity {
 		
 		this.spriteNum = value;
 	}
+	
+	public Rectangle getSolidArea() {
+	    return solidArea;
+	}
+
+	public void setSolidArea(Rectangle r) {
+	    this.solidArea = r;
+	}
+	public int getSolidAreaDefaultX() {
+	    return solidAreaDefaultX;
+	}
+
+	public void setSolidAreaDefaultX(int solidAreaDefaultX) {
+	    this.solidAreaDefaultX = solidAreaDefaultX;
+	}
+
+	public int getSolidAreaDefaultY() {
+	    return solidAreaDefaultY;
+	}
+
+	public void setSolidAreaDefaultY(int solidAreaDefaultY) {
+	    this.solidAreaDefaultY = solidAreaDefaultY;
+	}
+	
+	public int getSolidAreaX() {
+	    return solidArea.x;
+	}
+
+	public void setSolidAreaX(int x) {
+	    solidArea.x = x;
+	}
+
+	public int getSolidAreaY() {
+	    return solidArea.y;
+	}
+
+	public void setSolidAreaY(int y) {
+	    solidArea.y = y;
+	}
+	
+	public int getSolidAreaWidth() {
+	    return solidArea.width;
+	}
+
+	public void setSolidAreaWidth(int width) {
+	    solidArea.width = width;
+	}
+
+	public int getSolidAreaHeight() {
+	    return solidArea.height;
+	}
+
+	public void setSolidAreaHeight(int height) {
+	    solidArea.height = height;
+	}
+
+	public boolean isCollisionOn() {
+	    return collisionOn;
+	}
+
+	public void setCollisionOn(boolean collisionOn) {
+	    this.collisionOn = collisionOn;
+	}
+
 	
 	public void setBufferedImage(String direction, BufferedImage b) {
 		if(direction == "up1") {

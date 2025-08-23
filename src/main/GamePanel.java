@@ -18,15 +18,16 @@ public class GamePanel extends JPanel implements Runnable{
 	private final int screenHeight = tileSize * maxScreenRow;       // 576 pixels 
 	
 	// Impostazioni della Mappa
-	private final int maxWorldCol = 35;                      // Dimensioni delle colonne della mappa
-	private final int maxWorldRow = 35;						// Dimensioni delle righe della mappa
+	private final int maxWorldCol = 50;                      // Dimensioni delle colonne della mappa
+	private final int maxWorldRow = 50;						// Dimensioni delle righe della mappa
 	
 	// FPS
 	int FPS = 60;
 	
 	TileMap tileM = new TileMap(this);
     KeyHandler keyH = new KeyHandler(this); // Creazione di un gestore degli eventi della tastiera
-
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
 	
