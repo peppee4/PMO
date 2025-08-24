@@ -98,6 +98,12 @@ public class GamePanel extends JPanel implements Runnable{
     // Metodo per la gestione del movimento del player
 	public void update(){
 		player.update();
+
+        for(int i = 0; i < this.mons.length; i++){
+            if(this.mons[i] != null){
+                this.mons[i].update();
+            }
+        }
 	}
 	
     // Metodo per ridisegnare il player

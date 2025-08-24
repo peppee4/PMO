@@ -1,24 +1,26 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
+
 public class NormalMonster extends Monsters {
-    
     // Costruttore
-    public NormalMonster() {
-        super("NormalMonster");
+    public NormalMonster(GamePanel gp) {
+        super("NormalMonster", gp);
         setup();
     }
 
     private void setup() {
         // Carica l'immagine del mostro
         try {
-			//up1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_up_1.png"));
-			//up2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_up_2.png"));
-			//down1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_down_1.png"));
-			//down2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_down_2.png"));
+			up1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_up_1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_up_2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_down_1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_down_2.png"));
 			left1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_left_1.png"));
 			left2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_left_2.png"));
 			right1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_right_1.png"));

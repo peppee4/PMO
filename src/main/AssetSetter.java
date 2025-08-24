@@ -25,8 +25,24 @@ public class AssetSetter {
     public void setMonster() {
         
         // NomramlMonster
+        gp.mons[0] = new NormalMonster(this.gp);
+        gp.mons[0].setWorldX(gp.getTileSize() * 24);
+        gp.mons[0].setWorldY(gp.getTileSize() * 24);
+
+       /*  gp.mons[0] = new NormalMonster();
+        gp.mons[0].worldX = gp.getTileSize() * 23;
+        gp.mons[0].worldY = gp.getTileSize() * 23;
+
         gp.mons[0] = new NormalMonster();
         gp.mons[0].worldX = gp.getTileSize() * 23;
-        gp.mons[0].worldY = gp.getTileSize() * 24;
+        gp.mons[0].worldY = gp.getTileSize() * 22;
+
+        gp.mons[0] = new NormalMonster();
+        gp.mons[0].worldX = gp.getTileSize() * 23;
+        gp.mons[0].worldY = gp.getTileSize() * 21;
+
+        gp.mons[0] = new NormalMonster();
+        gp.mons[0].worldX = gp.getTileSize() * 22;
+        gp.mons[0].worldY = gp.getTileSize() * 21;*/
     }
 }
