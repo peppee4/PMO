@@ -73,10 +73,10 @@ public class CollisionChecker {
 		checkObject(entity);
 
 		// Calcola i bordi del player
-		int playerLeftWorldX = gp.player.getWorldX() + gp.player.getSolidAreaX();
-		int playerRightWorldX = gp.player.getWorldX() + gp.player.getSolidAreaX() + gp.player.getSolidAreaWidth();
-		int playerTopWorldY =gp.player.getWorldY() + gp.player.getSolidAreaY();
-		int playerBottomWorldY = gp.player.getWorldY() + gp.player.getSolidAreaY() + gp.player.getSolidAreaHeight();
+		int playerLeftWorldX = gp.player.getWorldX() + gp.player.getSolidAreaX() + 5;
+		int playerRightWorldX = gp.player.getWorldX() + gp.player.getSolidAreaX() + gp.player.getSolidAreaWidth() + 5;
+		int playerTopWorldY =gp.player.getWorldY() + gp.player.getSolidAreaY() + 5;
+		int playerBottomWorldY = gp.player.getWorldY() + gp.player.getSolidAreaY() + gp.player.getSolidAreaHeight() + 5;
 
 		// Calcola i bordi delle tile in cui si trova il player
 		int playerLeftCol = playerLeftWorldX/gp.getTileSize();

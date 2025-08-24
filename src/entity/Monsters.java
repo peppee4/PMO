@@ -9,24 +9,28 @@ public class Monsters extends Entity {
     public BufferedImage image;        			// Immagine del mostro
 	private int actionLockCounter = 0;			// Contatore per gestire le azioni del mostro
     private GamePanel gp;             			// Riferimento al GamePanel
-	private int lifeCounter = 120;				// Contatore per la gestione della vita del player
+	private int lifeCounter = 180;				// Contatore per la gestione della vita del player
 	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
         //this.name = name;
 		this.gp = gp;
 
+		// Imposta l'area solida per la collisione
 		setSolidArea(new Rectangle());
 		setSolidAreaX(8);
 		setSolidAreaY(8);
 
+		// Dimensioni dell'area solida
 		setSolidAreaWidth(30);
 		setSolidAreaHeight(45);
 
+		// Posizione di default dell'area solida
 		setSolidAreaDefaultX(getSolidArea().x);
 		setSolidAreaDefaultY(getSolidArea().y);
 
-		this.setSpeed(3);
+		// Imposta la velocità del mostro
+		this.setSpeed(2);
     }
 
     public void draw(Graphics2D g2, GamePanel gp){
@@ -107,27 +111,30 @@ public class Monsters extends Entity {
 		collisionPlayer = false;
 		gp.cChecker.checkPlayer(this);
 
+		if(this.lifeCounter < 180){
+			this.lifeCounter++;
+		}
+
 		// Se c'è collisione con il player
-		if(collisionPlayer == true) {
-			// Sottrae 1 alla vita del player ogni 120 frame (2 secondi a 60 FPS)
-			if(this.lifeCounter < 120){
-				this.lifeCounter++;	
-			}else if(gp.player.getLife() > 0){
+		if(collisionPlayer == true && this.lifeCounter == 180){
+			System.out.println("Collisione con il player!");
+
+			if(gp.player.getLife() > 0){
 				gp.player.setLife(gp.player.getLife() - 1);
 				this.lifeCounter = 0;
 			}
 			
 			// Fine del gioco se la vita del player è 0
 			if(gp.player.getLife() == 0){
-				System.out.println("Game Over");
+				System.out.println("Game Over");				// Messaggio di Game Over
 				gp.setGameStatus(false);				// Imposta lo stato del gioco su "Game Over"
 			}
-
-			System.out.println("Player Life: " + gp.player.getLife());
 		}
 
 		// Gestione dell’animazione del mostro
 		this.setSpriteCounter(this.getSpriteCounter() + 1);
+
+		// Avanza l’animazione ogni 12 frame
 		if(this.getSpriteCounter() > 12) {
 			if(this.getSpriteNum() == 1) {
 				this.setSpriteNum(2);
@@ -135,6 +142,7 @@ public class Monsters extends Entity {
 				this.setSpriteNum(1);
 			}
 			
+			// Resetta il contatore
 			this.setSpriteCounter(0);
 		}
 	}
