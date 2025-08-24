@@ -164,7 +164,7 @@ public class Player extends Entity{
 				break;
 		}
 		
-		g2.drawImage(image, centerX, centerY, 35, 35, null);
+		g2.drawImage(image, centerX, centerY, 30, 30, null);
 	}
 
 	// Metodi getter per ottenere le coordinate centrali dello schermo

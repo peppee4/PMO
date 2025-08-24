@@ -3,10 +3,10 @@ package object;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class ObjKey extends SuperObject{
+public class ObjChest extends SuperObject{
     
     // Costruttore
-    public ObjKey() {
+    public ObjChest() {
         
         name = "Cassa";     // Nome dell'oggetto
         collision = false;  // La cassa non ha una collisione attiva

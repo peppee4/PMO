@@ -16,6 +16,7 @@ public class TileMap {
 	GamePanel gp;
 	public Tile[] tile;
 	public int mapTileNumber[][];
+	private double zoom = 2.0;	
 	
 	public TileMap(GamePanel gp) {
 		
@@ -32,7 +33,6 @@ public class TileMap {
 	}
 	
 	public void setup(int index, String imageName, boolean collision) {
-		
 		ImageScaler iScaler = new ImageScaler();
 		
 		try {
@@ -62,7 +62,10 @@ public class TileMap {
 	}
 	
 	public void draw(Graphics2D g2) {
-		
+		g2.translate(gp.getWidth()/2, gp.getHeight()/2); 	// Trasla il sistema di coordinate al centro dello schermo
+		g2.scale(zoom, zoom);
+		g2.translate(-gp.getWidth()/2, -gp.getHeight()/2); 	// Riporta il sistema di coordinate all'angolo in alto a sinistra
+
 		// Variabili di appoggio
 		int worldCol = 0;
 		int worldRow = 0;
