@@ -3,6 +3,7 @@ package main;
 import java.awt.*;
 import javax.swing.JPanel;
 import entity.Player;
+import environment.EnvironmentManager;
 import map.TileMap;
 import object.SuperObject;
 import entity.Monsters;
@@ -29,7 +30,8 @@ public class GamePanel extends JPanel implements Runnable{
 	TileMap tileM = new TileMap(this);                                  // Creazione della mappa
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
-    public AssetSetter aSetter = new AssetSetter(this);                 // Creazione del posizionatore degli oggetti 
+    public AssetSetter aSetter = new AssetSetter(this);   
+    EnvironmentManager eManager = new EnvironmentManager(this);// Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
@@ -57,7 +59,7 @@ public class GamePanel extends JPanel implements Runnable{
     	
     	aSetter.setObject();    // Posizioniamo gli oggetti
         aSetter.setMonster();   // Posizioniamo i mostri
-    	
+        eManager.setup();       // Aggiunge l'effetto di luce soffusa attorno al player
     }
 
     public void startGameThread() {
@@ -132,6 +134,9 @@ public class GamePanel extends JPanel implements Runnable{
 
         // Player
         this.player.draw(g2);
+        
+        // Ambiente
+        //eManager.draw(g2);
         
         g2.dispose();
 	} 
