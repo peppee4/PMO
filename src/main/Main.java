@@ -19,6 +19,7 @@ public class Main {
         window.setLocationRelativeTo(null);                     // Impostiamo la posizione iniziale della finestra al centro dello schermo
         window.setVisible(true);
 
+        gamePanel.setupGame();                                  // Impostiamo il gioco
         gamePanel.startGameThread();                            // Facciamo iniziare il Loop
 
     }

@@ -58,7 +58,7 @@ public class TileMap {
 	public void getTileImage() {
 		
 		setup(0, "earth", false); // EARTH
-		setup(1, "wall", true); // WALL
+		setup(1, "wall", true); 	// WALL
 	}
 	
 	public void draw(Graphics2D g2) {

@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.JPanel;
 import entity.Player;
 import map.TileMap;
+import object.SuperObject;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -24,15 +25,19 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-	TileMap tileM = new TileMap(this);
-    KeyHandler keyH = new KeyHandler(this); // Creazione di un gestore degli eventi della tastiera
-    public CollisionChecker cChecker = new CollisionChecker(this);
+	TileMap tileM = new TileMap(this);                                  // Creazione della mappa
+    KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
+    public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
+    public AssetSetter aSetter = new AssetSetter(this);                 // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
 	
 	// Creiamo il Player
-	public Player player = new Player(this,keyH);
+	public Player player = new Player(this,keyH);                       // Creazione del player
+
+    // Creiamo gli oggetti
+    public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
 
     // Costruttore della classe
     public GamePanel() {
@@ -41,6 +46,13 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);                                       // Per ridurre il flickering
         this.addKeyListener(keyH);                                          // Aggiungiamo il Listener al pannello
         this.setFocusable(true);                                  
+    }
+
+    // Metodo per impostare gli oggetti di gioco
+    public void setupGame() {
+    	
+    	aSetter.setObject();
+    	
     }
 
     public void startGameThread() {
@@ -90,9 +102,18 @@ public class GamePanel extends JPanel implements Runnable{
         
         Graphics2D g2 = (Graphics2D)g;
         
-        tileM.draw(g2);
+        // Tile
+        this.tileM.draw(g2);
 
-        player.draw(g2);
+        // Oggetti
+        for(int i = 0; i < this.obj.length; i++){
+            if(this.obj[i] != null){
+                this.obj[i].draw(g2, this);
+            }
+        }
+
+        // Player
+        this.player.draw(g2);
         
         g2.dispose();
 	} 
