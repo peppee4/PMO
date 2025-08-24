@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import entity.Player;
 import map.TileMap;
 import object.SuperObject;
+import entity.Monsters;
 
 public class GamePanel extends JPanel implements Runnable{
 
@@ -39,6 +40,9 @@ public class GamePanel extends JPanel implements Runnable{
     // Creiamo gli oggetti
     public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
 
+    // Creiamo i mostri
+    public Monsters mons[] = new Monsters[10];                          // Array di mostri
+
     // Costruttore della classe
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));    // Dimensione predefinita del JPanel
@@ -51,7 +55,8 @@ public class GamePanel extends JPanel implements Runnable{
     // Metodo per impostare gli oggetti di gioco
     public void setupGame() {
     	
-    	aSetter.setObject();
+    	aSetter.setObject();    // Posizioniamo gli oggetti
+        aSetter.setMonster();   // Posizioniamo i mostri
     	
     }
 
@@ -109,6 +114,13 @@ public class GamePanel extends JPanel implements Runnable{
         for(int i = 0; i < this.obj.length; i++){
             if(this.obj[i] != null){
                 this.obj[i].draw(g2, this);
+            }
+        }
+
+        // Mostri
+        for(int i = 0; i < this.mons.length; i++){
+            if(this.mons[i] != null){
+                this.mons[i].draw(g2, this);
             }
         }
 

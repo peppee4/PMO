@@ -44,7 +44,7 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		this.setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
 		this.setWorldY(gp.getTileSize() * 24); 				// Coordinata y iniziale del Player
-		this.setSpeed(8);				            	// Velocità iniziale del Player
+		this.setSpeed(4);				            	// Velocità iniziale del Player
 		this.setDirection("right");				// Direzione iniziale del Player
 		
 	}
