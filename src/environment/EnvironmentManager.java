@@ -15,7 +15,7 @@ public class EnvironmentManager {
 	
 	public void setup() {
 		// Crea l'effetto luce attorno al player con raggio 350
-		lighting = new PlayerLighting(gp, 350);
+		lighting = new PlayerLighting(gp, 250);
 	}
 	
 	public void draw(Graphics2D g2) {

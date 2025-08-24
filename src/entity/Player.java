@@ -17,25 +17,33 @@ public class Player extends Entity{
 	
 	private final int centerX;	// Coordinate centrali dello schermo
 	private final int centerY;	// Coordinate centrali dello schermo
+
+	private double life;  		// Vita del player
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
-		this.keyH = keyH;
+		this.gp = gp;														// Inizializza il pannello
+		this.keyH = keyH;													// Inizializza il gestore degli eventi della tastiera										
 		
-		this.centerX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);
-		this.centerY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);
+		this.centerX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);		// Calcola la coordinata centrale orizzontale dello schermo
+		this.centerY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);		// Calcola la coordinata centrale verticale dello schermo
+
+		this.life = 3.0;													// Imposta la vita iniziale del player
 		
+		// Imposta l'area solida per la collisione
 		setSolidArea(new Rectangle());
 		setSolidAreaX(8);
 		setSolidAreaY(8);
 		
-		setSolidAreaWidth(26);
-		setSolidAreaHeight(26);
+		// Dimensioni dell'area solida
+		setSolidAreaWidth(20);
+		setSolidAreaHeight(20);
 		
+		// Posizione di default dell'area solida
 		setSolidAreaDefaultX(getSolidArea().x);
 		setSolidAreaDefaultY(getSolidArea().y);
 		
+		// Inizializza le variabili del player
 		setDefaultValues();
 		getPlayerImage();
 	}
@@ -167,12 +175,20 @@ public class Player extends Entity{
 		g2.drawImage(image, centerX, centerY, 30, 30, null);
 	}
 
-	// Metodi getter per ottenere le coordinate centrali dello schermo
+	// Getter e Setter
 	public int getCenterX() {
 		return this.centerX;
 	}
 
 	public int getCenterY() {
 		return this.centerY;
+	}
+
+	public double getLife() {
+		return this.life;
+	}
+
+	public void setLife(double life) {
+		this.life = life;
 	}
 }

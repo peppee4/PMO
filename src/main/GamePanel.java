@@ -23,6 +23,8 @@ public class GamePanel extends JPanel implements Runnable{
 	// Impostazioni della Mappa
 	private final int maxWorldCol = 50;                         // Dimensioni delle colonne della mappa
 	private final int maxWorldRow = 50;						    // Dimensioni delle righe della mappa
+
+    private boolean gameStatus = true;                          // Stato del gioco (true = in corso, false = terminato)
 	
 	// FPS
 	int FPS = 60;
@@ -31,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   
-    EnvironmentManager eManager = new EnvironmentManager(this);// Creazione del posizionatore degli oggetti 
+    EnvironmentManager eManager = new EnvironmentManager(this);         // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
@@ -73,7 +75,8 @@ public class GamePanel extends JPanel implements Runnable{
         double drawInterval = 1000000000 / FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
 
-        while (gameThread != null) {
+        while (gameThread != null && this.gameStatus == true) {
+            // 1.
         	// Aggiornare le informazioni
             update();
             // Disegnare su schermo con le informazioni aggiornate
@@ -97,7 +100,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
     }
 	
-    // Metodo per la gestione del movimento del player
+    // Metodo per aggiornare le informazioni del gioco
 	public void update(){
 		player.update();
 
@@ -136,8 +139,9 @@ public class GamePanel extends JPanel implements Runnable{
         this.player.draw(g2);
         
         // Ambiente
-        //eManager.draw(g2);
+        eManager.draw(g2);
         
+        // Disposizione delle risorse
         g2.dispose();
 	} 
 	
@@ -165,4 +169,12 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		return this.screenHeight;
 	}
+
+    public boolean gameStatus() {
+        return this.gameStatus;
+    }
+
+    public void setGameStatus(boolean gameStatus) {
+        this.gameStatus = gameStatus;
+    }
 }

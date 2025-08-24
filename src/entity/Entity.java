@@ -15,9 +15,10 @@ public class Entity {
 			    worldY;		    // Coordinata verticale
 	private int speed;	        // Velocità di movimento
 	
-	private Rectangle solidArea = new Rectangle(0,0,48,48);
-	private int solidAreaDefaultX,solidAreaDefaultY;
-	public boolean collisionOn = false;
+	private Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione/
+	private int solidAreaDefaultX,solidAreaDefaultY;							// Posizione di default dell'area solida
+	protected boolean collisionOn = false;											// Flag per la collisione
+	protected boolean collisionPlayer = false; 									// Flag per la collisione con il player
 	
 	// Frame dell’animazione per ciascuna direzione
 	protected BufferedImage up1, 
@@ -149,11 +150,11 @@ public class Entity {
 	    solidArea.height = height;
 	}
 
-	public boolean isCollisionOn() {
-	    return collisionOn;
-	}
-
 	public void setCollisionOn(boolean collisionOn) {
 	    this.collisionOn = collisionOn;
+	}
+
+	public void setCollisionPlayer(boolean collisionPlayer) {
+	    this.collisionPlayer = collisionPlayer;
 	}
 }

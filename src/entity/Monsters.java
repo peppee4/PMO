@@ -6,15 +6,14 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
 public class Monsters extends Entity {
-    public BufferedImage image;        	// Immagine del mostro
-    //public int worldX, worldY;         	// Posizione del mostro nel mondo di gioco
-    private String name;               	// Nome del mostro
-	private int actionLockCounter = 0;	// Contatore per gestire le azioni del mostro
-    private GamePanel gp;             	// Riferimento al GamePanel
-
+    public BufferedImage image;        			// Immagine del mostro
+	private int actionLockCounter = 0;			// Contatore per gestire le azioni del mostro
+    private GamePanel gp;             			// Riferimento al GamePanel
+	private int lifeCounter = 120;				// Contatore per la gestione della vita del player
+	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
-        this.name = name;
+        //this.name = name;
 		this.gp = gp;
 
 		setSolidArea(new Rectangle());
@@ -82,9 +81,6 @@ public class Monsters extends Entity {
 	public void update() {
 		setAction();
 
-		int worldX = this.getWorldX();
-		int worldY = this.getWorldY();
-
 		// Collisione con i tile
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
@@ -105,6 +101,29 @@ public class Monsters extends Entity {
 					this.setWorldX(this.getWorldX() + this.getSpeed());
 					break;
 			}
+		}
+
+		// Collisione con il player
+		collisionPlayer = false;
+		gp.cChecker.checkPlayer(this);
+
+		// Se c'è collisione con il player
+		if(collisionPlayer == true) {
+			// Sottrae 1 alla vita del player ogni 120 frame (2 secondi a 60 FPS)
+			if(this.lifeCounter < 120){
+				this.lifeCounter++;	
+			}else if(gp.player.getLife() > 0){
+				gp.player.setLife(gp.player.getLife() - 1);
+				this.lifeCounter = 0;
+			}
+			
+			// Fine del gioco se la vita del player è 0
+			if(gp.player.getLife() == 0){
+				System.out.println("Game Over");
+				gp.setGameStatus(false);				// Imposta lo stato del gioco su "Game Over"
+			}
+
+			System.out.println("Player Life: " + gp.player.getLife());
 		}
 
 		// Gestione dell’animazione del mostro
