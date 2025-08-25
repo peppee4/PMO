@@ -14,7 +14,7 @@ public class EnvironmentManager {
 	}
 	
 	public void setup() {
-		// Crea l'effetto luce attorno al player con raggio 350
+		// Crea l'effetto luce attorno al player con raggio 250
 		lighting = new PlayerLighting(gp, 250);
 	}
 	

@@ -36,7 +36,6 @@ public class TileMap {
 		ImageScaler iScaler = new ImageScaler();
 		
 		try {
-			
 			// Crea un nuovo Tile e lo inserisce nell’array
 			tile[index] = new Tile();
 			

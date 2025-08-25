@@ -13,8 +13,8 @@ public class Monsters extends Entity {
     private GamePanel gp;             			// Riferimento al GamePanel
 	private int lifeCounter = 180;				// Contatore per la gestione della vita del player
 	private Integer targetCol = null,
-			    targetRow = null;				// Colonna e riga del tile di destinazione		
-	
+			    	targetRow = null;			// Colonna e riga del tile di destinazione		
+
     // Costruttore
     public Monsters(String name, GamePanel gp) {
         //this.name = name;
@@ -22,8 +22,8 @@ public class Monsters extends Entity {
 
 		// Imposta l'area solida per la collisione
 		setSolidArea(new Rectangle());
-		setSolidAreaX(8);
-		setSolidAreaY(8);
+		setSolidAreaX(0);
+		setSolidAreaY(0);
 
 		// Dimensioni dell'area solida
 		setSolidAreaWidth(30);
@@ -87,11 +87,11 @@ public class Monsters extends Entity {
     }
 
 	public void update() {
-		setAction();
-
 		// Collisione con i tile
 		collisionOn = false;
 		gp.cChecker.checkTile(this);
+
+		setAction();
 
 		// Se non c’è collisione, il mostro si muove
 		if(collisionOn == false) {
@@ -158,15 +158,23 @@ public class Monsters extends Entity {
 		int playerTileY = gp.player.getWorldY() / gp.getTileSize();								// Calcola la riga del tile del player
 		int distance = getTileDistance(monsterTileX, monsterTileY, playerTileX, playerTileY);	// Distanza in tile tra mostro e player
 
-		// Se non sono centrato in una tile, continuo nella direzione attuale
-    	if (!alignedToTile()) return;
+		// Se il mostro non è allineato alla griglia, continua nella direzione attuale
+    	if (!alignedToTile()) {
+			// Se c'è una collisione, resetta il contatore e scegli una nuova direzione
+			if(this.collisionOn) {
+				this.actionCounter = 120;
+				randomDirection();
+			}
+			
+			return;
+		}
 
-    	// Se non ho un target o ci sono arrivato, ne calcolo uno nuovo
+		// Se non ho un target o ci sono arrivato, ne calcolo uno nuovo
     	if (targetCol == null || targetRow == null ||
      	   (monsterTileX == targetCol && monsterTileY == targetRow)) {
 
     	    int[] nextStep = getNextStep(monsterTileX, monsterTileY, playerTileX, playerTileY);
-    	    if (nextStep != null) {
+			if (nextStep != null) {
     	        targetCol = nextStep[0];
     	        targetRow = nextStep[1];
     	    }
@@ -180,10 +188,10 @@ public class Monsters extends Entity {
      	  	else if (monsterTileY > targetRow) setDirection("up");
     	}
 
+		int[] nextStep = getNextStep(monsterTileX, monsterTileY, playerTileX, playerTileY);
 
 		// Se il player è entro 16 tile, il mostro inizia a inseguirlo
-		if(distance <= 16) {
-			int[] nextStep = getNextStep(monsterTileX, monsterTileY, playerTileX, playerTileY);
+		if(distance <= 16 && nextStep != null) {
 			if(nextStep != null) {	
 				int nextCol = nextStep[0];
 				int nextRow = nextStep[1];
@@ -201,27 +209,7 @@ public class Monsters extends Entity {
 		}else {
 			this.actionCounter++;
 
-			// Cambia direzione ogni 60 frame o se c'è una collisione
-			if(this.actionCounter == 60 || collisionOn == true) {
-			int random = (int)(Math.random() * 100) + 1; // Numero casuale tra 1 e 100
-
-			// Cambia direzione in base al numero casuale
-			if(random <= 25) {
-				this.setDirection("up");
-			}
-			if(random > 25 && random <= 50) {
-				this.setDirection("down");
-			}
-			if(random > 50 && random <= 75) {
-				this.setDirection("left");
-			}
-			if(random > 75 && random <= 100) {
-				this.setDirection("right");
-			}
-
-			// Resetta il contatore
-			this.actionCounter = 0;
-			}
+			randomDirection();
 		}
 	}
 
@@ -336,6 +324,29 @@ public class Monsters extends Entity {
 	}
 
 	private boolean alignedToTile() {
-		return this.getWorldX() % gp.getTileSize() == 0 && this.getWorldY() % gp.getTileSize() == 0;
+		return this.getWorldX() % gp.getTileSize() <= 2 && this.getWorldY() % gp.getTileSize() <= 2;
+	}
+
+	private void randomDirection(){
+		// Cambia direzione ogni 60 frame o se c'è una collisione
+		if(this.actionCounter >= 120 || collisionOn) {
+			int random = (int)(Math.random() * 60) + 1; // Numero casuale tra 1 e 100
+
+			// Cambia direzione in base al numero casuale
+			if(random <= 15) {
+				this.setDirection("up");
+			}
+			if(random > 15 && random <= 30) {
+				this.setDirection("down");
+			}
+			if(random > 30 && random <= 45) {
+				this.setDirection("left");
+			}
+			if(random > 45 && random <= 60) {
+				this.setDirection("right");
+			}
+
+			this.actionCounter = 0;
+		}
 	}
 }

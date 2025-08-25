@@ -1,11 +1,13 @@
 package main;
 
+import java.util.Random;
+
 import entity.NormalMonster;
 import object.ObjChest;
-//import entity.NormalMonster;
 
 public class AssetSetter {
-    GamePanel gp;   // Riferimento al GamePanel
+    GamePanel gp;                       // Riferimento al GamePanel
+    private Random rdm = new Random();  // Generatore di numeri casuali
 
     // Costruttore
     public AssetSetter (GamePanel gp) {
@@ -24,25 +26,28 @@ public class AssetSetter {
     // Metodo per posizionare i mostri
     public void setMonster() {
         
-        // NomramlMonster
-        gp.mons[0] = new NormalMonster(this.gp);
-        gp.mons[0].setWorldX(gp.getTileSize() * 24);
-        gp.mons[0].setWorldY(gp.getTileSize() * 22);
+        // NormalMonster
+        for(int i = 0; i < 2; i++){
+            boolean posizioneValida = false;
+            int spawnX = 0;
+            int spawnY = 0;
 
-        gp.mons[1] = new NormalMonster(this.gp);
-        gp.mons[1].setWorldX(gp.getTileSize() * 26);
-        gp.mons[1].setWorldY(gp.getTileSize() * 25);
-/* 
-        gp.mons[0] = new NormalMonster(this.gp);
-        gp.mons[0].setWorldX(gp.getTileSize() * 24);
-        gp.mons[0].setWorldY(gp.getTileSize() * 24);
+            // Trova una posizione casuale non solida
+            while(!posizioneValida){
+                spawnX = rdm.nextInt(gp.getMaxWorldCol());
+                spawnY = rdm.nextInt(gp.getMaxWorldRow());
+                int tileNum = gp.tileM.mapTileNumber[spawnX][spawnY];
 
-        gp.mons[0] = new NormalMonster(this.gp);
-        gp.mons[0].setWorldX(gp.getTileSize() * 24);
-        gp.mons[0].setWorldY(gp.getTileSize() * 24);
+                // Controlla se la tile non è solida
+                if(!gp.tileM.tile[tileNum].collision){
+                    posizioneValida = true;
+                }
+            }
 
-        gp.mons[0] = new NormalMonster(this.gp);
-        gp.mons[0].setWorldX(gp.getTileSize() * 24);
-        gp.mons[0].setWorldY(gp.getTileSize() * 24);*/
+            // Imposta il mostro nella posizione trovata
+            gp.mons[i] = new NormalMonster(this.gp);
+            gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+            gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+        }
     }
 }
