@@ -27,10 +27,10 @@ public class AssetSetter {
         // NomramlMonster
         gp.mons[0] = new NormalMonster(this.gp);
         gp.mons[0].setWorldX(gp.getTileSize() * 24);
-        gp.mons[0].setWorldY(gp.getTileSize() * 24);
+        gp.mons[0].setWorldY(gp.getTileSize() * 22);
 
         gp.mons[1] = new NormalMonster(this.gp);
-        gp.mons[1].setWorldX(gp.getTileSize() * 24);
+        gp.mons[1].setWorldX(gp.getTileSize() * 26);
         gp.mons[1].setWorldY(gp.getTileSize() * 25);
 /* 
         gp.mons[0] = new NormalMonster(this.gp);

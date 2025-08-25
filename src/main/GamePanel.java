@@ -11,7 +11,7 @@ import entity.Monsters;
 public class GamePanel extends JPanel implements Runnable{
 
     // Impostazioni della finestra
-	final int originalTileSize = 25;                            // 16x16 tile
+	final int originalTileSize = 20;                            // 16x16 tile
 	final int scale = 3;
 
 	private final int tileSize = originalTileSize * scale;      // 48 * 48
@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-	TileMap tileM = new TileMap(this);                                  // Creazione della mappa
+	public TileMap tileM = new TileMap(this);                                  // Creazione della mappa
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   
