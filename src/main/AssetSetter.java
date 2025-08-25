@@ -40,13 +40,13 @@ public class AssetSetter {
         }
 
         // SlimeMonster
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < 1; i++){
             this.findTile();
 
             // Imposta il mostro nella posizione trovata
             gp.mons[i] = new SlimeMonster(this.gp);
-            gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-            gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+            gp.mons[i].setWorldX(21 * gp.getTileSize());
+            gp.mons[i].setWorldY(23 * gp.getTileSize());
         }
     }
 

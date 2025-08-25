@@ -131,6 +131,13 @@ public class Player extends Entity{
 		}else {
 			this.setDirection("stop");
 		}
+
+		if(gp.slime[0] != null){
+			collisionPlayer = false;
+        gp.cChecker.checkPlayer(gp.slime[0]);
+
+        System.out.println(collisionPlayer);
+		}
 	}
 	
 	// Metodo per ridisegnare il player

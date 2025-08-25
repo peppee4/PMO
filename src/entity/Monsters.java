@@ -16,6 +16,7 @@ public class Monsters extends Entity {
 			    	targetRow = null;			// Riga del tile di destinazione		
 	protected int width,						// Larghezza del mostro
 				  height;						// Altezza del mostro
+	protected int damage;						// Danno inflitto
 
     // Costruttore
     public Monsters(String name, GamePanel gp) {
@@ -85,16 +86,16 @@ public class Monsters extends Entity {
 		if(collisionOn == false) {
 			switch(this.getDirection()) {
 				case "up":
-					this.setWorldY(this.getWorldY() - this.getSpeed());
+					this.setWorldY(this.getWorldY() - (int)this.getSpeed());
 					break;
 				case "down":
-					this.setWorldY(this.getWorldY() + this.getSpeed());
+					this.setWorldY(this.getWorldY() + (int)this.getSpeed());
 					break;
 				case "left":
-					this.setWorldX(this.getWorldX() - this.getSpeed());
+					this.setWorldX(this.getWorldX() - (int)this.getSpeed());
 					break;
 				case "right":
-					this.setWorldX(this.getWorldX() + this.getSpeed());
+					this.setWorldX(this.getWorldX() + (int)this.getSpeed());
 					break;
 			}
 		}
@@ -110,7 +111,7 @@ public class Monsters extends Entity {
 		// Se c'è collisione con il player
 		if(collisionPlayer == true && this.lifeCounter == 180){
 			if(gp.player.getLife() > 0){
-				gp.player.setLife(gp.player.getLife() - 1);
+				gp.player.setLife(gp.player.getLife() - this.damage);
 				this.lifeCounter = 0;
 			}
 			

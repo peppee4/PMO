@@ -3,6 +3,8 @@ package main;
 import java.awt.*;
 import javax.swing.JPanel;
 import entity.Player;
+import entity.Slime;
+import entity.SlimeMonster;
 import environment.EnvironmentManager;
 import map.TileMap;
 import object.SuperObject;
@@ -46,6 +48,9 @@ public class GamePanel extends JPanel implements Runnable{
     // Creiamo i mostri
     public Monsters mons[] = new Monsters[10];                          // Array di mostri
     
+    // Creiamo gli slime
+    public Slime slime[] = new Slime[30];                               // Array di slime   
+
     // Stati del gioco
     private boolean gameStatus = true;                          // Stato del gioco (true = in corso, false = terminato)
 	private int gameState;
@@ -118,7 +123,18 @@ public class GamePanel extends JPanel implements Runnable{
 	            if(this.mons[i] != null){
 	                this.mons[i].update();
 	            }
+
+                if(this.mons[i] instanceof SlimeMonster){
+                    SlimeMonster s = (SlimeMonster)this.mons[i];
+                    s.releaseSlime();
+                }
 	        }
+
+            for(int i = 0; i < this.slime.length; i++){
+                if(this.slime[i] != null){
+                    this.slime[i].effect(player);
+                }
+            }
 		}
 		
 		if(gameState == pauseState) {
@@ -147,6 +163,13 @@ public class GamePanel extends JPanel implements Runnable{
         for(int i = 0; i < this.mons.length; i++){
             if(this.mons[i] != null){
                 this.mons[i].draw(g2, this);
+            }
+        }
+
+        // Slime
+        for(int i = 0; i < this.slime.length; i++){
+            if(this.slime[i] != null){
+                this.slime[i].draw(g2);
             }
         }
 

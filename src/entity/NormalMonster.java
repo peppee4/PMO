@@ -28,8 +28,12 @@ public class NormalMonster extends Monsters {
 			System.out.println(e);
 		}
 
+		// Setting dimensione mostro
 		width = 60;
 		height = 60;
+
+		// Danno
+		damage = 1;
 
 		// Imposta l'area solida per la collisione
 		setSolidAreaX(0);

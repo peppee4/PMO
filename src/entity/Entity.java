@@ -13,11 +13,11 @@ public class Entity {
 	
 	private int worldX, 		// Coordinata orizzontale
 			    worldY;		    // Coordinata verticale
-	private int speed;	        // Velocità di movimento
+	private double speed;	        // Velocità di movimento
 	
 	private Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione/
 	private int solidAreaDefaultX,solidAreaDefaultY;							// Posizione di default dell'area solida
-	protected boolean collisionOn = false;											// Flag per la collisione
+	protected boolean collisionOn = false;										// Flag per la collisione
 	protected boolean collisionPlayer = false; 									// Flag per la collisione con il player
 	
 	// Frame dell’animazione per ciascuna direzione
@@ -55,12 +55,12 @@ public class Entity {
 		this.worldX = value;
 	}
 
-	public void setSpeed(int value) {
+	public void setSpeed(double value) {
 		
 		this.speed = value;
 	}
 
-	public int getSpeed() {
+	public double getSpeed() {
 		
 		return this.speed;
 	}

@@ -7,10 +7,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class SlimeMonster extends Monsters{
+    private int slimeCounter;   // Slime presenti nella mappa
+    private int spawnSlime;     // Counter per lo spawn
+    private GamePanel gp;       // Riferimento al GamePanel
+
     // Costruttore
     public SlimeMonster(GamePanel gp){
         super("SlimeMonster", gp);
         setup();
+
+        this.gp = gp;
+        this.slimeCounter = 0;
+        this.spawnSlime = 0;
     }
 
     private void setup(){
@@ -51,5 +59,19 @@ public class SlimeMonster extends Monsters{
 		this.setSpeed(1);
 
         this.setDirection("left");
+    }
+
+    // Metodo per rialsciare slime
+    public void releaseSlime(){
+        if(this.slimeCounter < 30){
+            this.spawnSlime++;
+
+            if(this.spawnSlime == 100){
+                gp.slime[this.slimeCounter] = new Slime(this.getWorldX(), this.getWorldY(), this.gp);
+
+                this.slimeCounter++;
+                this.spawnSlime = 0;
+            }
+        }
     }
 }
