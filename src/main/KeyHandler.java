@@ -30,12 +30,23 @@ public class KeyHandler implements KeyListener{
 
         if(code == KeyEvent.VK_W){
             upPressed = true;
-        }else if(code == KeyEvent.VK_S){
+        }
+        else if(code == KeyEvent.VK_S){
             downPressed = true;
-        }else if(code == KeyEvent.VK_A){
+        }
+        else if(code == KeyEvent.VK_A){
             leftPressed = true;
-        }else if(code == KeyEvent.VK_D){
+        }
+        else if(code == KeyEvent.VK_D){
             rightPressed = true;
+        }
+        else if(code == KeyEvent.VK_P){
+            if(gp.getGameState() == gp.playState) {
+            	gp.setGameState(gp.pauseState);
+            }
+            else if(gp.getGameState() == gp.pauseState) {
+            	gp.setGameState(gp.playState);
+            }
         }
     }
 

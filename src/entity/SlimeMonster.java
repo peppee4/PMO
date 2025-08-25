@@ -33,7 +33,7 @@ public class SlimeMonster extends Monsters{
 		height = 30;
 
         // Impostiamo il danno
-		damage = 0.5;
+		//damage = 0.5;
 
         // Imposta l'area solida per la collisione
 		setSolidAreaX(0);

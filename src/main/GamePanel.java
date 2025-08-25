@@ -23,8 +23,6 @@ public class GamePanel extends JPanel implements Runnable{
 	// Impostazioni della Mappa
 	private final int maxWorldCol = 50;                         // Dimensioni delle colonne della mappa
 	private final int maxWorldRow = 50;						    // Dimensioni delle righe della mappa
-
-    private boolean gameStatus = true;                          // Stato del gioco (true = in corso, false = terminato)
 	
 	// FPS
 	int FPS = 60;
@@ -33,6 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   
+    public UiManager ui = new UiManager(this);
     EnvironmentManager eManager = new EnvironmentManager(this);         // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
@@ -46,6 +45,12 @@ public class GamePanel extends JPanel implements Runnable{
 
     // Creiamo i mostri
     public Monsters mons[] = new Monsters[10];                          // Array di mostri
+    
+    // Stati del gioco
+    private boolean gameStatus = true;                          // Stato del gioco (true = in corso, false = terminato)
+	private int gameState;
+    public final int playState = 1;
+    public final int pauseState = 2;
 
     // Costruttore della classe
     public GamePanel() {
@@ -61,6 +66,9 @@ public class GamePanel extends JPanel implements Runnable{
     	
     	aSetter.setObject();    // Posizioniamo gli oggetti
         aSetter.setMonster();   // Posizioniamo i mostri
+        
+        this.gameState = playState;
+        
         eManager.setup();       // Aggiunge l'effetto di luce soffusa attorno al player
     }
 
@@ -102,13 +110,20 @@ public class GamePanel extends JPanel implements Runnable{
 	
     // Metodo per aggiornare le informazioni del gioco
 	public void update(){
-		player.update();
+		
+		if(gameState == playState) {
+			player.update();
 
-        for(int i = 0; i < this.mons.length; i++){
-            if(this.mons[i] != null){
-                this.mons[i].update();
-            }
-        }
+	        for(int i = 0; i < this.mons.length; i++){
+	            if(this.mons[i] != null){
+	                this.mons[i].update();
+	            }
+	        }
+		}
+		
+		if(gameState == pauseState) {
+			
+		}
 	}
 	
     // Metodo per ridisegnare il player
@@ -140,6 +155,9 @@ public class GamePanel extends JPanel implements Runnable{
         
         // Ambiente
         eManager.draw(g2);
+        
+        // UI
+        ui.draw(g2);
         
         // Disposizione delle risorse
         g2.dispose();
@@ -177,4 +195,13 @@ public class GamePanel extends JPanel implements Runnable{
     public void setGameStatus(boolean gameStatus) {
         this.gameStatus = gameStatus;
     }
+    
+    public int getGameState() {
+		return gameState;
+	}
+
+	public void setGameState(int gameState) {
+		this.gameState = gameState;
+	}
+    
 }
