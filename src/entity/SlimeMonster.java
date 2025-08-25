@@ -66,8 +66,11 @@ public class SlimeMonster extends Monsters{
         if(this.slimeCounter < 30){
             this.spawnSlime++;
 
-            if(this.spawnSlime == 100){
-                gp.slime[this.slimeCounter] = new Slime(this.getWorldX(), this.getWorldY(), this.gp);
+            // Spawna uno slime
+            if(this.spawnSlime == 3000){
+                gp.slime[this.slimeCounter] = new Slime(gp);
+                gp.slime[this.slimeCounter].setWorldX(this.getWorldX());
+                gp.slime[this.slimeCounter].setWorldY(this.getWorldY());
 
                 this.slimeCounter++;
                 this.spawnSlime = 0;

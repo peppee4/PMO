@@ -12,16 +12,11 @@ public class Slime extends Monsters {
     //private double damage;    // Danno 
     private int width,          // Larghezza
                 height;         // Altezza
-    private int worldX;         // Coordinata X
-    private int worldY;         // Coordinata Y
     private GamePanel gp;       // Riferimento al gamepanel
 
-    public Slime(int worldX, int worldY, GamePanel gp){
+    public Slime(GamePanel gp){
         super("Slime", gp);
-        this.worldX = worldX;
-        this.worldY = worldY;
         this.gp = gp;
-
         // Impostiamo le dimensioni
         width = 30;
 		height = 20;
@@ -47,14 +42,14 @@ public class Slime extends Monsters {
             
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/Slime.png"));
             
-            int screenX = worldX - gp.player.getWorldX() + gp.player.getCenterX();
-		    int screenY = worldY - gp.player.getWorldY() + gp.player.getCenterY();
+            int screenX = getWorldX() - gp.player.getWorldX() + gp.player.getCenterX();
+		    int screenY = getWorldY() - gp.player.getWorldY() + gp.player.getCenterY();
 		
             // Disegna solo i tile che si trovano entro i confini dello schermo
-		    if(worldX + gp.getTileSize() > gp.player.getWorldX() - gp.player.getCenterX() &&
-		        worldX - gp.getTileSize() < gp.player.getWorldX() + gp.player.getCenterX() &&
-		        worldY + gp.getTileSize() > gp.player.getWorldY()- gp.player.getCenterY() &&
-                worldY - gp.getTileSize() < gp.player.getWorldY() + gp.player.getCenterY()) {
+		    if(getWorldX() + gp.getTileSize() > gp.player.getWorldX() - gp.player.getCenterX() &&
+		        getWorldX() - gp.getTileSize() < gp.player.getWorldX() + gp.player.getCenterX() &&
+		        getWorldY() + gp.getTileSize() > gp.player.getWorldY()- gp.player.getCenterY() &&
+                getWorldY() - gp.getTileSize() < gp.player.getWorldY() + gp.player.getCenterY()) {
                 
 		    	// Disegna l’immagine della tile sullo schermo
 		        g2.drawImage(image, screenX, screenY, this.width, this.height, null);
@@ -64,14 +59,16 @@ public class Slime extends Monsters {
         }
     }
 
+    // Metodo per rallentare il Player
     public void effect(Player p){
+
         collisionPlayer = false;
         gp.cChecker.checkPlayer(this);
 
-        System.out.println(collisionPlayer);
-
         if(collisionPlayer == true){
             p.setSpeed(1);
+        }else{
+            p.setSpeed(2);
         }
     }
 }

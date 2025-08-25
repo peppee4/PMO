@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public class Monsters extends Entity {
     public BufferedImage image;        			// Immagine del mostro
 	private int actionCounter = 0;				// Contatore per gestire le azioni del mostro
-    private GamePanel gp;             			// Riferimento al GamePanel
+    protected GamePanel gp;             		// Riferimento al GamePanel
 	private int lifeCounter = 180;				// Contatore per la gestione della vita del player
 	private Integer targetCol = null,			// Colonna del tile di destinazione
 			    	targetRow = null;			// Riga del tile di destinazione		
