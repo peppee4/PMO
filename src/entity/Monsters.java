@@ -12,29 +12,17 @@ public class Monsters extends Entity {
 	private int actionCounter = 0;				// Contatore per gestire le azioni del mostro
     private GamePanel gp;             			// Riferimento al GamePanel
 	private int lifeCounter = 180;				// Contatore per la gestione della vita del player
-	private Integer targetCol = null,
-			    	targetRow = null;			// Colonna e riga del tile di destinazione		
+	private Integer targetCol = null,			// Colonna del tile di destinazione
+			    	targetRow = null;			// Riga del tile di destinazione		
+	protected int width,						// Larghezza del mostro
+				  height;						// Altezza del mostro
 
     // Costruttore
     public Monsters(String name, GamePanel gp) {
-        //this.name = name;
 		this.gp = gp;
 
 		// Imposta l'area solida per la collisione
 		setSolidArea(new Rectangle());
-		setSolidAreaX(0);
-		setSolidAreaY(0);
-
-		// Dimensioni dell'area solida
-		setSolidAreaWidth(30);
-		setSolidAreaHeight(45);
-
-		// Posizione di default dell'area solida
-		setSolidAreaDefaultX(getSolidArea().x);
-		setSolidAreaDefaultY(getSolidArea().y);
-
-		// Imposta la velocità del mostro
-		this.setSpeed(2);
     }
 
     public void draw(Graphics2D g2, GamePanel gp){
@@ -82,7 +70,7 @@ public class Monsters extends Entity {
 		}
 
 			// Disegna l’immagine della tile sullo schermo
-		    g2.drawImage(image, screenX, screenY, 60, 60, null);
+		    g2.drawImage(image, screenX, screenY, this.width, this.height, null);
 		}
     }
 

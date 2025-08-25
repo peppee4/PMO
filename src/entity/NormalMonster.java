@@ -28,6 +28,24 @@ public class NormalMonster extends Monsters {
 			System.out.println(e);
 		}
 
+		width = 60;
+		height = 60;
+
+		// Imposta l'area solida per la collisione
+		setSolidAreaX(0);
+		setSolidAreaY(0);
+
+		// Dimensioni dell'area solida
+		setSolidAreaWidth(30);
+		setSolidAreaHeight(45);
+
+		// Posizione di default dell'area solida
+		setSolidAreaDefaultX(getSolidArea().x);
+		setSolidAreaDefaultY(getSolidArea().y);
+
+		// Imposta la velocità del mostro
+		this.setSpeed(2);
+
         this.setDirection("left");
     }
 }
