@@ -27,14 +27,14 @@ public class Monsters extends Entity {
     }
 
     public void draw(Graphics2D g2, GamePanel gp){
-        int screenX = getWorldX() - gp.player.getWorldX() + gp.player.getCenterX();
-		int screenY = getWorldY() - gp.player.getWorldY() + gp.player.getCenterY();
+        int screenX = getWorldX() - gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX();
+		int screenY = getWorldY() - gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY();
 		
         // Disegna solo i tile che si trovano entro i confini dello schermo
-		if(getWorldX() + gp.getTileSize() > gp.player.getWorldX() - gp.player.getCenterX() &&
-		    getWorldX() - gp.getTileSize() < gp.player.getWorldX() + gp.player.getCenterX() &&
-		    getWorldY() + gp.getTileSize() > gp.player.getWorldY()- gp.player.getCenterY() &&
-            getWorldY() - gp.getTileSize() < gp.player.getWorldY() + gp.player.getCenterY()) {
+		if(getWorldX() + gp.getTileSize() > gp.getPlayer().getWorldX() - gp.getPlayer().getCenterX() &&
+		    getWorldX() - gp.getTileSize() < gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX() &&
+		    getWorldY() + gp.getTileSize() > gp.getPlayer().getWorldY()- gp.getPlayer().getCenterY() &&
+            getWorldY() - gp.getTileSize() < gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY()) {
 			
             switch(this.getDirection()) {
 			case "up":
@@ -110,13 +110,13 @@ public class Monsters extends Entity {
 
 		// Se c'è collisione con il player
 		if(collisionPlayer == true && this.lifeCounter == 180){
-			if(gp.player.getLife() > 0){
-				gp.player.setLife(gp.player.getLife() - this.damage);
+			if(gp.getPlayer().getLife() > 0){
+				gp.getPlayer().setLife(gp.getPlayer().getLife() - this.damage);
 				this.lifeCounter = 0;
 			}
 			
 			// Fine del gioco se la vita del player è 0
-			if(gp.player.getLife() == 0){
+			if(gp.getPlayer().getLife() == 0){
 				System.out.println("Game Over");				// Messaggio di Game Over
 				gp.setGameStatus(false);				// Imposta lo stato del gioco su "Game Over"
 			}
@@ -143,8 +143,8 @@ public class Monsters extends Entity {
 		this.actionCounter++;																	// Incrementa il contatore delle azioni
 		int monsterTileX = this.getWorldX() / gp.getTileSize();									// Calcola la colonna del tile del mostro
 		int monsterTileY = this.getWorldY() / gp.getTileSize();									// Calcola la riga del tile del mostro
-		int playerTileX = gp.player.getWorldX() / gp.getTileSize();								// Calcola la colonna del tile del player	
-		int playerTileY = gp.player.getWorldY() / gp.getTileSize();								// Calcola la riga del tile del player
+		int playerTileX = gp.getPlayer().getWorldX() / gp.getTileSize();								// Calcola la colonna del tile del player	
+		int playerTileY = gp.getPlayer().getWorldY() / gp.getTileSize();								// Calcola la riga del tile del player
 		int distance = getTileDistance(monsterTileX, monsterTileY, playerTileX, playerTileY);	// Distanza in tile tra mostro e player
 
 		// Se il mostro non è allineato alla griglia, continua nella direzione attuale
@@ -237,7 +237,7 @@ public class Monsters extends Entity {
 				int newRow = currRow + dir[1];
 
 				if(newCol >= 0 && newCol < width && newRow >= 0 && newRow < height) {
-					if(!visited[newCol][newRow] && gp.tileM.mapTileNumber[newCol][newRow] == 0) {
+					if(!visited[newCol][newRow] && gp.getMap().mapTileNumber[newCol][newRow] == 0) {
 						visited[newCol][newRow] = true;
 						distance[newCol][newRow] = distance[currCol][currRow] + 1;
 						queue.add(new int[]{newCol, newRow});
@@ -299,7 +299,7 @@ public class Monsters extends Entity {
 				int newRow = currRow + dir[1];
 
 				if(newCol >= 0 && newCol < width && newRow >= 0 && newRow < height) {
-					if(!visited[newCol][newRow] && gp.tileM.mapTileNumber[newCol][newRow] == 0) {
+					if(!visited[newCol][newRow] && gp.getMap().mapTileNumber[newCol][newRow] == 0) {
 						visited[newCol][newRow] = true;
 						parentCol[newCol][newRow] = currCol;
 						parentRow[newCol][newRow] = currRow;

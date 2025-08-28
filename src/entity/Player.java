@@ -211,4 +211,9 @@ public class Player extends Entity{
 	public void setLife(double life) {
 		this.life = life;
 	}
+	
+	public BufferedImage getImageIdle() {
+		return this.stop;
+	}
+	
 }

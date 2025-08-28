@@ -26,8 +26,8 @@ public class PlayerLighting {
 		Area screenArea = new Area(new Rectangle2D.Double(0, 0, gp.getScreenWidth(), gp.getScreenHeight()));
 		
 		// Calcoliamo il centro del giocatore (coordinate al centro della sua tile)
-		int centerX = gp.player.getCenterX() + (gp.getTileSize()/2);
-		int centerY = gp.player.getCenterY() + (gp.getTileSize()/2);
+		int centerX = gp.getPlayer().getCenterX() + (gp.getTileSize()/2);
+		int centerY = gp.getPlayer().getCenterY() + (gp.getTileSize()/2);
 		
 		// Calcoliamo la posizione in alto a sinistra del cerchio di luce
 		double x = centerX - (circleSize/2);

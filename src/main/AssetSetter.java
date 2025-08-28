@@ -59,10 +59,10 @@ public class AssetSetter {
             while(!this.validPosition){
                 this.spawnX = rdm.nextInt(gp.getMaxWorldCol());
                 this.spawnY = rdm.nextInt(gp.getMaxWorldRow());
-                tileNum = gp.tileM.mapTileNumber[spawnX][spawnY];
+                tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
 
                 // Controlla se la tile non è solida
-                if(!gp.tileM.tile[tileNum].collision){
+                if(!gp.getMap().tile[tileNum].collision){
                     this.validPosition = true;
                 }
             }

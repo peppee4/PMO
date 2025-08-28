@@ -80,14 +80,14 @@ public class TileMap {
 			int worldY = worldRow * gp.getTileSize();
 			
 			 // Coordinate sullo schermo (relative al player, che sta al centro)
-			int screenX = worldX - gp.player.getWorldX() + gp.player.getCenterX();
-			int screenY = worldY - gp.player.getWorldY() + gp.player.getCenterY();
+			int screenX = worldX - gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX();
+			int screenY = worldY - gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY();
 			
 			// Disegna solo i tile che si trovano entro i confini dello schermo
-			if(worldX + gp.getTileSize() > gp.player.getWorldX() - gp.player.getCenterX() &&
-			   worldX - gp.getTileSize() < gp.player.getWorldX() + gp.player.getCenterX() &&
-			   worldY + gp.getTileSize() > gp.player.getWorldY()- gp.player.getCenterY() &&
-			   worldY - gp.getTileSize() < gp.player.getWorldY() + gp.player.getCenterY()) {
+			if(worldX + gp.getTileSize() > gp.getPlayer().getWorldX() - gp.getPlayer().getCenterX() &&
+			   worldX - gp.getTileSize() < gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX() &&
+			   worldY + gp.getTileSize() > gp.getPlayer().getWorldY()- gp.getPlayer().getCenterY() &&
+			   worldY - gp.getTileSize() < gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY()) {
 				
 				// Disegna l’immagine della tile sullo schermo
 			    g2.drawImage(tile[tileNum].image, screenX, screenY, null);

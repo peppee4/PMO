@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-	public TileMap tileM = new TileMap(this);                                  // Creazione della mappa
+	private TileMap tileM = new TileMap(this);                                  // Creazione della mappa
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread;
 	
 	// Creiamo il Player
-	public Player player = new Player(this,keyH);                       // Creazione del player
+	private Player player = new Player(this,keyH);                       // Creazione del player
 
     // Creiamo gli oggetti
     public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
@@ -54,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable{
     // Stati del gioco
     private boolean gameStatus = true;                          // Stato del gioco (true = in corso, false = terminato)
 	private int gameState;
+	public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
 
@@ -72,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable{
     	aSetter.setObject();    // Posizioniamo gli oggetti
         aSetter.setMonster();   // Posizioniamo i mostri
         
-        this.gameState = playState;
+        this.gameState = titleState;
         
         eManager.setup();       // Aggiunge l'effetto di luce soffusa attorno al player
     }
@@ -155,39 +156,45 @@ public class GamePanel extends JPanel implements Runnable{
         
         Graphics2D g2 = (Graphics2D)g;
         
-        // Tile
-        this.tileM.draw(g2);
+        if(gameState == titleState) {
+        	
+        	ui.draw(g2);
+        }else {
+        	 // Tile
+            this.tileM.draw(g2);
 
-        // Oggetti
-        for(int i = 0; i < this.obj.length; i++){
-            if(this.obj[i] != null){
-                this.obj[i].draw(g2, this);
+            // Oggetti
+            for(int i = 0; i < this.obj.length; i++){
+                if(this.obj[i] != null){
+                    this.obj[i].draw(g2, this);
+                }
             }
-        }
 
-        // Slime
-        for(int i = 0; i < this.slime.length; i++){
-            if(this.slime[i] != null){
-                this.slime[i].draw(g2);
+            // Slime
+            for(int i = 0; i < this.slime.length; i++){
+                if(this.slime[i] != null){
+                    this.slime[i].draw(g2);
+                }
             }
-        }
 
-        // Mostri
-        for(int i = 0; i < this.mons.length; i++){
-            if(this.mons[i] != null){
-                this.mons[i].draw(g2, this);
+            // Mostri
+            for(int i = 0; i < this.mons.length; i++){
+                if(this.mons[i] != null){
+                    this.mons[i].draw(g2, this);
+                }
             }
-        }
 
-        // Player
-        this.player.draw(g2);
-        
-        // Ambiente
-        eManager.draw(g2);
-        
-        // UI
-        ui.draw(g2);
-        
+            // Player
+            this.player.draw(g2);
+            
+            // Ambiente
+            eManager.draw(g2);
+            
+            // UI
+            ui.draw(g2);
+            
+        }
+       
         // Disposizione delle risorse
         g2.dispose();
 	} 
@@ -231,6 +238,14 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void setGameState(int gameState) {
 		this.gameState = gameState;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public TileMap getMap() {
+		return tileM;
 	}
     
 }

@@ -42,14 +42,14 @@ public class Slime extends Monsters {
             
             BufferedImage image = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/Slime.png"));
             
-            int screenX = getWorldX() - gp.player.getWorldX() + gp.player.getCenterX();
-		    int screenY = getWorldY() - gp.player.getWorldY() + gp.player.getCenterY();
+            int screenX = getWorldX() - gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX();
+		    int screenY = getWorldY() - gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY();
 		
             // Disegna solo i tile che si trovano entro i confini dello schermo
-		    if(getWorldX() + gp.getTileSize() > gp.player.getWorldX() - gp.player.getCenterX() &&
-		        getWorldX() - gp.getTileSize() < gp.player.getWorldX() + gp.player.getCenterX() &&
-		        getWorldY() + gp.getTileSize() > gp.player.getWorldY()- gp.player.getCenterY() &&
-                getWorldY() - gp.getTileSize() < gp.player.getWorldY() + gp.player.getCenterY()) {
+		    if(getWorldX() + gp.getTileSize() > gp.getPlayer().getWorldX() - gp.getPlayer().getCenterX() &&
+		        getWorldX() - gp.getTileSize() < gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX() &&
+		        getWorldY() + gp.getTileSize() > gp.getPlayer().getWorldY()- gp.getPlayer().getCenterY() &&
+                getWorldY() - gp.getTileSize() < gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY()) {
                 
 		    	// Disegna l’immagine della tile sullo schermo
 		        g2.drawImage(image, screenX, screenY, this.width, this.height, null);
