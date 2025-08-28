@@ -131,9 +131,15 @@ public class GamePanel extends JPanel implements Runnable{
 	        }
 
             for(int i = 0; i < this.slime.length; i++){
+                int count = 0;
+
                 if(this.slime[i] != null){
-                    this.slime[i].effect(player);
+                    if(this.cChecker.checkPlayer(this.slime[i])){
+                        count++;
+                    }
                 }
+    
+                player.isSlow(count);
             }
 		}
 		
@@ -159,17 +165,17 @@ public class GamePanel extends JPanel implements Runnable{
             }
         }
 
-        // Mostri
-        for(int i = 0; i < this.mons.length; i++){
-            if(this.mons[i] != null){
-                this.mons[i].draw(g2, this);
-            }
-        }
-
         // Slime
         for(int i = 0; i < this.slime.length; i++){
             if(this.slime[i] != null){
                 this.slime[i].draw(g2);
+            }
+        }
+
+        // Mostri
+        for(int i = 0; i < this.mons.length; i++){
+            if(this.mons[i] != null){
+                this.mons[i].draw(g2, this);
             }
         }
 

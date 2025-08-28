@@ -18,6 +18,8 @@ public class Player extends Entity{
 	private final int centerX;	// Coordinate centrali dello schermo
 	private final int centerY;	// Coordinate centrali dello schermo
 
+	private int slowtime;       // Tempo di rallentamento del player
+
 	private double life;  		// Vita del player
 	
 	// Costruttore della classe Player
@@ -30,6 +32,8 @@ public class Player extends Entity{
 
 		this.life = 3.0;													// Imposta la vita iniziale del player
 		
+		this.slowtime = 0;
+
 		// Imposta l'area solida per la collisione
 		setSolidArea(new Rectangle());
 		setSolidAreaX(8);
@@ -173,6 +177,22 @@ public class Player extends Entity{
 		}
 		
 		g2.drawImage(image, centerX, centerY, 30, 30, null);
+	}
+
+	// Effetto dello slime sul player
+	public void isSlow(int value){
+		
+		// Se il player si trova su almeno uno slime rallentalo
+		if(value > 0 || this.slowtime > 0){
+			this.setSpeed(1);
+			if(this.slowtime < 120){
+				this.slowtime++;
+			}else{
+				this.slowtime = 0;
+			}
+		}else{
+			this.setSpeed(3);
+		}
 	}
 
 	// Getter e Setter

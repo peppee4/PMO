@@ -18,19 +18,19 @@ public class Slime extends Monsters {
         super("Slime", gp);
         this.gp = gp;
         // Impostiamo le dimensioni
-        width = 30;
-		height = 20;
+        width = 50;
+		height = 30;
 
         // Impostiamo il danno
-		//damage = 0.25;
+		damage = 0.25;
 
         // Imposta l'area solida per la collisione
 		setSolidAreaX(0);
 		setSolidAreaY(0);
 
 		// Dimensioni dell'area solida
-		setSolidAreaWidth(5);
-		setSolidAreaHeight(5);
+		setSolidAreaWidth(width);
+		setSolidAreaHeight(height);
 
 		// Posizione di default dell'area solida
 		setSolidAreaDefaultX(getSolidArea().x);
@@ -56,19 +56,6 @@ public class Slime extends Monsters {
 		    }
         } catch (IOException e) {
             System.out.println(e);        
-        }
-    }
-
-    // Metodo per rallentare il Player
-    public void effect(Player p){
-
-        collisionPlayer = false;
-        gp.cChecker.checkPlayer(this);
-
-        if(collisionPlayer == true){
-            p.setSpeed(1);
-        }else{
-            p.setSpeed(2);
         }
     }
 }

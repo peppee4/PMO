@@ -52,6 +52,8 @@ public class AssetSetter {
 
     private void findTile(){
         int tileNum = 0;
+        this.spawnX = 0;    // Reset
+        this.spawnY = 0;    // Reset
 
         // Trova una posizione casuale non solida
             while(!this.validPosition){

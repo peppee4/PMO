@@ -68,7 +68,7 @@ public class CollisionChecker {
 	}
 
 	// Controlla la collisione tra i mostri e il player
-	public void checkPlayer(Entity entity){
+	public boolean checkPlayer(Entity entity){
 		// Calcola i bordi dell'entity
 		checkObject(entity);
 
@@ -78,17 +78,19 @@ public class CollisionChecker {
 		int playerTopWorldY =gp.player.getWorldY() + gp.player.getSolidAreaY() + 5;
 		int playerBottomWorldY = gp.player.getWorldY() + gp.player.getSolidAreaY() + gp.player.getSolidAreaHeight() + 5;
 
-		// Calcola i bordi delle tile in cui si trova il player
-		int playerLeftCol = playerLeftWorldX/gp.getTileSize();
-		int playerRightCol = playerRightWorldX/gp.getTileSize();
-		int playerTopRow = playerTopWorldY/gp.getTileSize();
-		int playerBottomRow = playerBottomWorldY/gp.getTileSize();
-
 		// Controlla la collisione
-		// Se c'è collisione attiva il flag
-		if(entityLeftCol == playerLeftCol && entityRightCol == playerRightCol && entityTopRow == playerTopRow && entityBottomRow == playerBottomRow) {
-			entity.setCollisionPlayer(true);
+		boolean overlap = 
+   	 		entityRightWorldX  > playerLeftWorldX &&
+    		entityLeftWorldX   < playerRightWorldX &&
+    		entityBottomWorldY > playerTopWorldY &&
+    		entityTopWorldY    < playerBottomWorldY;
+
+		if (overlap) {
+    		//entity.setCollisionPlayer(true);
+			return true;
 		}
+
+		return false;
 	}
 
 	// Funzione per calolare i bordi dell'entity

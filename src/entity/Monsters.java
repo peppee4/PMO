@@ -16,7 +16,7 @@ public class Monsters extends Entity {
 			    	targetRow = null;			// Riga del tile di destinazione		
 	protected int width,						// Larghezza del mostro
 				  height;						// Altezza del mostro
-	protected int damage;						// Danno inflitto
+	protected double damage;					// Danno inflitto
 
     // Costruttore
     public Monsters(String name, GamePanel gp) {
