@@ -20,7 +20,8 @@ public class Player extends Entity{
 
 	private int slowtime;       // Tempo di rallentamento del player
 
-	private double life;  		// Vita del player
+	protected double life;  	// Vita del player
+	private double startSpeed;	// Velocità iniziale del player
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -32,10 +33,10 @@ public class Player extends Entity{
 
 		this.life = 3.0;													// Imposta la vita iniziale del player
 		
-		this.slowtime = 0;
+		this.slowtime = 0;													// Inizializziamo il tempo di rallentamento
 
 		// Imposta l'area solida per la collisione
-		setSolidArea(new Rectangle());
+		solidArea = new Rectangle();
 		setSolidAreaX(8);
 		setSolidAreaY(8);
 		
@@ -44,19 +45,22 @@ public class Player extends Entity{
 		setSolidAreaHeight(20);
 		
 		// Posizione di default dell'area solida
-		setSolidAreaDefaultX(getSolidArea().x);
-		setSolidAreaDefaultY(getSolidArea().y);
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		
 		// Inizializza le variabili del player
 		setDefaultValues();
 		getPlayerImage();
+
+		// Inizializzazione della velocità iniziale del player
+		this.startSpeed = this.getSpeed();
 	}
 	
 	// Metodo per inizializzare il player
 	public void setDefaultValues() {
 		this.setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
 		this.setWorldY(gp.getTileSize() * 24); 				// Coordinata y iniziale del Player
-		this.setSpeed(3);				            	// Velocità iniziale del Player
+		this.setSpeed(3);				            	// Velocità del Player
 		this.setDirection("right");				// Direzione iniziale del Player
 		
 	}
@@ -122,19 +126,21 @@ public class Player extends Entity{
 			}
 		
 			// Gestione degli sprite
-			this.setSpriteCounter(this.getSpriteCounter() + 1);
-			if(this.getSpriteCounter() > 10) {
-				if(this.getSpriteNum() == 1) {
-					this.setSpriteNum(2);
-				}else if(this.getSpriteNum() == 2) {
-					this.setSpriteNum(1);
+			this.spriteCounter++;
+			if(this.spriteCounter > 10) {
+				if(this.spriteNum == 1) {
+					this.spriteNum = 2;
+				}else if(this.spriteNum == 2) {
+					this.spriteNum = 1;
 				}
 			
-				this.setSpriteCounter(0);
+				this.spriteCounter = 0;
 			}
 		}else {
 			this.setDirection("stop");
 		}
+
+		//System.out.println(life);
 	}
 	
 	// Metodo per ridisegnare il player
@@ -144,30 +150,30 @@ public class Player extends Entity{
 		
 		switch(this.getDirection()) {
 			case "up":
-				if(this.getSpriteNum() == 1) {
+				if(spriteNum == 1) {
 					image = up1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(spriteNum == 2) {
 					image = up2;
 				}
 				break;
 			case "down":
-				if(this.getSpriteNum() == 1) {
+				if(spriteNum == 1) {
 					image = down1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(spriteNum == 2) {
 					image = down2;
 				}
 				break;
 			case "left":
-				if(this.getSpriteNum() == 1) {
+				if(spriteNum == 1) {
 					image = left1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(spriteNum == 2) {
 					image = left2;
 				}
 				break;
 			case "right":
-				if(this.getSpriteNum() == 1) {
+				if(spriteNum == 1) {
 					image = right1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(spriteNum == 2) {
 					image = right2;
 				}
 				break;
@@ -191,7 +197,7 @@ public class Player extends Entity{
 				this.slowtime = 0;
 			}
 		}else{
-			this.setSpeed(3);
+			this.setSpeed(this.startSpeed);
 		}
 	}
 
@@ -202,14 +208,6 @@ public class Player extends Entity{
 
 	public int getCenterY() {
 		return this.centerY;
-	}
-
-	public double getLife() {
-		return this.life;
-	}
-
-	public void setLife(double life) {
-		this.life = life;
 	}
 	
 	public BufferedImage getImageIdle() {

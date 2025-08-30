@@ -17,6 +17,7 @@ public class Slime extends Monsters {
     public Slime(GamePanel gp){
         super("Slime", gp);
         this.gp = gp;
+        
         // Impostiamo le dimensioni
         width = 50;
 		height = 30;
@@ -33,8 +34,8 @@ public class Slime extends Monsters {
 		setSolidAreaHeight(height);
 
 		// Posizione di default dell'area solida
-		setSolidAreaDefaultX(getSolidArea().x);
-		setSolidAreaDefaultY(getSolidArea().y);
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
     }
 
     public void draw(Graphics2D g2){

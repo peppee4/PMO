@@ -8,7 +8,7 @@ import java.awt.Rectangle;
 import java.util.LinkedList;
 
 public class Monsters extends Entity {
-    public BufferedImage image;        			// Immagine del mostro
+    private BufferedImage image;        		// Immagine del mostro
 	private int actionCounter = 0;				// Contatore per gestire le azioni del mostro
     protected GamePanel gp;             		// Riferimento al GamePanel
 	private int lifeCounter = 180;				// Contatore per la gestione della vita del player
@@ -23,7 +23,7 @@ public class Monsters extends Entity {
 		this.gp = gp;
 
 		// Imposta l'area solida per la collisione
-		setSolidArea(new Rectangle());
+		solidArea = new Rectangle();
     }
 
     public void draw(Graphics2D g2, GamePanel gp){
@@ -38,30 +38,30 @@ public class Monsters extends Entity {
 			
             switch(this.getDirection()) {
 			case "up":
-				if(this.getSpriteNum() == 1) {
+				if(this.spriteNum == 1) {
 					image = up1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(this.spriteNum == 2) {
 					image = up2;
 				}
 				break;
 			case "down":
-				if(this.getSpriteNum() == 1) {
+				if(this.spriteNum == 1) {
 					image = down1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(this.spriteNum == 2) {
 					image = down2;
 				}
 				break;
 			case "left":
-				if(this.getSpriteNum() == 1) {
+				if(this.spriteNum == 1) {
 					image = left1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(this.spriteNum == 2) {
 					image = left2;
 				}
 				break;
 			case "right":
-				if(this.getSpriteNum() == 1) {
+				if(this.spriteNum == 1) {
 					image = right1;
-				}else if(this.getSpriteNum() == 2) {
+				}else if(this.spriteNum == 2) {
 					image = right2;
 				}
 				break;
@@ -100,41 +100,37 @@ public class Monsters extends Entity {
 			}
 		}
 
-		// Collisione con il player
-		collisionPlayer = false;
-		gp.cChecker.checkPlayer(this);
-
 		if(this.lifeCounter < 180){
 			this.lifeCounter++;
 		}
 
 		// Se c'è collisione con il player
-		if(collisionPlayer == true && this.lifeCounter == 180){
-			if(gp.getPlayer().getLife() > 0){
-				gp.getPlayer().setLife(gp.getPlayer().getLife() - this.damage);
+		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 180){
+			if(gp.getPlayer().life > 0){
+				gp.getPlayer().life = gp.getPlayer().life - this.damage;
 				this.lifeCounter = 0;
 			}
 			
 			// Fine del gioco se la vita del player è 0
-			if(gp.getPlayer().getLife() == 0){
+			if(gp.getPlayer().life == 0){
 				System.out.println("Game Over");				// Messaggio di Game Over
 				gp.setGameStatus(false);				// Imposta lo stato del gioco su "Game Over"
 			}
 		}
 
 		// Gestione dell’animazione del mostro
-		this.setSpriteCounter(this.getSpriteCounter() + 1);
+		this.spriteCounter++;
 
 		// Avanza l’animazione ogni 12 frame
-		if(this.getSpriteCounter() > 12) {
-			if(this.getSpriteNum() == 1) {
-				this.setSpriteNum(2);
-			}else if(this.getSpriteNum() == 2) {
-				this.setSpriteNum(1);
+		if(spriteCounter > 12) {
+			if(spriteNum == 1) {
+				this.spriteNum = 2;
+			}else if(this.spriteNum == 2) {
+				this.spriteNum = 1;
 			}
 			
 			// Resetta il contatore
-			this.setSpriteCounter(0);
+			this.spriteCounter = 0;
 		}
 	}
 
@@ -143,8 +139,8 @@ public class Monsters extends Entity {
 		this.actionCounter++;																	// Incrementa il contatore delle azioni
 		int monsterTileX = this.getWorldX() / gp.getTileSize();									// Calcola la colonna del tile del mostro
 		int monsterTileY = this.getWorldY() / gp.getTileSize();									// Calcola la riga del tile del mostro
-		int playerTileX = gp.getPlayer().getWorldX() / gp.getTileSize();								// Calcola la colonna del tile del player	
-		int playerTileY = gp.getPlayer().getWorldY() / gp.getTileSize();								// Calcola la riga del tile del player
+		int playerTileX = gp.getPlayer().getWorldX() / gp.getTileSize();						// Calcola la colonna del tile del player	
+		int playerTileY = gp.getPlayer().getWorldY() / gp.getTileSize();						// Calcola la riga del tile del player
 		int distance = getTileDistance(monsterTileX, monsterTileY, playerTileX, playerTileY);	// Distanza in tile tra mostro e player
 
 		// Se il mostro non è allineato alla griglia, continua nella direzione attuale

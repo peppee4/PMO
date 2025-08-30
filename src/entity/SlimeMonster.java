@@ -52,8 +52,8 @@ public class SlimeMonster extends Monsters{
 		setSolidAreaHeight(20);
 
 		// Posizione di default dell'area solida
-		setSolidAreaDefaultX(getSolidArea().x);
-		setSolidAreaDefaultY(getSolidArea().y);
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 
 		// Imposta la velocità del mostro
 		this.setSpeed(1);

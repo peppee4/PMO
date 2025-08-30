@@ -30,24 +30,21 @@ public class AssetSetter {
     public void setMonster() {
         
         // NormalMonster
-        for(int i = 0; i < 2; i++){
+        for(int i = 0; i < 5; i++){
             this.findTile();
 
-            // Imposta il mostro nella posizione trovata
-            gp.mons[i] = new NormalMonster(this.gp);
-            gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-            gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-        }
-
-        // SlimeMonster
-        for(int i = 0; i < 3; i++){
-            this.findTile();
-
-            // Imposta il mostro nella posizione trovata
-            gp.mons[i] = new SlimeMonster(this.gp);
-            gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-            gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-        }
+            if(i < 2){
+                // Genera il mostro normale alle coordinate trovate
+                gp.mons[i] = new NormalMonster(this.gp);
+                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+            }else if(i >= 1){
+                // Genera il mostro slime alle coordinate trovate
+                gp.mons[i] = new SlimeMonster(this.gp);
+                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+            }
+        }    
     }
 
     private void findTile(){

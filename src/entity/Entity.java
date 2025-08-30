@@ -3,6 +3,8 @@ package entity;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+
+
 /**
  * Entità di base del gioco.
  * Definisce posizione, velocità, direzione e riferimenti ai frame sprite
@@ -13,28 +15,28 @@ public class Entity {
 	
 	private int worldX, 		// Coordinata orizzontale
 			    worldY;		    // Coordinata verticale
-	private double speed;	        // Velocità di movimento
+	private double speed;	    // Velocità di movimento
 	
-	private Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione/
-	private int solidAreaDefaultX,solidAreaDefaultY;							// Posizione di default dell'area solida
+	protected Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione/
+	protected int solidAreaDefaultX,
+				  solidAreaDefaultY;											// Posizione di default dell'area solida
 	protected boolean collisionOn = false;										// Flag per la collisione
-	protected boolean collisionPlayer = false; 									// Flag per la collisione con il player
 	
 	// Frame dell’animazione per ciascuna direzione
 	protected BufferedImage up1, 
-					      up2, 
-					      down1, 
-					      down2, 
-					      left1, 
-					      left2, 
-					      right1, 
-					      right2,
-					      stop;
-	private String direction;		// Direzione corrente
-	private int spriteCounter = 0;	// Contatore per avanzare l’animazione
-	private int spriteNum = 1;		// Indice del frame corrente
+					        up2, 
+					        down1, 
+					        down2, 
+					        left1, 
+					        left2, 
+					        right1, 
+					      	right2,
+					      	stop;
+	private String direction;			// Direzione corrente
+	protected int spriteCounter = 0;	// Contatore per avanzare l’animazione
+	protected int spriteNum = 1;		// Indice del frame corrente
 	
-	// Getter e Setter
+	// Getter e Setter 
 	public int getWorldX() {
 		
 		return this.worldX;
@@ -59,7 +61,7 @@ public class Entity {
 		
 		this.speed = value;
 	}
-
+ 
 	public double getSpeed() {
 		
 		return this.speed;
@@ -75,49 +77,6 @@ public class Entity {
 		this.direction = direction;
 	}
 
-	public int getSpriteNum() {
-		
-		return this.spriteNum;
-	}
-
-	public int getSpriteCounter() {
-		
-		return this.spriteCounter;
-	}
-
-	public void setSpriteCounter(int value) {
-		
-		this.spriteCounter = value;
-	}
-
-	public void setSpriteNum(int value) {
-		
-		this.spriteNum = value;
-	}
-	
-	public Rectangle getSolidArea() {
-	    return solidArea;
-	}
-
-	public void setSolidArea(Rectangle r) {
-	    this.solidArea = r;
-	}
-	public int getSolidAreaDefaultX() {
-	    return solidAreaDefaultX;
-	}
-
-	public void setSolidAreaDefaultX(int solidAreaDefaultX) {
-	    this.solidAreaDefaultX = solidAreaDefaultX;
-	}
-
-	public int getSolidAreaDefaultY() {
-	    return solidAreaDefaultY;
-	}
-
-	public void setSolidAreaDefaultY(int solidAreaDefaultY) {
-	    this.solidAreaDefaultY = solidAreaDefaultY;
-	}
-	
 	public int getSolidAreaX() {
 	    return solidArea.x;
 	}
@@ -133,7 +92,7 @@ public class Entity {
 	public void setSolidAreaY(int y) {
 	    solidArea.y = y;
 	}
-	
+	 
 	public int getSolidAreaWidth() {
 	    return solidArea.width;
 	}
@@ -152,9 +111,5 @@ public class Entity {
 
 	public void setCollisionOn(boolean collisionOn) {
 	    this.collisionOn = collisionOn;
-	}
-
-	public void setCollisionPlayer(boolean collisionPlayer) {
-	    this.collisionPlayer = collisionPlayer;
 	}
 }

@@ -86,7 +86,6 @@ public class CollisionChecker {
     		entityTopWorldY    < playerBottomWorldY;
 
 		if (overlap) {
-    		//entity.setCollisionPlayer(true);
 			return true;
 		}
 
