@@ -13,9 +13,9 @@ public class EnvironmentManager {
 		this.gp = gp;
 	}
 	
-	public void setup() {
+	public void setLight(int value) {
 		// Crea l'effetto luce attorno al player con raggio 250
-		lighting = new PlayerLighting(gp, 250);
+		lighting = new PlayerLighting(gp, value);
 	}
 	
 	public void draw(Graphics2D g2) {

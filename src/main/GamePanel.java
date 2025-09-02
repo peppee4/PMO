@@ -34,6 +34,8 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   
     public UiManager ui = new UiManager(this);
+    private boolean flagTitle = false;
+    private boolean flagPlay = false;
     EnvironmentManager eManager = new EnvironmentManager(this);         // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
@@ -75,7 +77,6 @@ public class GamePanel extends JPanel implements Runnable{
         
         this.gameState = titleState;
         
-        eManager.setup();       // Aggiunge l'effetto di luce soffusa attorno al player
     }
 
     public void startGameThread() {
@@ -156,9 +157,22 @@ public class GamePanel extends JPanel implements Runnable{
         
         Graphics2D g2 = (Graphics2D)g;
         
+        if(gameState == titleState && flagTitle == false) {
+        	eManager.setLight(1200);
+        	flagTitle = true;
+        	
+        }
+        else if(gameState == playState && flagPlay == false) {
+        	eManager.setLight(250);
+        	flagTitle = true;
+        }
+        
         if(gameState == titleState) {
         	
         	ui.draw(g2);
+        	
+        	eManager.draw(g2);
+        	
         }else {
         	 // Tile
             this.tileM.draw(g2);
@@ -182,7 +196,7 @@ public class GamePanel extends JPanel implements Runnable{
                 if(this.mons[i] != null){
                     this.mons[i].draw(g2, this);
                 }
-            }
+            } 
 
             // Player
             this.player.draw(g2);

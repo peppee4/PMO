@@ -60,7 +60,7 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		this.setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
 		this.setWorldY(gp.getTileSize() * 24); 				// Coordinata y iniziale del Player
-		this.setSpeed(3);				            	// Velocità del Player
+		this.setSpeed(3.5);				            	// Velocità del Player
 		this.setDirection("right");				// Direzione iniziale del Player
 		
 	}
@@ -210,8 +210,17 @@ public class Player extends Entity{
 		return this.centerY;
 	}
 	
-	public BufferedImage getImageIdle() {
-		return this.stop;
+	public BufferedImage getImageIdle(int value) {
+		
+		BufferedImage image= null;
+		
+		if(value == 1) {
+			image = this.right1;
+		}else if(value == 2){
+			image = this.right2;
+		}
+		
+		return image;
 	}
 	
 }
