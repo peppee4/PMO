@@ -46,7 +46,7 @@ public class UiManager {
 		
 		this.g2 = g2;
 		
-		g2.setFont(arial_40);
+		g2.setFont(arial_80B);
 		g2.setColor(Color.white);
 		
 		// TITLE STATE
@@ -77,14 +77,29 @@ public class UiManager {
 		}
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 92F));
-		String text = "The Pyros Stone";
+		String text = "The Labyrinth";
 		int x = this.getXForCenteredText(text);
 		int y = (int) (gp.getTileSize() * 2.75);
-		
-		// SHADOW
-		g2.setColor(Color.black);
-		g2.drawString(text, x + 5, y + 5);
-		// MAIN COLOR
+
+		// OMBRA (grigio scuro, spostata in basso a destra)
+		g2.setColor(Color.black); // Nero semitrasparente
+		g2.drawString(text, x + 6, y + 6);
+
+		// CONTORNO NERO
+		g2.setColor(Color.BLACK);
+		int outline = 2;
+
+		// 8 direzioni per il contorno
+		g2.drawString(text, x, y - outline);
+		g2.drawString(text, x, y + outline);
+		g2.drawString(text, x - outline, y);
+		g2.drawString(text, x + outline, y);
+		g2.drawString(text, x - outline, y - outline);
+		g2.drawString(text, x + outline, y - outline);
+		g2.drawString(text, x - outline, y + outline);
+		g2.drawString(text, x + outline, y + outline);
+
+		// TESTO PRINCIPALE (rosso)
 		g2.setColor(Color.RED);
 		g2.drawString(text, x, y);
 		

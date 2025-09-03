@@ -161,7 +161,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         
         if(gameState == titleState && flagTitle == false) {
-        	eManager.setLight(1500);
+        	eManager.setLight(1200);
         	flagTitle = true;
         	
         }
