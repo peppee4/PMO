@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -52,4 +53,17 @@ public class NormalMonster extends Monsters {
 
         this.setDirection("left");
     }
+    
+    public BufferedImage getImageIdle(int value) {
+		
+		BufferedImage image= null;
+		
+		if(value == 1) {
+			image = this.right1;
+		}else if(value == 2){
+			image = this.right2;
+		}
+		
+		return image;
+	}
 }

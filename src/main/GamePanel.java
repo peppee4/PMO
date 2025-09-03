@@ -29,20 +29,22 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-	private TileMap tileM = new TileMap(this);                                  // Creazione della mappa
+	private TileMap tileM = new TileMap(this);                          // Creazione della mappa
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
-    public AssetSetter aSetter = new AssetSetter(this);   
-    public UiManager ui = new UiManager(this);
-    private boolean flagTitle = false;
-    private boolean flagPlay = false;
+    public AssetSetter aSetter = new AssetSetter(this);   				// Creazione di un gestore per le entità
+    public UiManager ui = new UiManager(this);							// Creazione della classe per la gestione della luce che circonda il player
+    private boolean flagTitle = false;									// Variabile booleana per settare circonfernza luce che circonda 
+    																	// il player nella schermata iniziale
+    private boolean flagPlay = false;									// Variabile booleana per settare circonfernza luce che circonda 
+    																	// il player nel gioco
     EnvironmentManager eManager = new EnvironmentManager(this);         // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
 	
 	// Creiamo il Player
-	private Player player = new Player(this,keyH);                       // Creazione del player
+	private Player player = new Player(this,keyH);                      // Creazione del player
 
     // Creiamo gli oggetti
     public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
@@ -54,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable{
     public Slime slime[] = new Slime[30];                               // Array di slime   
 
     // Stati del gioco
-    private boolean gameStatus = true;                          // Stato del gioco (true = in corso, false = terminato)
+    private boolean gameStatus = true;                          		// Stato del gioco (true = in corso, false = terminato)
 	private int gameState;
 	public final int titleState = 0;
     public final int playState = 1;
@@ -158,7 +160,7 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         
         if(gameState == titleState && flagTitle == false) {
-        	eManager.setLight(1200);
+        	eManager.setLight(1500);
         	flagTitle = true;
         	
         }
