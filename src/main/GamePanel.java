@@ -33,6 +33,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   				// Creazione di un gestore per le entità
+    private Sound soundManager = new Sound();							// Creazione del gestore dei suoni
     public UiManager ui = new UiManager(this);							// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;									// Variabile booleana per settare circonfernza luce che circonda 
     																	// il player nella schermata iniziale
@@ -214,6 +215,28 @@ public class GamePanel extends JPanel implements Runnable{
         // Disposizione delle risorse
         g2.dispose();
 	} 
+	
+	// Metodo per riprodurre un suono all'infinto
+	public void playMusic(int i) {
+		
+		this.soundManager.setFile(i);
+		this.soundManager.play();
+		this.soundManager.loop();
+	}
+	
+	// Metodo per fermare il suono
+	public void stopMusic() {
+		
+		this.soundManager.stop();
+	}
+
+	// Metodo per riprodurre il suono di un effetto nel gioco
+	public void playSoundEffect(int i) {
+	
+		this.soundManager.setFile(i);
+		this.soundManager.play();
+	
+	}
 	
 	public int getMaxWorldCol() {
 		

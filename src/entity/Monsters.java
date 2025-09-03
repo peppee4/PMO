@@ -108,11 +108,13 @@ public class Monsters extends Entity {
 		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 180){
 			if(gp.getPlayer().life > 0){
 				gp.getPlayer().life = gp.getPlayer().life - this.damage;
+				gp.playSoundEffect(3);
 				this.lifeCounter = 0;
 			}
 			
 			// Fine del gioco se la vita del player è 0
 			if(gp.getPlayer().life == 0){
+				gp.playSoundEffect(2);
 				System.out.println("Game Over");				// Messaggio di Game Over
 				gp.setGameStatus(false);				// Imposta lo stato del gioco su "Game Over"
 			}
