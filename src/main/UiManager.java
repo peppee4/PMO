@@ -22,6 +22,11 @@ public class UiManager {
 	private int yPlayer;
 	private int xMonster;
 	private int yMonster;
+	private int optionsCommandNum = 0;
+	private int soundVolume = 50; 
+	private int musicVolume = 50; 
+	private int effectsVolume = 50; 
+	private boolean fullscreen = false; 
 	
 	
 	private BufferedImage monsterImage1, monsterImage2; // Immagini del mostro
@@ -38,7 +43,7 @@ public class UiManager {
 		setyPlayer((int) ((gp.getTileSize()* 2) +  (gp.getTileSize()* 3.35)));
 		
 		setxMonster((int) (gp.getScreenWidth()/3.5 - (gp.getTileSize()*2)/2));
-		setyMonster((int) ((gp.getTileSize()* 2) +  (gp.getTileSize()* 3.35)));
+		setyMonster((int) ((gp.getTileSize()* 2) +  (gp.getTileSize()* 2.5)));
 		
 	}
 	
@@ -54,6 +59,11 @@ public class UiManager {
 			drawTitleScreen();			
 		} 
 		
+		// OPTIONS STATE
+		if(gp.getGameState() == gp.optionsState) {
+			drawOptionsScreen();
+		}
+		
 		// PLAY STATE
 		if(gp.getGameState() == gp.playState) {
 			
@@ -68,18 +78,19 @@ public class UiManager {
 	public void drawTitleScreen(){
 		
 		// TITLE NAME
-		
+				
 		try {
 			g2.drawImage(ImageIO.read(getClass().getResourceAsStream("/titles/TitleImageBackground.png")), 0, 0, gp.getScreenWidth(), gp.getScreenHeight(), null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 92F));
 		String text = "The Labyrinth";
 		int x = this.getXForCenteredText(text);
-		int y = (int) (gp.getTileSize() * 2.75);
+		int y = (int) (gp.getTileSize() * 2.75); 
 
 		// OMBRA (grigio scuro, spostata in basso a destra)
 		g2.setColor(Color.black); // Nero semitrasparente
@@ -111,7 +122,7 @@ public class UiManager {
 		
 		text = "NEW GAME";
 		x = this.getXForCenteredText(text);
-		y += gp.getTileSize() * 6.5;
+		y += gp.getTileSize() * 6.4;
 		g2.setColor(Color.black);
 		g2.drawString(text, x + 5, y + 5);
 		g2.setColor(Color.RED);
@@ -123,14 +134,28 @@ public class UiManager {
 			g2.drawString(">", x - gp.getTileSize(), y);
 		}
 		
-		text = "QUIT";
+		text = "OPTIONS";
 		x = this.getXForCenteredText(text);
-		y += gp.getTileSize() * 1.5;
+		y += gp.getTileSize() * 1;
 		g2.setColor(Color.black);
 		g2.drawString(text, x + 5, y + 5);
 		g2.setColor(Color.RED);
 		g2.drawString(text, x, y);
 		if(this.commandNum == 1) {
+			g2.setColor(Color.black);
+			g2.drawString(">", x - gp.getTileSize() + 5, y + 5);
+			g2.setColor(Color.RED);
+			g2.drawString(">", x - gp.getTileSize(), y);
+		}
+		
+		text = "QUIT";
+		x = this.getXForCenteredText(text);
+		y += gp.getTileSize() * 1;
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+		g2.setColor(Color.RED);
+		g2.drawString(text, x, y);
+		if(this.commandNum == 2) {
 			g2.setColor(Color.black);
 			g2.drawString(">", x - gp.getTileSize() + 5, y + 5);
 			g2.setColor(Color.RED);
@@ -210,9 +235,9 @@ public class UiManager {
 			    
 		// Disegna il mostro
 		if(this.spriteNum == 1) {
-			g2.drawImage(monsterImage1, xMonster, yMonster, gp.getTileSize()*2, gp.getTileSize()*2, null);
+			g2.drawImage(monsterImage1, xMonster, yMonster, gp.getTileSize()*3, gp.getTileSize()*3, null);
 		}else if(this.spriteNum == 2) {
-			g2.drawImage(monsterImage2, xMonster, yMonster, gp.getTileSize()*2, gp.getTileSize()*2, null);
+			g2.drawImage(monsterImage2, xMonster, yMonster, gp.getTileSize()*3, gp.getTileSize()*3, null);
 		}
 		
 	}
@@ -225,6 +250,157 @@ public class UiManager {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	// Metodo per stampare la versione del gioco nella schermata inziale 
+	public void drawVersion() {
+		int x, y;
+    	String text;
+    	
+    	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 15F));
+		text = "Labyrinth Alpha 0.1";
+		x = 10; 
+		y = gp.getScreenHeight() - 10; 
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+	}
+	
+	// NUOVO METODO: Schermata delle opzioni
+	public void drawOptionsScreen() {
+		// Sfondo semi-trasparente
+		g2.setColor(new Color(0, 0, 0, 150)); // Nero semitrasparente
+		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+			
+		// Titolo "OPTIONS"
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 72F));
+		String text = "OPTIONS";
+		int x = this.getXForCenteredText(text);
+		int y = (int) (gp.getTileSize() * 2);
+			
+		// Ombra del titolo
+		g2.setColor(Color.BLACK);
+		g2.drawString(text, x + 3, y + 3);
+		// Titolo principale
+		g2.setColor(Color.WHITE);
+		g2.drawString(text, x, y);
+			
+		// Menu delle opzioni
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 40F));
+		int startY = y + (int)(gp.getTileSize() * 2.5);
+		int spacing = (int)(gp.getTileSize() * 0.8);
+			
+		// VOLUME MUSICA
+		text = "MUSIC VOLUME: " + musicVolume + "%";
+		x = this.getXForCenteredText(text);
+		drawOptionItem(text, x, startY, 0);
+			
+		// VOLUME SUONI
+		text = "SOUND VOLUME: " + soundVolume + "%";
+		x = this.getXForCenteredText(text);
+		drawOptionItem(text, x, startY + spacing, 1);
+			
+		// VOLUME EFFETTI
+		text = "EFFECTS VOLUME: " + effectsVolume + "%";
+		x = this.getXForCenteredText(text);
+		drawOptionItem(text, x, startY + spacing * 2, 2);
+			
+		// FULLSCREEN
+		text = "FULLSCREEN: " + (fullscreen ? "ON" : "OFF");
+		x = this.getXForCenteredText(text);
+		drawOptionItem(text, x, startY + spacing * 3, 3);
+			
+		// BACK
+		text = "BACK";
+		x = this.getXForCenteredText(text);
+		drawOptionItem(text, x, startY + spacing * 4, 4);
+			
+		// Istruzioni in basso
+		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 14F));
+		text = "Usa le frecce DESTRA/SINISTRA per dimininuire o aumentare le opzioni";
+		x = this.getXForCenteredText(text);
+		g2.setColor(Color.LIGHT_GRAY);
+		g2.drawString(text, x, (int)((gp.getTileSize()* 2) +  (gp.getTileSize()* 6.8)));
+	}
+	
+	private void drawOptionItem(String text, int x, int y, int itemIndex) {
+		// Ombra
+		g2.setColor(Color.BLACK);
+		g2.drawString(text, x + 2, y + 2);
+		
+		// Testo principale
+		if(this.optionsCommandNum == itemIndex) {
+			g2.setColor(Color.YELLOW); // Evidenzia l'opzione selezionata
+			// Freccia di selezione
+			g2.setColor(Color.BLACK);
+			g2.drawString(">", x - gp.getTileSize() + 2, y + 2);
+			g2.setColor(Color.YELLOW);
+			g2.drawString(">", x - gp.getTileSize(), y);
+		} else {
+			g2.setColor(Color.WHITE);
+		}
+		g2.drawString(text, x, y);
+	}
+	
+	// Cambia il valore di un'opzione (chiamato quando si preme LEFT/RIGHT)
+	public void changeOptionValue(boolean increase) {
+		switch(optionsCommandNum) {
+			case 0: // Music Volume
+				if(increase && musicVolume < 100) 
+					musicVolume += 10;
+				else if(!increase && musicVolume > 0) 
+					musicVolume -= 10;
+				break;
+			case 1: // Sound Volume
+				if(increase && soundVolume < 100) 
+					soundVolume += 10;
+				else if(!increase && soundVolume > 0) 
+					soundVolume -= 10;
+				break;
+			case 2: // Effects Volume
+				if(increase && effectsVolume < 100) 
+					effectsVolume += 10;
+				else if(!increase && effectsVolume > 0) 
+					effectsVolume -= 10;
+				break;
+			case 3: // Fullscreen
+				fullscreen = !fullscreen;
+				break;
+			case 4: // Back - non fa nulla qui, gestito nel KeyHandler
+				break;
+		}
+	}
+		
+	// Gestisce l'azione quando si preme INVIO nel menu opzioni
+	public void selectOption() {
+		if(optionsCommandNum == 4) { // BACK
+			gp.setGameState(gp.titleState);
+			optionsCommandNum = 0; // Reset selezione opzioni
+		}
+			
+	} 
+		
+		
+		
+	public int getOptionsCommandNum() {
+		return optionsCommandNum;
+	}
+		
+	public void setOptionsCommandNum(int optionsCommandNum) {
+		this.optionsCommandNum = optionsCommandNum;
+	}
+		
+	public void plusOptionsCommandNum() {
+		this.optionsCommandNum++;
+		if(this.optionsCommandNum > 4) { // 5 opzioni totali (0-4)
+			this.optionsCommandNum = 0;
+		}
+	}
+	
+	public void minusOptionsCommandNum() {
+		this.optionsCommandNum--;
+		if(this.optionsCommandNum < 0) {
+			this.optionsCommandNum = 4;
+		}
 	}
 	
 	public int getCommandNum() {

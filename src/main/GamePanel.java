@@ -34,7 +34,7 @@ public class GamePanel extends JPanel implements Runnable{
     public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   				// Creazione di un gestore per le entità
     private Sound soundManager = new Sound();							// Creazione del gestore dei suoni
-    public UiManager ui = new UiManager(this);							// Creazione della classe per la gestione della luce che circonda il player
+    private UiManager ui = new UiManager(this);							// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;									// Variabile booleana per settare circonfernza luce che circonda 
     																	// il player nella schermata iniziale
     private boolean flagPlay = false;									// Variabile booleana per settare circonfernza luce che circonda 
@@ -62,6 +62,7 @@ public class GamePanel extends JPanel implements Runnable{
 	public final int titleState = 0;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int optionsState = 3;
 
     // Costruttore della classe
     public GamePanel() {
@@ -176,6 +177,8 @@ public class GamePanel extends JPanel implements Runnable{
         	
         	eManager.draw(g2);
         	
+        	ui.drawVersion();
+        	
         }else {
         	 // Tile
             this.tileM.draw(g2);
@@ -285,6 +288,10 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	public TileMap getMap() {
 		return tileM;
+	}
+
+	public UiManager getUi() {
+		return ui;
 	}
     
 }

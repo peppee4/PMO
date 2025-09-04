@@ -31,24 +31,63 @@ public class KeyHandler implements KeyListener{
         
         if(gp.getGameState() == gp.titleState) {
         	if(code == KeyEvent.VK_W){
-                gp.ui.minusCommandNum();
-                if(gp.ui.getCommandNum() < 0) {
-                	gp.ui.setCommandNum(1);
+        		gp.playSoundEffect(0);
+                gp.getUi().minusCommandNum();
+                if(gp.getUi().getCommandNum() < 0) {
+                	gp.getUi().setCommandNum(2);
                 }
             }
             if(code == KeyEvent.VK_S){
-            	gp.ui.plusCommandNum();
-            	if(gp.ui.getCommandNum() > 1) {
-                	gp.ui.setCommandNum(0);
+            	gp.playSoundEffect(0);
+            	gp.getUi().plusCommandNum();
+            	if(gp.getUi().getCommandNum() > 2) {
+                	gp.getUi().setCommandNum(0);
                 }
             }
         	if(code == KeyEvent.VK_ENTER){
-        		if(gp.ui.getCommandNum() == 0) {
+        		if(gp.getUi().getCommandNum() == 0) {
                 	gp.setGameState(gp.playState);
                 }
-        		if(gp.ui.getCommandNum() == 1) {
+        		if(gp.getUi().getCommandNum() == 1) {
+                	gp.setGameState(gp.optionsState);
+                }
+        		if(gp.getUi().getCommandNum() == 2) {
                 	System.exit(0);
                 }
+            }
+        }
+     // OPTIONS STATE - NUOVO!
+        else if(gp.getGameState() == gp.optionsState) {
+            
+            if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+                gp.getUi().minusOptionsCommandNum();
+            }
+            
+            if(code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+                gp.getUi().plusOptionsCommandNum();
+            }
+            
+            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+                // Diminuisci valore opzione
+                gp.getUi().changeOptionValue(false);
+            }
+            
+            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+                // Aumenta valore opzione
+                gp.getUi().changeOptionValue(true);
+            }
+            
+            if(code == KeyEvent.VK_ENTER) {
+                gp.getUi().selectOption(); // Gestisce il BACK
+            }
+            
+            if(code == KeyEvent.VK_ESCAPE) {
+                // Torna al menu principale con ESC
+                gp.setGameState(gp.playState);
+                gp.getUi().setOptionsCommandNum(0);
+            }
+            else if(code == KeyEvent.VK_P){
+            	gp.setGameState(gp.playState);
             }
         }
         else if(gp.getGameState() == gp.playState) {
@@ -64,8 +103,8 @@ public class KeyHandler implements KeyListener{
             else if(code == KeyEvent.VK_D){
                 rightPressed = true;
             }
-            else if(code == KeyEvent.VK_P){
-            	gp.setGameState(gp.pauseState);
+            else if(code == KeyEvent.VK_I){
+            	gp.setGameState(gp.optionsState);
             }
         }
         else if(gp.getGameState() == gp.pauseState) {
