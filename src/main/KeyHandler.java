@@ -49,6 +49,7 @@ public class KeyHandler implements KeyListener{
                 	gp.setGameState(gp.playState);
                 }
         		if(gp.getUi().getCommandNum() == 1) {
+        			gp.getUi().setPreviousState(gp.titleState);
                 	gp.setGameState(gp.optionsState);
                 }
         		if(gp.getUi().getCommandNum() == 2) {
@@ -82,13 +83,11 @@ public class KeyHandler implements KeyListener{
             }
             
             if(code == KeyEvent.VK_ESCAPE) {
-                // Torna al menu principale con ESC
-                gp.setGameState(gp.playState);
+                // Torna alla schermata precedente
+            	gp.setGameState(gp.getUi().getPreviousState());
                 gp.getUi().setOptionsCommandNum(0);
             }
-            else if(code == KeyEvent.VK_P){
-            	gp.setGameState(gp.playState);
-            }
+            
         }
         else if(gp.getGameState() == gp.playState) {
         	if(code == KeyEvent.VK_W){
@@ -104,6 +103,7 @@ public class KeyHandler implements KeyListener{
                 rightPressed = true;
             }
             else if(code == KeyEvent.VK_I){
+            	gp.getUi().setPreviousState(gp.playState);
             	gp.setGameState(gp.optionsState);
             }
         }

@@ -28,6 +28,8 @@ public class UiManager {
 	private int effectsVolume = 50; 
 	private boolean fullscreen = false; 
 	
+	private int previousState = 0;
+	
 	
 	private BufferedImage monsterImage1, monsterImage2; // Immagini del mostro
 	
@@ -373,14 +375,20 @@ public class UiManager {
 	// Gestisce l'azione quando si preme INVIO nel menu opzioni
 	public void selectOption() {
 		if(optionsCommandNum == 4) { // BACK
-			gp.setGameState(gp.titleState);
+			gp.setGameState(previousState);
 			optionsCommandNum = 0; // Reset selezione opzioni
 		}
 			
 	} 
-		
-		
-		
+	
+	public int getPreviousState() {
+	    return previousState;
+	}
+
+	public void setPreviousState(int previousState) {
+	    this.previousState = previousState;
+	}
+			
 	public int getOptionsCommandNum() {
 		return optionsCommandNum;
 	}

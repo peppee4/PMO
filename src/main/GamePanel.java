@@ -167,7 +167,7 @@ public class GamePanel extends JPanel implements Runnable{
         	
         }
         else if(gameState == playState && flagPlay == false) {
-        	eManager.setLight(250);
+        	eManager.setLight(400);
         	flagTitle = true;
         }
         
