@@ -58,10 +58,10 @@ public class Player extends Entity{
 	
 	// Metodo per inizializzare il player
 	public void setDefaultValues() {
-		this.setWorldX(gp.getTileSize() * 23); 				// Coordinata x iniziale del Player
-		this.setWorldY(gp.getTileSize() * 24); 				// Coordinata y iniziale del Player
-		this.setSpeed(3.5);				            	// Velocità del Player
-		this.setDirection("right");				// Direzione iniziale del Player
+		this.setWorldX(gp.getTileSize() * 23); 		// Coordinata x iniziale del Player
+		this.setWorldY(gp.getTileSize() * 24); 		// Coordinata y iniziale del Player
+		this.setSpeed(3.5);				            // Velocità del Player
+		this.setDirection("right");					// Direzione iniziale del Player
 		
 	}
 	
@@ -139,8 +139,6 @@ public class Player extends Entity{
 		}else {
 			this.setDirection("stop");
 		}
-
-		//System.out.println(life);
 	}
 	
 	// Metodo per ridisegnare il player

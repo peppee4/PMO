@@ -22,8 +22,8 @@ public class AssetSetter {
 
         // Chest
         gp.obj[0] = new ObjChest();
-        gp.obj[0].worldX = gp.getTileSize() * 44;
-        gp.obj[0].worldY = gp.getTileSize() * 1;
+        gp.obj[0].setWorldX(gp.getTileSize() * 21);
+        gp.obj[0].setWorldY(gp.getTileSize() * 24);
     }
 
     // Metodo per posizionare i mostri

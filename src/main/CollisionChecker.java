@@ -1,6 +1,7 @@
 package main;
 
 import entity.Entity;
+import object.SuperObject;
 
 public class CollisionChecker {
 
@@ -116,5 +117,23 @@ public class CollisionChecker {
 		this.entityRightCol = entityRightWorldX/gp.getTileSize();
 		this.entityTopRow = entityTopWorldY/gp.getTileSize();
 		this.entityBottomRow = entityBottomWorldY/gp.getTileSize();
+	}
+	
+	public boolean isPlayerNearObject(SuperObject obj) {
+		int objLeftWorldX   = obj.getWorldX() + obj.getSolidAreaX();
+	    int objRightWorldX  = obj.getWorldX() + obj.getSolidAreaX() + obj.getSolidAreaWidth();
+	    int objTopWorldY    = obj.getWorldY() + obj.getSolidAreaY();
+	    int objBottomWorldY = obj.getWorldY() + obj.getSolidAreaY() + obj.getSolidAreaHeight();
+
+	    int playerLeftWorldX   = gp.getPlayer().getWorldX() + gp.getPlayer().getSolidAreaX();
+	    int playerRightWorldX  = gp.getPlayer().getWorldX() + gp.getPlayer().getSolidAreaX() + gp.getPlayer().getSolidAreaWidth();
+	    int playerTopWorldY    = gp.getPlayer().getWorldY() + gp.getPlayer().getSolidAreaY();
+	    int playerBottomWorldY = gp.getPlayer().getWorldY() + gp.getPlayer().getSolidAreaY() + gp.getPlayer().getSolidAreaHeight();
+
+	    return objRightWorldX > playerLeftWorldX &&
+	           objLeftWorldX < playerRightWorldX &&
+	           objBottomWorldY > playerTopWorldY &&
+	           objTopWorldY < playerBottomWorldY;
+
 	}
 }

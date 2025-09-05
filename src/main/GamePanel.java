@@ -2,14 +2,10 @@ package main;
 
 import java.awt.*;
 import javax.swing.JPanel;
-import entity.Player;
-import entity.Slime;
-import entity.SlimeMonster;
 import environment.EnvironmentManager;
 import map.TileMap;
 import object.SuperObject;
-import entity.Monsters;
-
+import entity.*;
 public class GamePanel extends JPanel implements Runnable{
 
     // Impostazioni della finestra
@@ -147,6 +143,12 @@ public class GamePanel extends JPanel implements Runnable{
     
                 player.isSlow(count);
             }
+		}
+		
+		for(int i = 0; i < this.obj.length; i++) {
+			if(this.obj[i] != null) {
+				this.obj[i].update(this);
+			}
 		}
 		
 		if(gameState == pauseState) {
