@@ -8,8 +8,10 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class SuperObject {
+	
     protected BufferedImage image1,
-    						image2;         					// Immagine dell'oggetto
+    						image2,
+    						image3;         					// Immagine dell'oggetto
     protected String name;                 						// Nome dell'oggetto 
     protected boolean collision = false;   						// Indica se l'oggetto ha una collisione attiva
     private int worldX, worldY;          						// Posizione dell'oggetto nel mondo di gioco
@@ -17,7 +19,7 @@ public class SuperObject {
     protected int solidAreaDefaultX,
 	  			  solidAreaDefaultY;							// Posizione di default dell'area solida
     private boolean objStatus = false;							// Stato dell'oggetto
-    private KeyHandler keyH;									// Riverimento al KeyHandler
+    private KeyHandler keyH;									// Riferimento al KeyHandler
     
     public SuperObject(KeyHandler keyH){
     	this.keyH = keyH;
