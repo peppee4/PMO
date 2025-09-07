@@ -50,6 +50,7 @@ public class SuperObject {
     		
     		if(keyH.ePressed == true) {
     			this.objStatus = true;
+    			gp.setNumberOfKey(gp.getNumberOfKey() + 1);
     			gp.setGameState(gp.playState);
     		}
     	}

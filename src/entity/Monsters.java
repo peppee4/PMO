@@ -100,12 +100,12 @@ public class Monsters extends Entity {
 			}
 		}
 
-		if(this.lifeCounter < 180){
+		if(this.lifeCounter < 200){
 			this.lifeCounter++;
 		}
 
 		// Se c'è collisione con il player
-		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 180){
+		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 200){
 			if(gp.getPlayer().life > 0){
 				gp.getPlayer().life = gp.getPlayer().life - this.damage;
 				gp.playSoundEffect(3);
@@ -115,7 +115,6 @@ public class Monsters extends Entity {
 			// Fine del gioco se la vita del player è 0
 			if(gp.getPlayer().life == 0){
 				gp.playSoundEffect(2);
-				//gp.setGameStatus(false);				// Imposta lo stato del gioco su "Game Over"
 				gp.setGameState(gp.gameOverState);
 			}
 		}
@@ -178,7 +177,7 @@ public class Monsters extends Entity {
 		int[] nextStep = getNextStep(monsterTileX, monsterTileY, playerTileX, playerTileY);
 
 		// Se il player è entro 16 tile, il mostro inizia a inseguirlo
-		if(distance <= 16 && nextStep != null) {
+		if(distance <= 20 && nextStep != null) {
 			if(nextStep != null) {	
 				int nextCol = nextStep[0];
 				int nextRow = nextStep[1];

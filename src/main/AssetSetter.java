@@ -35,15 +35,15 @@ public class AssetSetter {
     public void setMonster() {
         
         // NormalMonster
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 9; i++){
             this.findTile();
 
-            if(i < 2){
+            if(i < 4){
                 // Genera il mostro normale alle coordinate trovate
                 gp.mons[i] = new NormalMonster(this.gp);
                 gp.mons[i].setWorldX(spawnX * gp.getTileSize());
                 gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-            }else if(i >= 1){
+            }else if(i > 4){
                 // Genera il mostro slime alle coordinate trovate
                 gp.mons[i] = new SlimeMonster(this.gp);
                 gp.mons[i].setWorldX(spawnX * gp.getTileSize());
@@ -54,19 +54,20 @@ public class AssetSetter {
 
     private void findTile(){
         int tileNum = 0;
-        this.spawnX = 0;    // Reset
-        this.spawnY = 0;    // Reset
+        this.spawnX = 0;    			// Reset
+        this.spawnY = 0;    			// Reset
+        this.validPosition = false;		// Reset
 
         // Trova una posizione casuale non solida
-            while(!this.validPosition){
-                this.spawnX = rdm.nextInt(gp.getMaxWorldCol());
-                this.spawnY = rdm.nextInt(gp.getMaxWorldRow());
-                tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
+        while(!this.validPosition){
+        	this.spawnX = rdm.nextInt(gp.getMaxWorldCol());
+            this.spawnY = rdm.nextInt(gp.getMaxWorldRow());
+            tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
 
-                // Controlla se la tile non è solida
-                if(!gp.getMap().tile[tileNum].collision){
-                    this.validPosition = true;
-                }
+            // Controlla se la tile non è solida
+            if(!gp.getMap().tile[tileNum].collision){
+            	this.validPosition = true;
             }
+        }
     }
 }

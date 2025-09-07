@@ -6,6 +6,8 @@ import environment.EnvironmentManager;
 import map.TileMap;
 import object.SuperObject;
 import entity.*;
+
+// Classe principale per la gestione del Gioco
 public class GamePanel extends JPanel implements Runnable{
 
     // Impostazioni della finestra
@@ -55,13 +57,15 @@ public class GamePanel extends JPanel implements Runnable{
     // Stati del gioco
     private boolean gameStatus = true;                          		// Stato del gioco (true = in corso, false = terminato)
 	private int gameState;
-	public final int titleState = 0;
-    public final int playState = 1;
-    public final int optionsState = 2;
-    public final int dialogueState = 3;
-    public final int gameOverState = 4; 
-    public final int optionsControlState = 5; 
+	public final int titleState = 0;									// Titoli iniziali
+    public final int playState = 1;										// Dentro il labirinto
+    public final int optionsState = 2;									// Impostazioni
+    public final int dialogueState = 3;									// Finestra di dialogo
+    public final int gameOverState = 4; 								// Schermata del game over
+    public final int optionsControlState = 5; 							// Impostazioni
     
+    // Chiavi 
+    private int key = 0;												// Chiavi per aprire la porta
 
     // Costruttore della classe
     public GamePanel() {
@@ -330,4 +334,11 @@ public class GamePanel extends JPanel implements Runnable{
 		this.flagPlay = flagPlay;
 	}
     
+	public int getNumberOfKey() {
+		return this.key;
+	}
+	
+	public void setNumberOfKey(int value) {
+		this.key = value;
+	}
 }

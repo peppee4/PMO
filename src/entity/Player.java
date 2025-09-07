@@ -32,7 +32,7 @@ public class Player extends Entity{
 		this.centerX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);		// Calcola la coordinata centrale orizzontale dello schermo
 		this.centerY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);		// Calcola la coordinata centrale verticale dello schermo
 
-		this.life = 1.0;													// Imposta la vita iniziale del player
+		this.life = 3.0;													// Imposta la vita iniziale del player
 		
 		this.slowtime = 0;													// Inizializziamo il tempo di rallentamento
 
