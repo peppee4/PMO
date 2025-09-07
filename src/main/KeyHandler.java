@@ -11,7 +11,7 @@ public class KeyHandler implements KeyListener{
                    downPressed,
                    leftPressed,
                    rightPressed,
-                   enterPressed;
+                   ePressed;
 
     public KeyHandler(GamePanel gp) {
     	
@@ -107,10 +107,14 @@ public class KeyHandler implements KeyListener{
             	gp.setGameState(gp.optionsState);
             }
         }
+        // Per quando siamo in pausa
         else if(gp.getGameState() == gp.pauseState) {
         	if(code == KeyEvent.VK_P){
             	gp.setGameState(gp.playState);
             }
+        // Per quando dobbiamo interagire con un oggetto
+        }else if(code == KeyEvent.VK_E && gp.getGameState() == gp.dialogueState){
+        	ePressed = true;
         }
     }
 
@@ -127,6 +131,8 @@ public class KeyHandler implements KeyListener{
             leftPressed = false;
         }else if(code == KeyEvent.VK_D){
             rightPressed = false;
+        }else if(code == KeyEvent.VK_E){
+        	ePressed = false;
         }
     }
     

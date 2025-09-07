@@ -11,19 +11,24 @@ public class AssetSetter {
     private Random rdm = new Random();      // Generatore di numeri casuali
     private boolean validPosition = false;  // Posizione valida per lo spawn
     private int spawnX, spawnY;             // Coordinate per lo spawn
+    private KeyHandler keyH;				// Riferimento al KeyHandler
 
     // Costruttore
-    public AssetSetter (GamePanel gp) {
+    public AssetSetter (GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
+        this.keyH = keyH;
     }
 
     // Metodo per posizionare gli oggetti di gioco
     public void setObject(){
 
         // Chest
-        gp.obj[0] = new ObjChest();
-        gp.obj[0].setWorldX(gp.getTileSize() * 21);
-        gp.obj[0].setWorldY(gp.getTileSize() * 24);
+        for(int i = 0; i < 3; i++) {
+        	this.findTile();
+        	gp.obj[i] = new ObjChest(keyH);
+            gp.obj[i].setWorldX(gp.getTileSize() * spawnX);
+            gp.obj[i].setWorldY(gp.getTileSize() * spawnY);
+        }
     }
 
     // Metodo per posizionare i mostri

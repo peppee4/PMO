@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -75,12 +76,16 @@ public class UiManager {
 		if(gp.getGameState() == gp.pauseState) {
 			drawPauseScreen();
 		}
+		
+		// FINESTRA DIALOGHI
+		if(gp.getGameState() == gp.dialogueState) {
+			drawDialogueScreen("Premi E per interagire");
+		}
 	}
 	
 	public void drawTitleScreen(){
 		
 		// TITLE NAME
-				
 		try {
 			g2.drawImage(ImageIO.read(getClass().getResourceAsStream("/titles/TitleImageBackground.png")), 0, 0, gp.getScreenWidth(), gp.getScreenHeight(), null);
 		} catch (IOException e) {
@@ -380,6 +385,38 @@ public class UiManager {
 		}
 			
 	} 
+	
+	//
+	public void drawDialogueScreen(String text) {
+	    int x = (gp.getTileSize() * 15) / 2;
+	    int y = (gp.getTileSize() * 6) / 2;
+	    int width = (gp.getScreenWidth() - (gp.getTileSize() * 4)) / 3;
+	    int height = (gp.getTileSize() * 4) / 3;
+
+	    drawSubWindow(x, y, width, height);
+	    
+	    g2.setColor(Color.white);
+	    g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 15F));
+
+	    int textX = x + gp.getTileSize() - 40;
+	    int textY = y + gp.getTileSize() - 20;
+	    for (String line : text.split("\n")) {
+	        g2.drawString(line, textX, textY);
+	        textY += gp.getTileSize();
+	    }
+	}
+	
+	//
+	public void drawSubWindow(int x, int y, int width, int height) {
+		Color c = new Color(0,0,0,220);
+		g2.setColor(c);
+		g2.fillRoundRect(x, y, width, height, 35, 35);
+		
+		c = new Color(255,255,255);
+		g2.setColor(c);
+		g2.setStroke(new BasicStroke(5));
+		g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
+	}
 	
 	public int getPreviousState() {
 	    return previousState;

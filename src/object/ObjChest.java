@@ -3,16 +3,20 @@ package object;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import main.KeyHandler;
+
 public class ObjChest extends SuperObject{
     
     // Costruttore
-    public ObjChest() {
+    public ObjChest(KeyHandler keyH) {
+    	super(keyH);
         name = "Cassa";     // Nome dell'oggetto
         collision = false;  // La cassa non ha una collisione attiva
         
         // Carica l'immagine della cassa
         try {
-            image = ImageIO.read(getClass().getResourceAsStream("/objects/chest_1.png"));
+            image1 = ImageIO.read(getClass().getResourceAsStream("/objects/chest_1.png"));
+            image2 = ImageIO.read(getClass().getResourceAsStream("/objects/chest_2.png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -29,5 +33,4 @@ public class ObjChest extends SuperObject{
      	solidAreaDefaultX = solidArea.x;
      	solidAreaDefaultY = solidArea.y;
     }
-    
 }
