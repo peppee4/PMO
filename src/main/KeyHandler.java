@@ -27,8 +27,10 @@ public class KeyHandler implements KeyListener{
     // Metodo per dire cosa fare quando viene premuto un bottone
     @Override
     public void keyPressed(KeyEvent e) {
+    	
         int code = e.getKeyCode();
         
+        // TITLE STATE
         if(gp.getGameState() == gp.titleState) {
         	if(code == KeyEvent.VK_W){
         		gp.playSoundEffect(0);
@@ -57,7 +59,7 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
-     // OPTIONS STATE - NUOVO!
+        // OPTIONS STATE 
         else if(gp.getGameState() == gp.optionsState) {
             
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -68,12 +70,12 @@ public class KeyHandler implements KeyListener{
                 gp.getUi().plusOptionsCommandNum();
             }
             
-            if(code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT) {
+            if(code == KeyEvent.VK_LEFT) {
                 // Diminuisci valore opzione
                 gp.getUi().changeOptionValue(false);
             }
             
-            if(code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT) {
+            if(code == KeyEvent.VK_RIGHT) {
                 // Aumenta valore opzione
                 gp.getUi().changeOptionValue(true);
             }
@@ -86,10 +88,16 @@ public class KeyHandler implements KeyListener{
                 // Torna alla schermata precedente
             	gp.setGameState(gp.getUi().getPreviousState());
                 gp.getUi().setOptionsCommandNum(0);
-            }
-            
+            }          
         }
+        else if(gp.getGameState() == gp.optionsControlState) {
+        	if(code == KeyEvent.VK_ENTER) {
+                gp.setGameState(gp.optionsState); // Gestisce il BACK
+            }
+        }
+        // PLAY STATE
         else if(gp.getGameState() == gp.playState) {
+        	
         	if(code == KeyEvent.VK_W){
                 upPressed = true;
             }
@@ -107,14 +115,40 @@ public class KeyHandler implements KeyListener{
             	gp.setGameState(gp.optionsState);
             }
         }
-        // Per quando siamo in pausa
-        else if(gp.getGameState() == gp.pauseState) {
-        	if(code == KeyEvent.VK_P){
-            	gp.setGameState(gp.playState);
+        // DIALOGUE STATE -> Per quando dobbiamo interagire con un oggetto
+        else if(gp.getGameState() == gp.dialogueState){
+        	
+        	if(code == KeyEvent.VK_E){
+        		ePressed = true;
+             }
+        }
+        // GAME OVER STATE
+        else if(gp.getGameState() == gp.gameOverState){
+        	
+        	if(code == KeyEvent.VK_W){
+               gp.getUi().minusCommandNum();
+               if(gp.getUi().getCommandNum() < 0) {
+            	   gp.getUi().setCommandNum(1);
+               }
+               gp.playSoundEffect(0);
             }
-        // Per quando dobbiamo interagire con un oggetto
-        }else if(code == KeyEvent.VK_E && gp.getGameState() == gp.dialogueState){
-        	ePressed = true;
+            if(code == KeyEvent.VK_S){
+            	gp.getUi().plusCommandNum();
+                if(gp.getUi().getCommandNum() > 1) {
+             	   gp.getUi().setCommandNum(0);
+                }
+                gp.playSoundEffect(0);
+            }
+            if(code == KeyEvent.VK_ENTER) {
+                if(gp.getUi().getCommandNum() == 0) {
+                	gp.reset();
+                	gp.setGameState(gp.playState);
+                }else if(gp.getUi().getCommandNum() == 1) {
+                	gp.setFlagTitle(false);
+                	gp.reset();
+                	gp.setGameState(gp.titleState);
+                }
+            }
         }
     }
 

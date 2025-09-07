@@ -57,9 +57,11 @@ public class GamePanel extends JPanel implements Runnable{
 	private int gameState;
 	public final int titleState = 0;
     public final int playState = 1;
-    public final int pauseState = 2;
-    public final int optionsState = 3;
-    public final int dialogueState = 4;
+    public final int optionsState = 2;
+    public final int dialogueState = 3;
+    public final int gameOverState = 4; 
+    public final int optionsControlState = 5; 
+    
 
     // Costruttore della classe
     public GamePanel() {
@@ -79,6 +81,15 @@ public class GamePanel extends JPanel implements Runnable{
         this.gameState = titleState;
         
     }
+    
+    // Metodo che resetta i valori a fine gioco
+    public void reset() {
+    	aSetter.setObject();   		    // Riposizioniamo gli oggetti
+        aSetter.setMonster();   		// Riposizioniamo i mostri
+        player.restorePlayerValues();   // Reseta i valori iniziali del player ad una nuova partita
+    }
+    
+    
 
     public void startGameThread() {
 		gameThread = new Thread(this);  // Inizializzazione del Thread
@@ -301,6 +312,22 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public UiManager getUi() {
 		return ui;
+	}
+
+	public boolean isFlagTitle() {
+		return flagTitle;
+	}
+
+	public void setFlagTitle(boolean flagTitle) {
+		this.flagTitle = flagTitle;
+	}
+
+	public boolean isFlagPlay() {
+		return flagPlay;
+	}
+
+	public void setFlagPlay(boolean flagPlay) {
+		this.flagPlay = flagPlay;
 	}
     
 }

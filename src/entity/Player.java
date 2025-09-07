@@ -21,6 +21,7 @@ public class Player extends Entity{
 	private int slowtime;       // Tempo di rallentamento del player
 
 	protected double life;  	// Vita del player
+	private static final double MAX_LIFE = 3.0;
 	private double startSpeed;	// Velocità iniziale del player
 	
 	// Costruttore della classe Player
@@ -31,7 +32,7 @@ public class Player extends Entity{
 		this.centerX = gp.getScreenWidth()/2 - (gp.getTileSize()/2);		// Calcola la coordinata centrale orizzontale dello schermo
 		this.centerY = gp.getScreenHeight()/2 - (gp.getTileSize()/2);		// Calcola la coordinata centrale verticale dello schermo
 
-		this.life = 3.0;													// Imposta la vita iniziale del player
+		this.life = 1.0;													// Imposta la vita iniziale del player
 		
 		this.slowtime = 0;													// Inizializziamo il tempo di rallentamento
 
@@ -139,6 +140,8 @@ public class Player extends Entity{
 		}else {
 			this.setDirection("stop");
 		}
+		
+		
 	}
 	
 	// Metodo per ridisegnare il player
@@ -219,6 +222,14 @@ public class Player extends Entity{
 		}
 		
 		return image;
+	}
+	
+	public void restorePlayerValues() {
+		this.life = MAX_LIFE;
+		this.setWorldX(gp.getTileSize() * 23); 		// Coordinata x iniziale del Player
+		this.setWorldY(gp.getTileSize() * 24); 		// Coordinata y iniziale del Player
+		this.setDirection("right");
+		this.setSpeed(3.5);
 	}
 	
 }
