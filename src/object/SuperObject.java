@@ -3,11 +3,15 @@ package object;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import main.ImageScaler;
 import main.KeyHandler;
 
-public class SuperObject {
+public abstract class SuperObject {
 	
 	private GamePanel gp;										// Riferimento al GamePanel
     protected BufferedImage image1,
@@ -21,10 +25,16 @@ public class SuperObject {
 	  			  solidAreaDefaultY;							// Posizione di default dell'area solida
     private boolean objStatus = false;							// Stato dell'oggetto
     private KeyHandler keyH;									// Riferimento al KeyHandler
+    protected ImageScaler iScaler;
     
     public SuperObject(KeyHandler keyH, GamePanel gp){
     	this.keyH = keyH;
     	this.gp = gp;
+    }
+    
+    public SuperObject(GamePanel gp){
+    	this.gp = gp;
+    	this.iScaler = new ImageScaler();
     }
     
     // Metodo per disegnare l'oggetto
@@ -59,6 +69,8 @@ public class SuperObject {
     		}
     	}
     }
+
+    
     
     // Getter e Setter
     public int getWorldX() {
@@ -112,4 +124,18 @@ public class SuperObject {
 	public void setObjStatus(boolean value) {
 		this.objStatus = value;
 	}
+
+	public BufferedImage getImage1() {
+		return image1;
+	}
+
+	public BufferedImage getImage2() {
+		return image2;
+	}
+
+	public BufferedImage getImage3() {
+		return image3;
+	}
+	
+	
 }

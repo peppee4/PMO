@@ -9,11 +9,16 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import entity.Player;
+import object.ObjHeart;
+import object.SuperObject;
+
 public class UiManager {
 
 	GamePanel gp;
 	Graphics2D g2;
 	Font arial_40, arial_80B;
+	BufferedImage heart_full, heart_half, heart_blank;
 	
 	private boolean gameFinished = false;
 	private int commandNum = 0;
@@ -48,6 +53,11 @@ public class UiManager {
 		setxMonster((int) (gp.getScreenWidth()/3.5 - (gp.getTileSize()*2)/2));
 		setyMonster((int) ((gp.getTileSize()* 2) +  (gp.getTileSize()* 2.5)));
 		
+		// Creiamo i cuori che rappresentano la vita del player
+		SuperObject heart = new ObjHeart(gp);
+		heart_full = heart.getImage1();
+		heart_half = heart.getImage2();
+		heart_blank = heart.getImage3();
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -74,7 +84,7 @@ public class UiManager {
 		
 		// PLAY STATE
 		if(gp.getGameState() == gp.playState) {
-			
+			drawPlayerLife();
 		}
 		
 		// FINESTRA DIALOGHI
@@ -87,6 +97,37 @@ public class UiManager {
 		}
 	}
 	
+	private void drawPlayerLife() {
+		
+		int x = (int)(gp.getTileSize() * 10.5) / 2;
+	    int y = (int)(gp.getTileSize() * 6.5) / 2;
+	    
+	    // Disegniamo prima i cuori vuoti
+	    int tempX = x;
+	    for(int i = 0; i < gp.getPlayer().getMaxLife(); i++) {
+	        g2.drawImage(heart_blank, tempX, y, null);
+	        tempX += gp.getTileSize() - 20;
+	    }
+	    
+	    // Resettiamo le coordinate
+	    tempX = x;
+	    double currentLife = gp.getPlayer().getLife();
+	    
+	    // Disegniamo i cuori in base alla vita attuale
+	    for(double life = 0; life < currentLife; life += 1.0) {
+	        if(currentLife - life >= 1.0) {
+	            // Cuore pieno (vita rimanente >= 1.0)
+	            g2.drawImage(heart_full, tempX, y, null);
+	        } else if(currentLife - life >= 0.5) {
+	            // Cuore mezzo (vita rimanente >= 0.5 ma < 1.0)
+	            g2.drawImage(heart_half, tempX, y, null);
+	        }
+	        // Se la vita rimanente < 0.5, non disegniamo nulla.
+	        
+	        tempX += gp.getTileSize() - 20;
+	    }
+	}
+
 	private void drawOptionsControlScreen() {
 		// TODO Auto-generated method stub
 		g2.setColor(new Color(0, 0, 0, 150)); // Nero semitrasparente

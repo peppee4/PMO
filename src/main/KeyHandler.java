@@ -141,10 +141,12 @@ public class KeyHandler implements KeyListener{
             }
             if(code == KeyEvent.VK_ENTER) {
                 if(gp.getUi().getCommandNum() == 0) {
+                	gp.setFlagPlay(false);
                 	gp.reset();
                 	gp.setGameState(gp.playState);
                 }else if(gp.getUi().getCommandNum() == 1) {
                 	gp.setFlagTitle(false);
+                	
                 	gp.reset();
                 	gp.setGameState(gp.titleState);
                 }

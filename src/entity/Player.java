@@ -21,8 +21,9 @@ public class Player extends Entity{
 	private int slowtime;       					// Tempo di rallentamento del player
 
 	protected double life;  						// Vita del player
-	private static final double MAX_LIFE = 3.0;
+	private static final double MAX_LIFE = 3.0; 	// Valore massimo della vita che il player possiede
 	private double startSpeed;						// Velocità iniziale del player
+
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -231,5 +232,17 @@ public class Player extends Entity{
 		this.setDirection("right");
 		this.setSpeed(3.5);
 	}
-	
+
+	public double getLife() {
+		return life;
+	}
+
+	public void setLife(double life) {
+		this.life = life;
+	}
+
+	public static double getMaxLife() {
+		return MAX_LIFE;
+	}
+
 }

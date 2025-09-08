@@ -41,9 +41,9 @@ public class AssetSetter {
 
             if(i < 4){
                 // Genera il mostro normale alle coordinate trovate
-                gp.mons[i] = new NormalMonster(this.gp);
-                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+               // gp.mons[i] = new NormalMonster(this.gp);
+                //gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                //gp.mons[i].setWorldY(spawnY * gp.getTileSize());
             }else if(i > 4 && i < 9){
                 // Genera il mostro slime alle coordinate trovate
                 gp.mons[i] = new SlimeMonster(this.gp);

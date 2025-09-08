@@ -104,18 +104,18 @@ public class Monsters extends Entity {
 		if(this.lifeCounter < 200){
 			this.lifeCounter++;
 		}
-
 		// Se c'è collisione con il player
 		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 200){
 			if(gp.getPlayer().life > 0){
 				gp.getPlayer().life = gp.getPlayer().life - this.damage;
 				gp.playSoundEffect(3);
 				
+				
 				this.lifeCounter = 0;
 			}
 			
 			// Fine del gioco se la vita del player è 0
-			if(gp.getPlayer().life == 0){
+			if(gp.getPlayer().life <= 0){
 				gp.playSoundEffect(2);
 				gp.setGameState(gp.gameOverState);
 			}
