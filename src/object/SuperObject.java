@@ -9,6 +9,7 @@ import main.KeyHandler;
 
 public class SuperObject {
 	
+	private GamePanel gp;										// Riferimento al GamePanel
     protected BufferedImage image1,
     						image2,
     						image3;         					// Immagine dell'oggetto
@@ -21,20 +22,21 @@ public class SuperObject {
     private boolean objStatus = false;							// Stato dell'oggetto
     private KeyHandler keyH;									// Riferimento al KeyHandler
     
-    public SuperObject(KeyHandler keyH){
+    public SuperObject(KeyHandler keyH, GamePanel gp){
     	this.keyH = keyH;
+    	this.gp = gp;
     }
     
     // Metodo per disegnare l'oggetto
-    public void draw(Graphics2D g2, GamePanel gp){
-        int screenX = worldX - gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX();
-		int screenY = worldY - gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY();
+    public void draw(Graphics2D g2){
+        int screenX = worldX - this.gp.getPlayer().getWorldX() + this.gp.getPlayer().getCenterX();
+		int screenY = worldY - this.gp.getPlayer().getWorldY() + this.gp.getPlayer().getCenterY();
 		
         // Disegna solo i tile che si trovano entro i confini dello schermo
-		if(worldX + gp.getTileSize() > gp.getPlayer().getWorldX() - gp.getPlayer().getCenterX() &&
-		   worldX - gp.getTileSize() < gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX() &&
-		   worldY + gp.getTileSize() > gp.getPlayer().getWorldY()- gp.getPlayer().getCenterY() &&
-           	worldY - gp.getTileSize() < gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY()) {
+		if(worldX + this.gp.getTileSize() > this.gp.getPlayer().getWorldX() - this.gp.getPlayer().getCenterX() &&
+		   worldX - this.gp.getTileSize() < this.gp.getPlayer().getWorldX() + this.gp.getPlayer().getCenterX() &&
+		   worldY + this.gp.getTileSize() > this.gp.getPlayer().getWorldY()- this.gp.getPlayer().getCenterY() &&
+           worldY - this.gp.getTileSize() < this.gp.getPlayer().getWorldY() + this.gp.getPlayer().getCenterY()) {
 				
 			// Disegna l’immagine della tile sullo schermo
 		    if(objStatus == false) {
@@ -46,14 +48,14 @@ public class SuperObject {
     }
     
     // Metodo per l'interazione con il player
-    public void update(GamePanel gp) {
-    	if((this != null && gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
-    		gp.setGameState(gp.dialogueState);
+    public void update() {
+    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
+    		this.gp.setGameState(this.gp.dialogueState);
     		
     		if(keyH.ePressed == true) {
     			this.objStatus = true;
-    			gp.setNumberOfKey(gp.getNumberOfKey() + 1);
-    			gp.setGameState(gp.playState);
+    			this.gp.setNumberOfKey(this.gp.getNumberOfKey() + 1);
+    			this.gp.setGameState(this.gp.playState);
     		}
     	}
     }

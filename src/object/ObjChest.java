@@ -3,13 +3,14 @@ package object;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import main.GamePanel;
 import main.KeyHandler;
 
 public class ObjChest extends SuperObject{
     
     // Costruttore
-    public ObjChest(KeyHandler keyH) {
-    	super(keyH);
+    public ObjChest(KeyHandler keyH, GamePanel gp) {
+    	super(keyH, gp);
         name = "Cassa";     // Nome dell'oggetto
         collision = false;  // La cassa non ha una collisione attiva
         

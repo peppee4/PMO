@@ -163,14 +163,14 @@ public class GamePanel extends JPanel implements Runnable{
 		
 		for(int i = 0; i < this.obj.length; i++) {
 			if(this.obj[i] != null) {
-				this.obj[i].update(this);
+				this.obj[i].update();
 			}
 		}
 		
 		if(gameState == this.dialogueState) {
 			for(int i = 0; i < this.obj.length; i++) {
 				if(this.obj[i] != null) {
-					this.obj[i].update(this);
+					this.obj[i].update();
 				}
 			}
 		}
@@ -210,7 +210,7 @@ public class GamePanel extends JPanel implements Runnable{
             // Oggetti
             for(int i = 0; i < this.obj.length; i++){
                 if(this.obj[i] != null){
-                    this.obj[i].draw(g2, this);
+                    this.obj[i].draw(g2);
                 }
             }
 
