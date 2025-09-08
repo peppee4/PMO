@@ -2,6 +2,7 @@ package main;
 
 import java.util.Random;
 
+import entity.CobraMonster;
 import entity.NormalMonster;
 import entity.SlimeMonster;
 import object.ObjChest;
@@ -35,7 +36,7 @@ public class AssetSetter {
     public void setMonster() {
         
         // NormalMonster
-        for(int i = 0; i < 9; i++){
+        for(int i = 0; i < 12; i++){
             this.findTile();
 
             if(i < 4){
@@ -43,9 +44,14 @@ public class AssetSetter {
                 gp.mons[i] = new NormalMonster(this.gp);
                 gp.mons[i].setWorldX(spawnX * gp.getTileSize());
                 gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-            }else if(i > 4){
+            }else if(i > 4 && i < 9){
                 // Genera il mostro slime alle coordinate trovate
                 gp.mons[i] = new SlimeMonster(this.gp);
+                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+            }else if(i > 8 && i < 12) {
+            	// Genera il mostro cobra alle coordinate trovate
+                gp.mons[i] = new CobraMonster(this.gp);
                 gp.mons[i].setWorldX(spawnX * gp.getTileSize());
                 gp.mons[i].setWorldY(spawnY * gp.getTileSize());
             }

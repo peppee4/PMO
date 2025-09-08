@@ -56,7 +56,7 @@ public class SlimeMonster extends Monsters{
 		solidAreaDefaultY = solidArea.y;
 
 		// Imposta la velocità del mostro
-		this.setSpeed(1);
+		this.setSpeed(1.5);
 
         this.setDirection("left");
     }

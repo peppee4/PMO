@@ -12,17 +12,17 @@ import main.KeyHandler;
 
 // Classe che rappresenta il personaggio 
 public class Player extends Entity{
-	private GamePanel gp;		// Pannello
-	private KeyHandler keyH;	// Variabile per la gestione dell'input dell'untete
+	private GamePanel gp;							// Pannello
+	private KeyHandler keyH;						// Variabile per la gestione dell'input dell'untete
 	
-	private final int centerX;	// Coordinate centrali dello schermo
-	private final int centerY;	// Coordinate centrali dello schermo
+	private final int centerX;						// Coordinate centrali dello schermo
+	private final int centerY;						// Coordinate centrali dello schermo
 
-	private int slowtime;       // Tempo di rallentamento del player
+	private int slowtime;       					// Tempo di rallentamento del player
 
-	protected double life;  	// Vita del player
+	protected double life;  						// Vita del player
 	private static final double MAX_LIFE = 3.0;
-	private double startSpeed;	// Velocità iniziale del player
+	private double startSpeed;						// Velocità iniziale del player
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -61,7 +61,7 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		this.setWorldX(gp.getTileSize() * 23); 		// Coordinata x iniziale del Player
 		this.setWorldY(gp.getTileSize() * 24); 		// Coordinata y iniziale del Player
-		this.setSpeed(3.5);				            // Velocità del Player
+		this.setSpeed(3.0);				            // Velocità del Player
 		this.setDirection("right");					// Direzione iniziale del Player
 		
 	}

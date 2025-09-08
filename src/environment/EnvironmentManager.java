@@ -22,4 +22,5 @@ public class EnvironmentManager {
 		// Richiama il disegno della luce del player
 		lighting.draw(g2);
 	}
+	
 }

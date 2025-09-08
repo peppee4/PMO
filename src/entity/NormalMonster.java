@@ -49,7 +49,7 @@ public class NormalMonster extends Monsters {
 		solidAreaDefaultY = solidArea.y;
 
 		// Imposta la velocità del mostro
-		this.setSpeed(2);
+		this.setSpeed(2.7);
 
         this.setDirection("left");
     }

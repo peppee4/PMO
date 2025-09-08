@@ -17,7 +17,8 @@ public class Monsters extends Entity {
 	protected int width,						// Larghezza del mostro
 				  height;						// Altezza del mostro
 	protected double damage;					// Danno inflitto
-
+	private int blindTime = 0;
+	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
 		this.gp = gp;
@@ -109,6 +110,7 @@ public class Monsters extends Entity {
 			if(gp.getPlayer().life > 0){
 				gp.getPlayer().life = gp.getPlayer().life - this.damage;
 				gp.playSoundEffect(3);
+				
 				this.lifeCounter = 0;
 			}
 			
@@ -116,6 +118,20 @@ public class Monsters extends Entity {
 			if(gp.getPlayer().life == 0){
 				gp.playSoundEffect(2);
 				gp.setGameState(gp.gameOverState);
+			}
+		}else if((gp.cChecker.checkPlayer(this) == true && this instanceof CobraMonster) || 
+				this.blindTime > 0) {
+			// Se il player si trova su almeno uno slime rallentalo
+			this.blindTime++;
+			CobraMonster c = (CobraMonster)this;
+			
+			if(this.blindTime > 0 && this.blindTime < 1000){
+				c.blind(true);
+				
+				this.blindTime++;
+			}else{
+				c.blind(false);
+				this.blindTime = 0;
 			}
 		}
 

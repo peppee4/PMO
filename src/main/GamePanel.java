@@ -27,17 +27,17 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-	private TileMap tileM = new TileMap(this);                          // Creazione della mappa
-    KeyHandler keyH = new KeyHandler(this);                             // Creazione di un gestore degli eventi della tastiera
-    public CollisionChecker cChecker = new CollisionChecker(this);      // Creazione del controllore delle collisioni
-    public AssetSetter aSetter = new AssetSetter(this, keyH);   		// Creazione di un gestore per le entità
-    private Sound soundManager = new Sound();							// Creazione del gestore dei suoni
-    private UiManager ui = new UiManager(this);							// Creazione della classe per la gestione della luce che circonda il player
-    private boolean flagTitle = false;									// Variabile booleana per settare circonfernza luce che circonda 
-    																	// il player nella schermata iniziale
-    private boolean flagPlay = false;									// Variabile booleana per settare circonfernza luce che circonda 
-    																	// il player nel gioco
-    EnvironmentManager eManager = new EnvironmentManager(this);         // Creazione del posizionatore degli oggetti 
+	private TileMap tileM = new TileMap(this);                          	// Creazione della mappa
+    KeyHandler keyH = new KeyHandler(this);                             	// Creazione di un gestore degli eventi della tastiera
+    public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
+    public AssetSetter aSetter = new AssetSetter(this, keyH);   			// Creazione di un gestore per le entità
+    private Sound soundManager = new Sound();								// Creazione del gestore dei suoni
+    private UiManager ui = new UiManager(this);								// Creazione della classe per la gestione della luce che circonda il player
+    private boolean flagTitle = false;										// Variabile booleana per settare circonfernza luce che circonda 
+    																		// il player nella schermata iniziale
+    private boolean flagPlay = false;										// Variabile booleana per settare circonfernza luce che circonda 
+    																		// il player nel gioco
+    public EnvironmentManager eManager = new EnvironmentManager(this);      // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
 	Thread gameThread;
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable{
     public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
 
     // Creiamo i mostri
-    public Monsters mons[] = new Monsters[10];                          // Array di mostri
+    public Monsters mons[] = new Monsters[30];                          // Array di mostri
     
     // Creiamo gli slime
     public Slime slime[] = new Slime[30];                               // Array di slime   
@@ -174,8 +174,6 @@ public class GamePanel extends JPanel implements Runnable{
 				}
 			}
 		}
-		
-		//System.out.println(this.getGameState());
 	}
 	
     // Metodo per ridisegnare il player
@@ -192,7 +190,7 @@ public class GamePanel extends JPanel implements Runnable{
         }
         else if(gameState == playState && flagPlay == false) {
         	eManager.setLight(400);
-        	flagTitle = true;
+        	flagPlay = true;
         }
         
         if(gameState == titleState) {
