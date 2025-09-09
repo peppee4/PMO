@@ -15,12 +15,10 @@ public class AssetSetter {
     private Random rdm = new Random();      // Generatore di numeri casuali
     private boolean validPosition = false;  // Posizione valida per lo spawn
     private int spawnX, spawnY;             // Coordinate per lo spawn
-    private KeyHandler keyH;				// Riferimento al KeyHandler
 
     // Costruttore
-    public AssetSetter (GamePanel gp, KeyHandler keyH) {
+    public AssetSetter (GamePanel gp) {
         this.gp = gp;
-        this.keyH = keyH;
     }
 
     // Metodo per posizionare gli oggetti di gioco
@@ -30,14 +28,16 @@ public class AssetSetter {
         for(int i = 0; i < 3; i++) {
     	
         	this.findTile();
-        	gp.obj[i] = new ObjChest(this.keyH, this.gp);
+        	gp.obj[i] = new ObjChest(gp);
             gp.obj[i].setWorldX(gp.getTileSize() * spawnX);
             gp.obj[i].setWorldY(gp.getTileSize() * spawnY);
-       }  
+        }  
         
+        // Door
+        findDoorTile();
         gp.obj[3] = new ObjDoor(this.gp);
-        gp.obj[3].setWorldX(gp.getTileSize() * 23);
-        gp.obj[3].setWorldY(gp.getTileSize() * 23);
+        gp.obj[3].setWorldX(gp.getTileSize() * spawnX);
+        gp.obj[3].setWorldY(gp.getTileSize() * spawnY);
     }
 
     // Metodo per posizionare i mostri
@@ -98,6 +98,7 @@ public class AssetSetter {
         }
     }
 
+    // Spawn casuale fuori dal muro
     private void findTile(){
         int tileNum = 0;
         this.spawnX = 0;    			// Reset
@@ -113,6 +114,30 @@ public class AssetSetter {
             // Controlla se la tile non è solida
             if(!gp.getMap().tile[tileNum].collision){
             	this.validPosition = true;
+            }
+        }
+    }
+    
+    // Spawn casuale per la porta
+    private void findDoorTile() {
+        int tileNum = 0;
+        int tileBelowNum = 0;
+        this.spawnX = 0;              // Reset
+        this.spawnY = 0;              // Reset
+        this.validPosition = false;  // Reset
+
+        while (!this.validPosition) {
+            this.spawnX = rdm.nextInt(gp.getMaxWorldCol());
+            this.spawnY = rdm.nextInt(gp.getMaxWorldRow() - 1); // -1 per evitare IndexOutOfBounds
+
+            tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
+            tileBelowNum = gp.getMap().mapTileNumber[spawnX][spawnY + 1];
+
+            boolean isWall = (tileNum == 1);
+            boolean isBelowWalkable = !gp.getMap().tile[tileBelowNum].collision;
+
+            if (isWall && isBelowWalkable) {
+                this.validPosition = true;
             }
         }
     }

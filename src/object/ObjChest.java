@@ -9,8 +9,8 @@ import main.KeyHandler;
 public class ObjChest extends SuperObject{
     
     // Costruttore
-    public ObjChest(KeyHandler keyH, GamePanel gp) {
-    	super(keyH, gp);
+    public ObjChest(GamePanel gp) {
+    	super(gp);
         name = "Cassa";     // Nome dell'oggetto
         collision = false;  // La cassa non ha una collisione attiva
         
@@ -30,8 +30,26 @@ public class ObjChest extends SuperObject{
      	setSolidAreaWidth(30);
      	setSolidAreaHeight(45);
 
+     	// Impostiamo le dimensioni
+        width = 35;
+		height = 35;
+     	
      	// Posizione di default dell'area solida
      	solidAreaDefaultX = solidArea.x;
      	solidAreaDefaultY = solidArea.y;
+    }
+    
+    @Override
+    public void update() {
+    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
+    		this.gp.setGameState(this.gp.dialogueState);
+    		
+    		if(this.gp.getKeyH().ePressed == true) {
+    			this.objStatus = true;
+    			this.gp.setGameState(this.gp.playState);
+    			this.gp.getPlayer().setNumberOfKey(this.gp.getPlayer().getNumberOfKey() + 1);
+    			gp.playSoundEffect(7);
+    		}
+    	}
     }
 }

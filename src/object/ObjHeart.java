@@ -24,6 +24,11 @@ public class ObjHeart extends SuperObject{
             image1 = iScaler.scaleImage(image1, gp.getTileSize() - 30, gp.getTileSize() - 30);
             image2 = iScaler.scaleImage(image2, gp.getTileSize() - 30, gp.getTileSize() - 30);
             image3 = iScaler.scaleImage(image3, gp.getTileSize() - 30  , gp.getTileSize() - 30);
+            
+            // Impostiamo le dimensioni
+            width = 30;
+    		height = 30;
+    		
         } catch (IOException e) {
             System.out.println(e);
         }

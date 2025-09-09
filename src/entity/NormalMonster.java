@@ -41,8 +41,8 @@ public class NormalMonster extends Monsters {
 		setSolidAreaY(0);
 
 		// Dimensioni dell'area solida
-		setSolidAreaWidth(30);
-		setSolidAreaHeight(45);
+		setSolidAreaWidth(50);
+		setSolidAreaHeight(50);
 
 		// Posizione di default dell'area solida
 		solidAreaDefaultX = solidArea.x;

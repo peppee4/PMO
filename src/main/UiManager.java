@@ -295,7 +295,7 @@ public class UiManager {
 
 		
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 92F));
-		String text = "The Labyrinth";
+		String text = "The Pyros Stone";
 		int x = this.getXForCenteredText(text);
 		int y = (int) (gp.getTileSize() * 2.75); 
 
@@ -456,7 +456,7 @@ public class UiManager {
     	String text;
     	
     	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 15F));
-		text = "Labyrinth Alpha 0.1";
+		text = "The Pyros Stone Alpha 0.1";
 		x = 10; 
 		y = gp.getScreenHeight() - 10; 
 		g2.setColor(Color.white);

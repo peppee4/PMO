@@ -32,6 +32,7 @@ public class KeyHandler implements KeyListener{
         
         // TITLE STATE
         if(gp.getGameState() == gp.titleState) {
+        	
         	if(code == KeyEvent.VK_W){
         		gp.playSoundEffect(0);
                 gp.getUi().minusCommandNum();

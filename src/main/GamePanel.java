@@ -28,9 +28,9 @@ public class GamePanel extends JPanel implements Runnable{
 	int FPS = 60;
 	
 	private TileMap tileM;						                          	// Creazione della mappa
-    KeyHandler keyH = new KeyHandler(this);                             	// Creazione di un gestore degli eventi della tastiera
+    private KeyHandler keyH = new KeyHandler(this);                         // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
-    public AssetSetter aSetter = new AssetSetter(this, keyH);   			// Creazione di un gestore per le entità
+    public AssetSetter aSetter = new AssetSetter(this);   					// Creazione di un gestore per le entità
     public Sound soundManager = new Sound();								// Creazione del gestore dei suoni
     private UiManager ui = new UiManager(this);								// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;										// Variabile booleana per settare circonfernza luce che circonda 
@@ -43,7 +43,7 @@ public class GamePanel extends JPanel implements Runnable{
 	Thread gameThread;
 	
 	// Creiamo il Player
-	private Player player = new Player(this,keyH);                      // Creazione del player
+	private Player player = new Player(this,getKeyH());                      // Creazione del player
 
     // Creiamo gli oggetti
     public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
@@ -71,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable{
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));    // Dimensione predefinita del JPanel
         this.setBackground(Color.black);                                    // Colore di sfondo del JPanel
         this.setDoubleBuffered(true);                                       // Per ridurre il flickering
-        this.addKeyListener(keyH);                                          // Aggiungiamo il Listener al pannello
+        this.addKeyListener(getKeyH());                                          // Aggiungiamo il Listener al pannello
         this.setFocusable(true);                                  
         this.levelNumber = 1;
     }
@@ -83,8 +83,7 @@ public class GamePanel extends JPanel implements Runnable{
     	aSetter.setObject();    // Posizioniamo gli oggetti
         aSetter.setMonster();   // Posizioniamo i mostri
         
-        this.gameState = titleState;
-        
+        this.gameState = titleState;        
     }
     
     // Metodo che resetta i valori a fine gioco
@@ -135,6 +134,25 @@ public class GamePanel extends JPanel implements Runnable{
 	
     // Metodo per aggiornare le informazioni del gioco
 	public void update(){
+		
+		// Controlliamo lo stato del gioco e in base ad esso riproduciamo 
+		// una canzone differente
+		if(gameState == titleState && flagTitle == false) {
+			this.soundManager.stopAndReset();
+	        this.soundManager.setMusic(8);
+	        this.soundManager.loop();
+	        
+	        flagTitle = true;
+        	flagPlay = false;
+        	
+		}else if(gameState == playState && flagPlay == false) {
+			this.soundManager.stopAndReset();
+		    this.soundManager.setMusic(11);
+		    this.soundManager.loop();
+		    
+		    flagTitle = false;
+        	flagPlay = true;
+	    }
 		
 		if(gameState == playState) {
 			player.update();
@@ -190,14 +208,16 @@ public class GamePanel extends JPanel implements Runnable{
         Graphics2D g2 = (Graphics2D)g;
         
         if(gameState == titleState && flagTitle == false) {
-        	eManager.setLight(1200);
-        	flagTitle = true;
-        	flagPlay = false;
         	
+        	eManager.setLight(1200);
+        	//flagTitle = true;
+        	//flagPlay = false;
         }
         else if(gameState == playState && flagPlay == false) {
+        	
         	eManager.setLight(400);
-        	flagPlay = true;
+        	//flagPlay = true;
+        	//flagTitle = false;
         }
         
         if(gameState == titleState) {
@@ -247,20 +267,6 @@ public class GamePanel extends JPanel implements Runnable{
         // Disposizione delle risorse
         g2.dispose();
 	} 
-	
-	// Metodo per riprodurre un suono all'infinto
-	public void playMusic(int i) {
-		
-		this.soundManager.setFile(i);
-		this.soundManager.play();
-		this.soundManager.loop();
-	}
-	
-	// Metodo per fermare il suono
-	public void stopMusic() {
-		
-		this.soundManager.stop();
-	}
 
 	// Metodo per riprodurre il suono di un effetto nel gioco
 	public void playSoundEffect(int i) {
@@ -337,6 +343,10 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public void setFlagPlay(boolean flagPlay) {
 		this.flagPlay = flagPlay;
+	}
+
+	public KeyHandler getKeyH() {
+		return keyH;
 	}
     
 }

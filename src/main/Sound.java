@@ -16,6 +16,8 @@ public class Sound {
 	// Clip rappresenta il file audio attualmente caricato e pronto per la riproduzione
 	Clip clip;
 	
+	Clip music;
+	
 	// Array di URL che contiene i percorsi ai file audio del gioco
     // Dimensione fissa di 25 elementi per contenere diversi suoni
 	URL soundURL[] = new URL[25];
@@ -30,13 +32,14 @@ public class Sound {
 		soundURL[1] = getClass().getResource("/sounds/dooropen.wav");
 		soundURL[2] = getClass().getResource("/sounds/gameover.wav");
 		soundURL[3] = getClass().getResource("/sounds/receivedamage.wav");
-		soundURL[4] = getClass().getResource("/sounds/powerup.wav");
+		soundURL[4] = getClass().getResource("/sounds/invisiblePower.wav");
 		soundURL[5] = getClass().getResource("/sounds/unlock.wav");
-		soundURL[6] = getClass().getResource("/sounds/player_walking_on_dirt.wav");
+		soundURL[6] = getClass().getResource("/sounds/spit.wav");
 		soundURL[7] = getClass().getResource("/sounds/chest-unlocking.wav");
 		soundURL[8] = getClass().getResource("/sounds/atmosphere_music.wav");
 		soundURL[9] = getClass().getResource("/sounds/fuse.wav");
 		soundURL[10] = getClass().getResource("/sounds/explosion.wav");
+		soundURL[11] = getClass().getResource("/sounds/ambient_dungeon.wav");
 	}
 	
 	// Carica un file audio specifico nel Clip per la riproduzione
@@ -67,7 +70,7 @@ public class Sound {
     // Utile per musica di sottofondo o effetti ambientali
 	public void loop() {
 		
-		clip.loop(Clip.LOOP_CONTINUOUSLY);
+		music.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
 	// Ferma la riproduzione del suono corrente
@@ -78,4 +81,30 @@ public class Sound {
 		
 	}
 	
+	// Metodo per ripulire la traccia in esecuzione
+	public void stopAndReset() {
+	    if (clip != null) {
+	        clip.stop();
+	        clip.flush();
+	        clip.close();
+	        clip = null;
+	    }
+	}
+	
+	// Metodo per settare la musica da riprodurre
+	public void setMusic(int i) {
+	    try {
+	        if (music != null && music.isOpen()) {
+	        	music.stop();
+	        	music.flush();
+	        	music.close();
+	        }
+
+	        AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
+	        music = AudioSystem.getClip();
+	        music.open(ais);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

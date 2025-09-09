@@ -13,7 +13,7 @@ import main.KeyHandler;
 
 public abstract class SuperObject {
 	
-	private GamePanel gp;										// Riferimento al GamePanel
+	protected GamePanel gp;										// Riferimento al GamePanel
     protected BufferedImage image1,
     						image2,
     						image3;         					// Immagine dell'oggetto
@@ -23,14 +23,10 @@ public abstract class SuperObject {
     protected Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione
     protected int solidAreaDefaultX,
 	  			  solidAreaDefaultY;							// Posizione di default dell'area solida
-    private boolean objStatus = false;							// Stato dell'oggetto
-    private KeyHandler keyH;									// Riferimento al KeyHandler
+    protected boolean objStatus = false;						// Stato dell'oggetto
     protected ImageScaler iScaler;
-    
-    public SuperObject(KeyHandler keyH, GamePanel gp){
-    	this.keyH = keyH;
-    	this.gp = gp;
-    }
+    protected int width,										// Larghezza dell'oggetto
+	  			  height;										// Altezza dell'oggetto
     
     public SuperObject(GamePanel gp){
     	this.gp = gp;
@@ -50,9 +46,9 @@ public abstract class SuperObject {
 				
 			// Disegna l’immagine della tile sullo schermo
 		    if(objStatus == false) {
-		    	g2.drawImage(this.image1, screenX, screenY, 30, 30, null);
+		    	g2.drawImage(this.image1, screenX, screenY, width, height, null);
 		    }else {
-		    	g2.drawImage(this.image2, screenX, screenY, 30, 30, null);
+		    	g2.drawImage(this.image2, screenX, screenY, width, height, null);
 		    }
 		}
     }
@@ -62,11 +58,9 @@ public abstract class SuperObject {
     	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
     		this.gp.setGameState(this.gp.dialogueState);
     		
-    		if(keyH.ePressed == true) {
+    		if(this.gp.getKeyH().ePressed) {
     			this.objStatus = true;
-    			this.gp.getPlayer().setNumberOfKey(this.gp.getPlayer().getNumberOfKey() + 1);
     			this.gp.setGameState(this.gp.playState);
-    			gp.playSoundEffect(7);
     		}
     	}
     }

@@ -86,7 +86,7 @@ public class CobraMonster extends Monsters{
     private void blind(boolean value) {
     	
     	if(value && this.flag) {
-    		
+    		gp.playSoundEffect(6);
     		gp.eManager.setLight(150);
     		
     		this.flag = false;

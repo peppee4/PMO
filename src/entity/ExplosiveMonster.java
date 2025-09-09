@@ -111,7 +111,7 @@ public class ExplosiveMonster extends Monsters {
 
 	    // Se entro la distanza massima
 	    if (distance <= 3 && this.flag) {
-	        this.setSpeed(2.7);
+	        this.setSpeed(2.9);
 	        this.gp.playSoundEffect(9);
 	        this.flag = false;
 	    }else if(distance > 3){
