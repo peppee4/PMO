@@ -239,15 +239,6 @@ public class Player extends Entity{
 			this.setSpeed(this.startSpeed);
 		}
 	}
-
-	// Getter e Setter
-	public int getCenterX() {
-		return this.centerX;
-	}
-
-	public int getCenterY() {
-		return this.centerY;
-	}
 	
 	public BufferedImage getImageIdle(int value) {
 		
@@ -266,9 +257,20 @@ public class Player extends Entity{
 		this.life = MAX_LIFE;
 		this.setWorldX(gp.getTileSize() * 23); 		// Coordinata x iniziale del Player
 		this.setWorldY(gp.getTileSize() * 24); 		// Coordinata y iniziale del Player
+		this.isInvincible = false;
+	    this.invincibilityCounter = 0;
 		this.setDirection("right");
 		this.setSpeed(3.5);
 		this.key = 0;
+	}
+	
+	// Getter e Setter
+	public int getCenterX() {
+		return this.centerX;
+	}
+
+	public int getCenterY() {
+		return this.centerY;
 	}
 
 	public double getLife() {

@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     private KeyHandler keyH = new KeyHandler(this);                         // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   					// Creazione di un gestore per le entità
-    public Sound soundManager = new Sound();								// Creazione del gestore dei suoni
+    public Sound soundManager = new Sound(this);								// Creazione del gestore dei suoni
     private UiManager ui = new UiManager(this);								// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;										// Variabile booleana per settare circonfernza luce che circonda 
     																		// il player nella schermata iniziale
@@ -83,6 +83,9 @@ public class GamePanel extends JPanel implements Runnable{
     	aSetter.setObject();    // Posizioniamo gli oggetti
         aSetter.setMonster();   // Posizioniamo i mostri
         
+        this.soundManager.setMusicVolume(ui.musicVolume);
+        this.soundManager.setSoundVolume(ui.soundVolume);
+        
         this.gameState = titleState;        
     }
     
@@ -92,6 +95,7 @@ public class GamePanel extends JPanel implements Runnable{
     	aSetter.setObject();   		    // Riposizioniamo gli oggetti
         aSetter.setMonster();   		// Riposizioniamo i mostri
         player.restorePlayerValues();   // Reseta i valori iniziali del player ad una nuova partita
+        
     }
     
     
@@ -138,7 +142,6 @@ public class GamePanel extends JPanel implements Runnable{
 		// Controlliamo lo stato del gioco e in base ad esso riproduciamo 
 		// una canzone differente
 		if(gameState == titleState && flagTitle == false) {
-			this.soundManager.stopAndReset();
 	        this.soundManager.setMusic(8);
 	        this.soundManager.loop();
 	        
@@ -146,7 +149,6 @@ public class GamePanel extends JPanel implements Runnable{
         	flagPlay = false;
         	
 		}else if(gameState == playState && flagPlay == false) {
-			this.soundManager.stopAndReset();
 		    this.soundManager.setMusic(11);
 		    this.soundManager.loop();
 		    

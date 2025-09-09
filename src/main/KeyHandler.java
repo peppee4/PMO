@@ -111,7 +111,7 @@ public class KeyHandler implements KeyListener{
             else if(code == KeyEvent.VK_D){
                 rightPressed = true;
             }
-            else if(code == KeyEvent.VK_I){
+            else if(code == KeyEvent.VK_ESCAPE){
             	gp.getUi().setPreviousState(gp.playState);
             	gp.setGameState(gp.optionsState);
             }

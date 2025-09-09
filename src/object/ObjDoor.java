@@ -41,7 +41,7 @@ public class ObjDoor extends SuperObject{
     
     @Override
     public void update() {
-    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false) && this.gp.getPlayer().getNumberOfKey() == 3) {
+    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false) && this.gp.getPlayer().getNumberOfKey() == 0) {
     		this.gp.setGameState(this.gp.dialogueState);
     		
     		if(this.gp.getKeyH().ePressed == true) {
@@ -50,7 +50,7 @@ public class ObjDoor extends SuperObject{
     			if(this.gp.levelNumber < 3) {
     				this.gp.levelNumber++;
         			this.gp.reset();
-        			this.gp.setGameState(this.gp.playState);
+        			this.gp.setGameState(this.gp.nextLevelState);
     			}
     		}
     	}

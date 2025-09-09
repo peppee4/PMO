@@ -29,8 +29,8 @@ public class UiManager {
 	private int xMonster;
 	private int yMonster;
 	private int optionsCommandNum = 0;
-	private int soundVolume = 50; 
-	private int musicVolume = 50; 
+	public int soundVolume = 50; 
+	public int musicVolume = 50; 
 	
 	private int previousState = 0;
 	
@@ -107,7 +107,8 @@ public class UiManager {
 	
 	private void drawNextLevelState() {
 		// TODO Auto-generated method stub
-		
+		g2.setColor(new Color(0, 0, 0, 150)); // Nero semitrasparente
+		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 	}
 
 	// Metodo per disegnare a schermo il numero di chiavi in possesso del player
@@ -546,22 +547,35 @@ public class UiManager {
 	
 	// Cambia il valore di un'opzione (chiamato quando si preme LEFT/RIGHT)
 	public void changeOptionValue(boolean increase) {
-		switch(optionsCommandNum) {
-			case 0: // Music Volume
-				if(increase && musicVolume < 100) 
-					musicVolume += 10;
-				else if(!increase && musicVolume > 0) 
-					musicVolume -= 10;
-				break;
-			case 1: // Sound Volume
-				if(increase && soundVolume < 100) 
-					soundVolume += 10;
-				else if(!increase && soundVolume > 0) 
-					soundVolume -= 10;
-				break;
-			case 2: // Back - non fa nulla qui, gestito nel KeyHandler
-				break;
-		}
+	    switch(optionsCommandNum) {
+	        case 0: // Music Volume
+	            if(increase && musicVolume < 100) {
+	                musicVolume += 10;
+	                // AGGIUNGI QUESTA RIGA: applica il nuovo volume
+	                gp.soundManager.setMusicVolume(musicVolume);
+	            }
+	            else if(!increase && musicVolume > 0) {
+	                musicVolume -= 10;
+	                // AGGIUNGI QUESTA RIGA: applica il nuovo volume
+	                gp.soundManager.setMusicVolume(musicVolume);
+	            }
+	            break;
+	        case 1: // Sound Volume
+	        	if(increase && soundVolume < 100) {
+	                soundVolume += 10;
+	                // AGGIUNGI QUESTE RIGHE: applica il volume e riproduci suono di test
+	                gp.soundManager.setSoundVolume(soundVolume);
+	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
+	            }
+	            else if(!increase && soundVolume > 0) {
+	                soundVolume -= 10;
+	                // AGGIUNGI QUESTE RIGHE: applica il volume e riproduci suono di test
+	                gp.soundManager.setSoundVolume(soundVolume);
+	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
+	            }
+	        case 2: // Back
+	            break;
+	    }
 	}
 		
 	// Gestisce l'azione quando si preme INVIO nel menu opzioni
