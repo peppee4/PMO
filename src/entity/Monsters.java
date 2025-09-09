@@ -29,6 +29,8 @@ public class Monsters extends Entity {
 	protected ArrayList<Clip> clips;			// Suoni del mostro
 	public boolean alive;						// Variabile per capire se stampare o meno il mostro
 	
+	private boolean invincibleTime = false;             // Tempo in cui il player è invincibile
+	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
 		this.gp = gp;
@@ -117,10 +119,8 @@ public class Monsters extends Entity {
 		}
 		
 		// Se c'è collisione con il player
-		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 200){
+		if((gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 200) && !gp.getPlayer().isInvincible) {
 			if(gp.getPlayer().life > 0){
-				gp.getPlayer().life = gp.getPlayer().life - this.damage;
-				gp.playSoundEffect(3);
 				
 				if(this instanceof ExplosiveMonster) {
 					ExplosiveMonster e = (ExplosiveMonster) this;
@@ -128,6 +128,12 @@ public class Monsters extends Entity {
 				}
 				
 				this.lifeCounter = 0;
+
+				gp.getPlayer().takeDamage(this.damage);
+			    gp.playSoundEffect(3);
+			    this.lifeCounter = 0;
+				
+
 			}
 			
 			// Fine del gioco se la vita del player è 0
@@ -457,4 +463,13 @@ public class Monsters extends Entity {
 	        e.printStackTrace();
 	    }
 	}
+
+	public boolean isInvincibleTime() {
+		return invincibleTime;
+	}
+
+	public void setInvincibleTime(boolean invincibleTime) {
+		this.invincibleTime = invincibleTime;
+	}
+	
 }

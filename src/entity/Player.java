@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -30,7 +31,9 @@ public class Player extends Entity{
 	// Chiavi 
     private int key = 0;												// Chiavi per aprire la porta
 
-
+    public boolean isInvincible = false;
+    public int invincibilityCounter = 0;
+    public final int INVINCIBILITY_DURATION = 200;
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -150,6 +153,13 @@ public class Player extends Entity{
 		}else {
 			this.setDirection("stop");
 		}
+		
+		if (isInvincible) {
+            invincibilityCounter--;
+            if (invincibilityCounter <= 0) {
+                isInvincible = false;
+            }
+        }
 	}
 	
 	// Metodo per ridisegnare il player
@@ -191,7 +201,27 @@ public class Player extends Entity{
 				break;
 		}
 		
-		g2.drawImage(image, centerX, centerY, 30, 30, null);
+		
+		// Imposta la trasparenza se invincibile
+        if (isInvincible) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% trasparente
+        }
+        
+        // Disegna il player
+        g2.drawImage(image, centerX, centerY,30, 30, null);
+        
+        // Ripristina l'opacità normale
+        if (isInvincible) {
+            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
+        }
+	}
+	
+	public void takeDamage(double damage) {
+	    if (!isInvincible && life > 0) {
+	        life -= damage;  // o life -= (int)damage se life è int
+	        isInvincible = true;
+	        invincibilityCounter = INVINCIBILITY_DURATION;
+	    }
 	}
 
 	// Effetto dello slime sul player
