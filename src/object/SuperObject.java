@@ -66,6 +66,7 @@ public abstract class SuperObject {
     			this.objStatus = true;
     			this.gp.setNumberOfKey(this.gp.getNumberOfKey() + 1);
     			this.gp.setGameState(this.gp.playState);
+    			gp.playSoundEffect(7);
     		}
     	}
     }

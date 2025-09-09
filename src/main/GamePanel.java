@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     KeyHandler keyH = new KeyHandler(this);                             	// Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this, keyH);   			// Creazione di un gestore per le entità
-    private Sound soundManager = new Sound();								// Creazione del gestore dei suoni
+    public Sound soundManager = new Sound();								// Creazione del gestore dei suoni
     private UiManager ui = new UiManager(this);								// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;										// Variabile booleana per settare circonfernza luce che circonda 
     																		// il player nella schermata iniziale

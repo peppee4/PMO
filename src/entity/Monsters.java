@@ -4,7 +4,14 @@ import main.GamePanel;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Queue;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import java.awt.Rectangle;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Monsters extends Entity {
@@ -17,12 +24,15 @@ public class Monsters extends Entity {
 	protected int width,						// Larghezza del mostro
 				  height;						// Altezza del mostro
 	protected double damage;					// Danno inflitto
-	private int blindTime = 0;
+	private int blindTime = 0;					// Tempo di accecamento
+	private int soundCooldown = 0;				// Tempo di riproduzione del suono
+	protected ArrayList<Clip> clips;			// Suoni del mostro
 	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
 		this.gp = gp;
-
+		this.clips = new ArrayList<Clip>();
+		
 		// Imposta l'area solida per la collisione
 		solidArea = new Rectangle();
     }
@@ -193,7 +203,7 @@ public class Monsters extends Entity {
 		int[] nextStep = getNextStep(monsterTileX, monsterTileY, playerTileX, playerTileY);
 
 		// Se il player è entro 16 tile, il mostro inizia a inseguirlo
-		if(distance <= 20 && nextStep != null) {
+		if(distance <= 16 && nextStep != null) {
 			if(nextStep != null) {	
 				int nextCol = nextStep[0];
 				int nextRow = nextStep[1];
@@ -207,12 +217,16 @@ public class Monsters extends Entity {
 				}else if(monsterTileY > nextRow) {
 					this.setDirection("up");
 				}
+				
+				
 			}
 		}else {
 			this.actionCounter++;
 
 			randomDirection();
 		}
+		
+		tryPlayRandomSound();
 	}
 
 	// Calcola la distanza in tile tra due punti usando la ricerca in ampiezza (BFS)
@@ -350,5 +364,86 @@ public class Monsters extends Entity {
 
 			this.actionCounter = 0;
 		}
+	}
+	
+	protected Clip loadClip(String path) {
+	    try {
+	        AudioInputStream ais = AudioSystem.getAudioInputStream(getClass().getResource(path));
+	        Clip clip = AudioSystem.getClip();
+	        clip.open(ais);
+	        return clip;
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	    }
+	}
+
+	protected void tryPlayRandomSound() {
+		// Nessun suono caricato
+	    if (clips == null || clips.isEmpty()) {
+	    	return;
+		}
+	
+	    // Coordinate tile di mostro e player
+	    int monsterTileX = this.getWorldX() / gp.getTileSize();
+	    int monsterTileY = this.getWorldY() / gp.getTileSize();
+	    int playerTileX = gp.getPlayer().getWorldX() / gp.getTileSize();
+	    int playerTileY = gp.getPlayer().getWorldY() / gp.getTileSize();
+
+	    // Calcola distanza in tile usando il metodo BFS già esistente
+	    int distance = getTileDistance(monsterTileX, monsterTileY, playerTileX, playerTileY);
+	    
+	    // Se il player non è raggiungibile, esci
+	    if (distance == Integer.MAX_VALUE){
+	    	return; // nessun suono caricato
+		}
+
+	    // Se entro la distanza massima
+	    if (distance <= 20) {
+	        if (soundCooldown <= 0) {
+	            // Probabilità di verso (es. 5% per frame)
+	            if (Math.random() < 1.0) {
+	                // Scegli un clip casuale
+	                Clip clip = clips.get((int) (Math.random() * clips.size()));
+
+	                // Regola volume in base alla distanza
+	                setClipVolume(clip, distance);
+
+	                // Riproduci
+	                if (clip.isRunning()) {
+	                    clip.stop();
+	                }
+	                clip.setFramePosition(0);
+	                clip.start();
+	                
+	                // Imposta cooldown
+	                soundCooldown = 120;
+	            }
+	        }
+	    }
+
+	    // Decrementa cooldown
+	    if (soundCooldown > 0) {
+	        soundCooldown--;
+	    }
+	}
+
+	// Regola il volume in base alla distanza
+	private void setClipVolume(Clip clip, int distance) {
+	    try {
+	        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+	        // Volume normalizzato (1.0 vicino, 0.0 lontano)
+	        float volume = Math.max(0.7f, 0.8f - (distance / (float) 20));
+
+	        // Converte in dB
+	        float min = gainControl.getMinimum();
+	        float max = gainControl.getMaximum();
+	        float gain = min + (max - min) * volume;
+
+	        gainControl.setValue(gain);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 }

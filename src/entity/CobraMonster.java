@@ -39,8 +39,8 @@ public class CobraMonster extends Monsters{
         }
 
         // Impostiamo le dimensioni
-        width = 30;
-		height = 30;
+        width = 40;
+		height = 40;
 
         // Impostiamo il danno
 		damage = 0.5;

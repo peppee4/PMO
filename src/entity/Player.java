@@ -23,7 +23,8 @@ public class Player extends Entity{
 	protected double life;  						// Vita del player
 	private static final double MAX_LIFE = 3.0; 	// Valore massimo della vita che il player possiede
 	private double startSpeed;						// Velocità iniziale del player
-
+	public boolean walk;							// Variabile per controllare il movimento del Player
+	private int soundCount = 0;						// Contatore per la riproduzione corretta del suono
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -90,17 +91,17 @@ public class Player extends Entity{
 		// Ottiene le coordinate attuali del player
 		int worldX = getWorldX();
 		int worldY = getWorldY();
-
+		
 		if(keyH.upPressed == true || keyH.downPressed == true 
 				|| keyH.leftPressed == true || keyH.rightPressed == true) {
-
+			
 			// Gestione dell'input
 			if(keyH.upPressed == true){
-				this.setDirection("up");				
+				this.setDirection("up");
 			}else if(keyH.downPressed == true){
-				this.setDirection("down");				
+				this.setDirection("down");
 			}else if(keyH.leftPressed == true){
-				this.setDirection("left");				
+				this.setDirection("left");
 			}else if(keyH.rightPressed == true){
 				this.setDirection("right");
 			}
@@ -141,8 +142,6 @@ public class Player extends Entity{
 		}else {
 			this.setDirection("stop");
 		}
-		
-		
 	}
 	
 	// Metodo per ridisegnare il player

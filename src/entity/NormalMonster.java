@@ -52,6 +52,13 @@ public class NormalMonster extends Monsters {
 		this.setSpeed(2.7);
 
         this.setDirection("left");
+        
+        
+        
+        clips.add(loadClip("/sounds/NormalMonster_1.wav"));
+        clips.add(loadClip("/sounds/NormalMonster_2.wav"));
+        clips.add(loadClip("/sounds/NormalMonster_3.wav"));
+        clips.add(loadClip("/sounds/NormalMonster_4.wav"));
     }
     
     public BufferedImage getImageIdle(int value) {
