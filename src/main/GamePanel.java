@@ -63,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int dialogueState = 3;									// Finestra di dialogo
     public final int gameOverState = 4; 								// Schermata del game over
     public final int optionsControlState = 5; 							// Impostazioni
+    public final int nextLevelState = 6;
     public int levelNumber;												// Inizializziamo i livelli al primo
 
     // Costruttore della classe

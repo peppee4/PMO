@@ -99,8 +99,17 @@ public class UiManager {
 		if(gp.getGameState() == gp.gameOverState) {
 			drawGameOverScreen();
 		}
+		// NEXT LEVEL STATE
+		if(gp.getGameState() == gp.nextLevelState) {
+			drawNextLevelState();
+		}
 	}
 	
+	private void drawNextLevelState() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// Metodo per disegnare a schermo il numero di chiavi in possesso del player
 	private void drawKeys() {
 		// TODO Auto-generated method stub

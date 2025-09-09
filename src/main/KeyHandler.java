@@ -152,6 +152,10 @@ public class KeyHandler implements KeyListener{
                 }
             }
         }
+        // NEXT LEVEL STATE
+        else if(gp.getGameState() == gp.nextLevelState) {
+        	
+        }
     }
 
     // Metodo per dire cosa fare quando viene rilasciato un bottone 
