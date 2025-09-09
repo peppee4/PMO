@@ -8,6 +8,7 @@ import entity.InvisibleMonster;
 import entity.NormalMonster;
 import entity.SlimeMonster;
 import object.ObjChest;
+import object.ObjDoor;
 
 public class AssetSetter {
     GamePanel gp;                           // Riferimento al GamePanel
@@ -32,7 +33,11 @@ public class AssetSetter {
         	gp.obj[i] = new ObjChest(this.keyH, this.gp);
             gp.obj[i].setWorldX(gp.getTileSize() * spawnX);
             gp.obj[i].setWorldY(gp.getTileSize() * spawnY);
-       }   
+       }  
+        
+        gp.obj[3] = new ObjDoor(this.gp);
+        gp.obj[3].setWorldX(gp.getTileSize() * 23);
+        gp.obj[3].setWorldY(gp.getTileSize() * 23);
     }
 
     // Metodo per posizionare i mostri
