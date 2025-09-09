@@ -114,10 +114,6 @@ public class KeyHandler implements KeyListener{
             	gp.getUi().setPreviousState(gp.playState);
             	gp.setGameState(gp.optionsState);
             }
-        	
-        	/*if (upPressed || downPressed || leftPressed || rightPressed) {
-                gp.soundManager.playerWalking(true);
-            }*/
         }
         // DIALOGUE STATE -> Per quando dobbiamo interagire con un oggetto
         else if(gp.getGameState() == gp.dialogueState){
@@ -173,13 +169,7 @@ public class KeyHandler implements KeyListener{
             rightPressed = false;
         }else if(code == KeyEvent.VK_E){
         	ePressed = false;
-        }
-        
-        /*if (!upPressed && !downPressed && !leftPressed && !rightPressed) {
-            gp.soundManager.playerWalking(false);
-        }*/
-
-        
+        }   
     }
     
 }

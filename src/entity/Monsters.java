@@ -27,6 +27,7 @@ public class Monsters extends Entity {
 	private int blindTime = 0;					// Tempo di accecamento
 	private int soundCooldown = 0;				// Tempo di riproduzione del suono
 	protected ArrayList<Clip> clips;			// Suoni del mostro
+	public boolean alive;						// Variabile per capire se stampare o meno il mostro
 	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
@@ -114,12 +115,17 @@ public class Monsters extends Entity {
 		if(this.lifeCounter < 200){
 			this.lifeCounter++;
 		}
+		
 		// Se c'è collisione con il player
 		if(gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 200){
 			if(gp.getPlayer().life > 0){
 				gp.getPlayer().life = gp.getPlayer().life - this.damage;
 				gp.playSoundEffect(3);
 				
+				if(this instanceof ExplosiveMonster) {
+					ExplosiveMonster e = (ExplosiveMonster) this;
+					e.explosion();
+				}
 				
 				this.lifeCounter = 0;
 			}
@@ -158,6 +164,11 @@ public class Monsters extends Entity {
 			
 			// Resetta il contatore
 			this.spriteCounter = 0;
+		}
+		
+		if(this instanceof ExplosiveMonster) {
+			ExplosiveMonster e = (ExplosiveMonster) this;
+			e.attack();
 		}
 	}
 
@@ -230,7 +241,7 @@ public class Monsters extends Entity {
 	}
 
 	// Calcola la distanza in tile tra due punti usando la ricerca in ampiezza (BFS)
-	private int getTileDistance(int col1, int row1, int col2, int row2) {
+	protected int getTileDistance(int col1, int row1, int col2, int row2) {
 		int width = gp.getMaxWorldCol();					// Larghezza della mappa in tile
 		int height = gp.getMaxWorldRow();					// Altezza della mappa in tile	
 		boolean[][] visited = new boolean[width][height];	// Matrice per tracciare i tile visitati

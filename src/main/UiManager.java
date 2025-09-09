@@ -21,7 +21,6 @@ public class UiManager {
 	Font arial_40, arial_80B;
 	BufferedImage heart_full, heart_half, heart_blank, key_image;
 	
-	private boolean gameFinished = false;
 	private int commandNum = 0;
 	private int spriteCounter = 0;
 	private int spriteNum = 1;
@@ -32,8 +31,6 @@ public class UiManager {
 	private int optionsCommandNum = 0;
 	private int soundVolume = 50; 
 	private int musicVolume = 50; 
-	private int effectsVolume = 50; 
-	private boolean fullscreen = false; 
 	
 	private int previousState = 0;
 	
@@ -437,8 +434,8 @@ public class UiManager {
 	// Carichiamo le immagini una volta sola
 	public void loadMonsterImages() {
 	    try {
-	        monsterImage1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_right_1.png"));
-	        monsterImage2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster_right_2.png"));
+	        monsterImage1 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster/NormalMonster_right_1.png"));
+	        monsterImage2 = ImageIO.read(getClass().getResourceAsStream("/monsters/NormalMonster/NormalMonster_right_2.png"));
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }

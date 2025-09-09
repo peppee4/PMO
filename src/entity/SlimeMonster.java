@@ -24,14 +24,14 @@ public class SlimeMonster extends Monsters{
     private void setup(){
         // Carica l'immagine del mostro
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster_right_2.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_up_1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_up_2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_down_1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_down_2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_left_1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_left_2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_right_1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/monsters/SlimeMonster/SlimeMonster_right_2.png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -59,6 +59,9 @@ public class SlimeMonster extends Monsters{
 		this.setSpeed(1.5);
 
         this.setDirection("left");
+        
+        // Impostiamo il mostro su vivo
+        alive = true;
     }
 
     // Metodo per rialsciare slime

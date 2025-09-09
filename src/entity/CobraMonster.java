@@ -7,8 +7,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class CobraMonster extends Monsters{
-    private int slimeCounter;   // Slime presenti nella mappa
-    private int spawnSlime;     // Counter per lo spawn
     private GamePanel gp;       // Riferimento al GamePanel
     private boolean flag;		// Variabile per il controllo del cambio di visibilità
 
@@ -18,22 +16,20 @@ public class CobraMonster extends Monsters{
         setup();
 
         this.gp = gp;
-        this.slimeCounter = 0;
-        this.spawnSlime = 0;
         this.flag = true;
     }
 
     private void setup(){
         // Carica l'immagine del mostro
         try {
-            up1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster_right_2.png"));
+            up1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_up_1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_up_2.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_down_1.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_down_2.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_left_1.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_left_2.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_right_1.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/monsters/CobraMonster/CobraMonster_right_2.png"));
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -61,6 +57,9 @@ public class CobraMonster extends Monsters{
 		this.setSpeed(2);
 
         this.setDirection("left");
+        
+        // Impostiamo il mostro su vivo
+        alive = true;
     }
     
     public void blind(boolean value) {

@@ -29,7 +29,18 @@ public class TileMap {
 																	  			si trova in quella posizione. */
 		
 		getTileImage();
-		loadMap("/maps/finalMap1.txt");
+		
+		switch(gp.levelNumber) {
+    		case 1:
+    			loadMap("/maps/finalMap1.txt");
+    			break;
+    		case 2:
+    			loadMap("/maps/finalMap2.txt");
+    			break;
+    		case 3:
+    			loadMap("/maps/finalMap3.txt");
+    			break;
+		}
 	}
 	
 	public void setup(int index, String imageName, boolean collision) {

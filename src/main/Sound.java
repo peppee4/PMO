@@ -35,8 +35,8 @@ public class Sound {
 		soundURL[6] = getClass().getResource("/sounds/player_walking_on_dirt.wav");
 		soundURL[7] = getClass().getResource("/sounds/chest-unlocking.wav");
 		soundURL[8] = getClass().getResource("/sounds/atmosphere_music.wav");
-		
-		//setPlayerSound();
+		soundURL[9] = getClass().getResource("/sounds/fuse.wav");
+		soundURL[10] = getClass().getResource("/sounds/explosion.wav");
 	}
 	
 	// Carica un file audio specifico nel Clip per la riproduzione
@@ -78,31 +78,4 @@ public class Sound {
 		
 	}
 	
-	/*// Metodo per impostare il suono per la camminata del player
-	private void setPlayerSound() {
-		try {
-			// Crea un AudioInputStream dal file audio specificato
-			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[6]);
-			// Ottiene un nuovo Clip dal sistema audio
-			this.playerWalking = AudioSystem.getClip();
-			 // Apre il Clip con i dati audio dall'AudioInputStream
-			this.playerWalking.open(ais);
-			
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	// Metodo per la gestione della riproduzione della camminata del player
-	public void playerWalking(boolean value) {
-	    if (value) {
-	        if (!this.playerWalking.isRunning()) { // evita di riavviare se già in loop
-	        	this.playerWalking.loop(Clip.LOOP_CONTINUOUSLY);
-	        }
-	    } else {
-	        if (this.playerWalking.isRunning()) {
-	            this.playerWalking.stop();
-	        }
-	    }
-	}*/
 }

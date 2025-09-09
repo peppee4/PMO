@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable{
 	// FPS
 	int FPS = 60;
 	
-	private TileMap tileM = new TileMap(this);                          	// Creazione della mappa
+	private TileMap tileM;						                          	// Creazione della mappa
     KeyHandler keyH = new KeyHandler(this);                             	// Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this, keyH);   			// Creazione di un gestore per le entità
@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int dialogueState = 3;									// Finestra di dialogo
     public final int gameOverState = 4; 								// Schermata del game over
     public final int optionsControlState = 5; 							// Impostazioni
-    
+    public int levelNumber;												// Inizializziamo i livelli al primo
 
     // Costruttore della classe
     public GamePanel() {
@@ -72,10 +72,12 @@ public class GamePanel extends JPanel implements Runnable{
         this.setDoubleBuffered(true);                                       // Per ridurre il flickering
         this.addKeyListener(keyH);                                          // Aggiungiamo il Listener al pannello
         this.setFocusable(true);                                  
+        this.levelNumber = 1;
     }
 
     // Metodo per impostare gli oggetti di gioco
     public void setupGame() {
+    	this.tileM = new TileMap(this);
     	
     	aSetter.setObject();    // Posizioniamo gli oggetti
         aSetter.setMonster();   // Posizioniamo i mostri
@@ -86,6 +88,7 @@ public class GamePanel extends JPanel implements Runnable{
     
     // Metodo che resetta i valori a fine gioco
     public void reset() {
+    	this.tileM = new TileMap(this);	// Ricreiamo la mappa
     	aSetter.setObject();   		    // Riposizioniamo gli oggetti
         aSetter.setMonster();   		// Riposizioniamo i mostri
         player.restorePlayerValues();   // Reseta i valori iniziali del player ad una nuova partita
@@ -138,6 +141,10 @@ public class GamePanel extends JPanel implements Runnable{
 	        for(int i = 0; i < this.mons.length; i++){
 	            if(this.mons[i] != null){
 	                this.mons[i].update();
+	                
+	                if(!this.mons[i].alive) {
+	                	this.mons[i] = null;
+	                }
 	            }
 
                 if(this.mons[i] instanceof SlimeMonster){
@@ -220,7 +227,7 @@ public class GamePanel extends JPanel implements Runnable{
 
             // Mostri
             for(int i = 0; i < this.mons.length; i++){
-                if(this.mons[i] != null){
+                if(this.mons[i] != null && this.mons[i].alive){
                     this.mons[i].draw(g2, this);
                 }
             } 

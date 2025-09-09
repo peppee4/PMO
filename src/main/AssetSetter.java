@@ -3,6 +3,8 @@ package main;
 import java.util.Random;
 
 import entity.CobraMonster;
+import entity.ExplosiveMonster;
+import entity.InvisibleMonster;
 import entity.NormalMonster;
 import entity.SlimeMonster;
 import object.ObjChest;
@@ -35,28 +37,60 @@ public class AssetSetter {
 
     // Metodo per posizionare i mostri
     public void setMonster() {
-        
-        // NormalMonster
-        for(int i = 0; i < 12; i++){
-            this.findTile();
+    	
+        switch(gp.levelNumber) {
+        	case 1:
+        		for(int i = 0; i < 12; i++){
+                    this.findTile();
 
-            if(i < 4){
-                // Genera il mostro normale alle coordinate trovate
-            	gp.mons[i] = new NormalMonster(this.gp);
-                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-            }else if(i > 4 && i < 9){
-                // Genera il mostro slime alle coordinate trovate
-                gp.mons[i] = new SlimeMonster(this.gp);
-                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-            }else if(i > 8 && i < 12) {
-            	// Genera il mostro cobra alle coordinate trovate
-                gp.mons[i] = new CobraMonster(this.gp);
-                gp.mons[i].setWorldX(spawnX * gp.getTileSize());
-                gp.mons[i].setWorldY(spawnY * gp.getTileSize());
-            }
-        }    
+                    if(i < 4){
+                        // Genera il mostro normale alle coordinate trovate
+                    	gp.mons[i] = new NormalMonster(this.gp);
+                        gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                        gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+                    }else {
+                        // Genera il mostro slime alle coordinate trovate
+                        gp.mons[i] = new SlimeMonster(this.gp);
+                        gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                        gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+                    }
+                } 
+        		break;
+        	case 2:
+        		for(int i = 0; i < 12; i++){
+                    this.findTile();
+
+                    if(i < 4){
+                        // Genera il mostro normale alle coordinate trovate
+                    	gp.mons[i] = new InvisibleMonster(this.gp);
+                        gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                        gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+                    }else{
+                        // Genera il mostro slime alle coordinate trovate
+                        gp.mons[i] = new SlimeMonster(this.gp);
+                        gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                        gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+                    }
+                } 
+        		break;
+        	case 3:
+        		for(int i = 0; i < 12; i++){
+                    this.findTile();
+
+                    if(i < 4){
+                        // Genera il mostro normale alle coordinate trovate
+                    	gp.mons[i] = new ExplosiveMonster(this.gp);
+                        gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                        gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+                    }else{
+                        // Genera il mostro slime alle coordinate trovate
+                        gp.mons[i] = new CobraMonster(this.gp);
+                        gp.mons[i].setWorldX(spawnX * gp.getTileSize());
+                        gp.mons[i].setWorldY(spawnY * gp.getTileSize());
+                    }
+                } 
+        		break;
+        }
     }
 
     private void findTile(){
