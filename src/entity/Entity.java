@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
 	
-	private int worldX, 		// Coordinata orizzontale
-			    worldY;		    // Coordinata verticale
+	protected int worldX;		    // Coordinata verticale
+	protected int worldY;
 	private double speed;	    // Velocità di movimento
 	
 	protected Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione/

@@ -24,12 +24,11 @@ public class Monsters extends Entity {
 	protected int width,						// Larghezza del mostro
 				  height;						// Altezza del mostro
 	protected double damage;					// Danno inflitto
-	private int blindTime = 0;					// Tempo di accecamento
 	private int soundCooldown = 0;				// Tempo di riproduzione del suono
 	protected ArrayList<Clip> clips;			// Suoni del mostro
 	public boolean alive;						// Variabile per capire se stampare o meno il mostro
 	
-	private boolean invincibleTime = false;             // Tempo in cui il player è invincibile
+	private boolean invincibleTime = false;     // Tempo in cui il player è invincibile
 	
     // Costruttore
     public Monsters(String name, GamePanel gp) {
@@ -140,20 +139,6 @@ public class Monsters extends Entity {
 			if(gp.getPlayer().life <= 0){
 				gp.playSoundEffect(2);
 				gp.setGameState(gp.gameOverState);
-			}
-		}else if((gp.cChecker.checkPlayer(this) == true && this instanceof CobraMonster) || 
-				this.blindTime > 0) {
-			// Se il player si trova su almeno uno slime rallentalo
-			this.blindTime++;
-			CobraMonster c = (CobraMonster)this;
-			
-			if(this.blindTime > 0 && this.blindTime < 1000){
-				c.blind(true);
-				
-				this.blindTime++;
-			}else{
-				c.blind(false);
-				this.blindTime = 0;
 			}
 		}
 
@@ -471,5 +456,4 @@ public class Monsters extends Entity {
 	public void setInvincibleTime(boolean invincibleTime) {
 		this.invincibleTime = invincibleTime;
 	}
-	
 }

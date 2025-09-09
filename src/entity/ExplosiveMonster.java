@@ -1,5 +1,7 @@
 package entity;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -8,8 +10,12 @@ import javax.sound.sampled.Clip;
 import main.GamePanel;
 
 public class ExplosiveMonster extends Monsters {
-	private GamePanel gp;       // Riferimento al GamePanel
-	private boolean flag;		// Flag per il controllo dell'attacco
+	private GamePanel gp;       			// Riferimento al GamePanel
+	private boolean flag;					// Flag per il controllo dell'attacco
+	private boolean exploding = false;
+	private int explosionFrame = 0;
+	private int explosionCounter = 0;
+	private BufferedImage[] explosionSprites = new BufferedImage[5];
 	
     // Costruttore
     public ExplosiveMonster(GamePanel gp){
@@ -31,6 +37,12 @@ public class ExplosiveMonster extends Monsters {
 			left2 = ImageIO.read(getClass().getResourceAsStream("/monsters/ExplosiveMonster/ExplosiveMonster_left_2.png"));
 			right1 = ImageIO.read(getClass().getResourceAsStream("/monsters/ExplosiveMonster/ExplosiveMonster_right_1.png"));
 			right2 = ImageIO.read(getClass().getResourceAsStream("/monsters/ExplosiveMonster/ExplosiveMonster_right_2.png"));
+			explosionSprites[0] = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/explosion_1.png"));
+	        explosionSprites[1] = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/explosion_2.png"));
+	        explosionSprites[2] = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/explosion_3.png"));
+	        explosionSprites[3] = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/explosion_4.png"));
+	        explosionSprites[4] = ImageIO.read(getClass().getResourceAsStream("/monsters/monstersElements/explosion_5.png"));
+
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -63,6 +75,25 @@ public class ExplosiveMonster extends Monsters {
         alive = true;
     }
     
+    @Override
+    public void update() {
+        if (exploding) {
+            // Gestione animazione esplosione
+            explosionCounter++;
+            if (explosionCounter % 10 == 0) {
+                explosionFrame++;
+                if (explosionFrame >= explosionSprites.length) {
+                    alive = false;
+                    return;
+                }
+            }
+            return; // Non fare altro mentre esplode
+        }
+
+        // Se non esplode, esegue la logica standard dei mostri
+        super.update();
+    }
+    
     public void attack() {
     	// Coordinate tile di mostro e player
 	    int monsterTileX = this.getWorldX() / gp.getTileSize();
@@ -90,7 +121,29 @@ public class ExplosiveMonster extends Monsters {
     }
     
     public void explosion() {
-    	this.gp.playSoundEffect(10);
-    	alive = false;
+        gp.playSoundEffect(10); // suono
+        exploding = true;       // attiva stato esplosione
+        explosionFrame = 0;     // parte dal primo sprite
+        explosionCounter = 0;
+    }
+
+    @Override
+    public void draw(Graphics2D g2, GamePanel gp) {
+    	int screenX = getWorldX() - gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX();
+		int screenY = getWorldY() - gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY();
+		
+		if(getWorldX() + gp.getTileSize() > gp.getPlayer().getWorldX() - gp.getPlayer().getCenterX() &&
+			    getWorldX() - gp.getTileSize() < gp.getPlayer().getWorldX() + gp.getPlayer().getCenterX() &&
+			    getWorldY() + gp.getTileSize() > gp.getPlayer().getWorldY()- gp.getPlayer().getCenterY() &&
+	            getWorldY() - gp.getTileSize() < gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY()) {
+		
+			if (exploding) {
+				// Disegna il frame corrente dell'esplosione
+				g2.drawImage(explosionSprites[explosionFrame], screenX, screenY, width, height, null);
+			} else {
+				// Comportamento normale: usa il draw della superclasse
+				super.draw(g2, gp);
+        	}
+		}
     }
 }

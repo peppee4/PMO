@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 public class CobraMonster extends Monsters{
     private GamePanel gp;       // Riferimento al GamePanel
     private boolean flag;		// Variabile per il controllo del cambio di visibilità
+    private int blindTime = 0;	// Tempo di accecamento
 
     // Costruttore
     public CobraMonster(GamePanel gp){
@@ -62,7 +63,27 @@ public class CobraMonster extends Monsters{
         alive = true;
     }
     
-    public void blind(boolean value) {
+    @Override
+    public void update() {
+        if ((gp.cChecker.checkPlayer(this) == true) || 
+				this.blindTime > 0) {
+        	// Se il player si trova su almeno uno slime rallentalo
+        	this.blindTime++;
+        	CobraMonster c = (CobraMonster)this;
+        				
+        	if(this.blindTime > 0 && this.blindTime < 1000){
+        		c.blind(true);
+        		this.blindTime++;
+        	}else{
+        		c.blind(false);
+        		this.blindTime = 0;
+        	}
+        }
+
+        super.update();
+    }
+    
+    private void blind(boolean value) {
     	
     	if(value && this.flag) {
     		
