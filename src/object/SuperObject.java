@@ -64,7 +64,7 @@ public abstract class SuperObject {
     		
     		if(keyH.ePressed == true) {
     			this.objStatus = true;
-    			this.gp.setNumberOfKey(this.gp.getNumberOfKey() + 1);
+    			this.gp.getPlayer().setNumberOfKey(this.gp.getPlayer().getNumberOfKey() + 1);
     			this.gp.setGameState(this.gp.playState);
     			gp.playSoundEffect(7);
     		}

@@ -25,6 +25,12 @@ public class Player extends Entity{
 	private double startSpeed;						// Velocità iniziale del player
 	public boolean walk;							// Variabile per controllare il movimento del Player
 	private int soundCount = 0;						// Contatore per la riproduzione corretta del suono
+
+	
+	// Chiavi 
+    private int key = 0;												// Chiavi per aprire la porta
+
+
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -37,6 +43,8 @@ public class Player extends Entity{
 		this.life = 3.0;													// Imposta la vita iniziale del player
 		
 		this.slowtime = 0;													// Inizializziamo il tempo di rallentamento
+		
+		this.key = 0;														// Inizializziamo il numero di chiavi
 
 		// Imposta l'area solida per la collisione
 		solidArea = new Rectangle();
@@ -230,6 +238,7 @@ public class Player extends Entity{
 		this.setWorldY(gp.getTileSize() * 24); 		// Coordinata y iniziale del Player
 		this.setDirection("right");
 		this.setSpeed(3.5);
+		this.key = 0;
 	}
 
 	public double getLife() {
@@ -242,6 +251,14 @@ public class Player extends Entity{
 
 	public static double getMaxLife() {
 		return MAX_LIFE;
+	}
+	
+	public int getNumberOfKey() {
+		return this.key;
+	}
+	
+	public void setNumberOfKey(int value) {
+		this.key = value;
 	}
 
 }

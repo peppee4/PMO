@@ -25,11 +25,12 @@ public class AssetSetter {
 
         // Chest
         for(int i = 0; i < 3; i++) {
+    	
         	this.findTile();
         	gp.obj[i] = new ObjChest(this.keyH, this.gp);
             gp.obj[i].setWorldX(gp.getTileSize() * spawnX);
             gp.obj[i].setWorldY(gp.getTileSize() * spawnY);
-        }
+       }   
     }
 
     // Metodo per posizionare i mostri

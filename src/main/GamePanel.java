@@ -64,8 +64,6 @@ public class GamePanel extends JPanel implements Runnable{
     public final int gameOverState = 4; 								// Schermata del game over
     public final int optionsControlState = 5; 							// Impostazioni
     
-    // Chiavi 
-    private int key = 0;												// Chiavi per aprire la porta
 
     // Costruttore della classe
     public GamePanel() {
@@ -333,11 +331,4 @@ public class GamePanel extends JPanel implements Runnable{
 		this.flagPlay = flagPlay;
 	}
     
-	public int getNumberOfKey() {
-		return this.key;
-	}
-	
-	public void setNumberOfKey(int value) {
-		this.key = value;
-	}
 }

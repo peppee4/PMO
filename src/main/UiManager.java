@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import entity.Player;
 import object.ObjHeart;
+import object.ObjKey;
 import object.SuperObject;
 
 public class UiManager {
@@ -18,7 +19,7 @@ public class UiManager {
 	GamePanel gp;
 	Graphics2D g2;
 	Font arial_40, arial_80B;
-	BufferedImage heart_full, heart_half, heart_blank;
+	BufferedImage heart_full, heart_half, heart_blank, key_image;
 	
 	private boolean gameFinished = false;
 	private int commandNum = 0;
@@ -58,6 +59,11 @@ public class UiManager {
 		heart_full = heart.getImage1();
 		heart_half = heart.getImage2();
 		heart_blank = heart.getImage3();
+		
+		// Creiamo l'immagine della chiave a schermo che informerà il player 
+		// riguardo al numero di chiavi in suo possesso
+		SuperObject key = new ObjKey(gp);
+		key_image = key.getImage1();
 	}
 	
 	public void draw(Graphics2D g2) {
@@ -85,6 +91,7 @@ public class UiManager {
 		// PLAY STATE
 		if(gp.getGameState() == gp.playState) {
 			drawPlayerLife();
+			drawKeys();
 		}
 		
 		// FINESTRA DIALOGHI
@@ -97,6 +104,22 @@ public class UiManager {
 		}
 	}
 	
+	// Metodo per disegnare a schermo il numero di chiavi in possesso del player
+	private void drawKeys() {
+		// TODO Auto-generated method stub
+	    
+	    int y = (int)(gp.getTileSize() * 6.5) / 2;
+	    int x = (int)(gp.getTileSize() * (28.5)) / 2;
+        
+	    int numberOfKeys = gp.getPlayer().getNumberOfKey();
+	    
+	    for(int i = 0; i < numberOfKeys; i++) {
+	        x = (int)(gp.getTileSize() * (28.5 - i)) / 2;
+	        g2.drawImage(key_image, x, y, null);
+	    }
+	}
+
+	// Metodo per disegnare a schermo il numero di cuori del player
 	private void drawPlayerLife() {
 		
 		int x = (int)(gp.getTileSize() * 10.5) / 2;
