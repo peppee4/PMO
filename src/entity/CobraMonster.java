@@ -87,11 +87,11 @@ public class CobraMonster extends Monsters{
     	
     	if(value && this.flag) {
     		gp.playSoundEffect(6);
-    		gp.eManager.setLight(150);
+    		gp.getEManger().setLight(150);
     		
     		this.flag = false;
     	}else if(!value && !this.flag) {
-    		gp.eManager.setLight(400);
+    		gp.getEManger().setLight(400);
     		this.flag = true;
     	}
     }

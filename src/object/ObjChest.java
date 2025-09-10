@@ -42,11 +42,11 @@ public class ObjChest extends SuperObject{
     @Override
     public void update() {
     	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
-    		this.gp.setGameState(this.gp.dialogueState);
+    		this.gp.setGameState(this.gp.getDialogueState());
     		
     		if(this.gp.getKeyH().ePressed == true) {
     			this.objStatus = true;
-    			this.gp.setGameState(this.gp.playState);
+    			this.gp.setGameState(this.gp.getPlayState());
     			this.gp.getPlayer().setNumberOfKey(this.gp.getPlayer().getNumberOfKey() + 1);
     			gp.playSoundEffect(7);
     		}

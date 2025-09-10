@@ -56,11 +56,11 @@ public abstract class SuperObject {
     // Metodo per l'interazione con il player
     public void update() {
     	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
-    		this.gp.setGameState(this.gp.dialogueState);
+    		this.gp.setGameState(this.gp.getDialogueState());
     		
     		if(this.gp.getKeyH().ePressed) {
     			this.objStatus = true;
-    			this.gp.setGameState(this.gp.playState);
+    			this.gp.setGameState(this.gp.getPlayState());
     		}
     	}
     }

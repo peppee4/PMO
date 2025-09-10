@@ -32,8 +32,7 @@ public class ObjDoor extends SuperObject{
 
      	// Impostiamo le dimensioni
         width = 60;
-		height = 60;
-     	
+		height = 60;     	
      	// Posizione di default dell'area solida
      	solidAreaDefaultX = solidArea.x;
      	solidAreaDefaultY = solidArea.y;
@@ -42,18 +41,18 @@ public class ObjDoor extends SuperObject{
     @Override
     public void update() {
     	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false) && this.gp.getPlayer().getNumberOfKey() == 3) {
-    		this.gp.setGameState(this.gp.dialogueState);
+    		this.gp.setGameState(this.gp.getDialogueState());
     		
     		if(this.gp.getKeyH().ePressed == true) {
     			this.objStatus = true;
     			gp.playSoundEffect(1);
     			if(this.gp.levelNumber < 3) {
-    				this.gp.setGameState(this.gp.nextLevelState);
+    				this.gp.setGameState(this.gp.getNextLevelState());
     				this.gp.levelNumber++;
         			this.gp.reset();
         			
     			} else {
-    				this.gp.setGameState(this.gp.nextLevelState);
+    				this.gp.setGameState(this.gp.getNextLevelState());
     				this.gp.levelNumber++;
     			}
     		}

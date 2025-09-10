@@ -697,25 +697,25 @@ public class UiManager {
 	            if(increase && musicVolume < 100) {
 	                musicVolume += 10;
 	                // applica il nuovo volume
-	                gp.soundManager.setMusicVolume(musicVolume);
+	                gp.getSoundManager().setMusicVolume(musicVolume);
 	            }
 	            else if(!increase && musicVolume > 0) {
 	                musicVolume -= 10;
 	                // applica il nuovo volume
-	                gp.soundManager.setMusicVolume(musicVolume);
+	                gp.getSoundManager().setMusicVolume(musicVolume);
 	            }
 	            break;
 	        case 1: // Sound Volume
 	        	if(increase && soundVolume < 100) {
 	                soundVolume += 10;
 	                // applica il volume e riproduci suono di test
-	                gp.soundManager.setSoundVolume(soundVolume);
+	                gp.getSoundManager().setSoundVolume(soundVolume);
 	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
 	            }
 	            else if(!increase && soundVolume > 0) {
 	                soundVolume -= 10;
 	                // applica il volume e riproduci suono di test
-	                gp.soundManager.setSoundVolume(soundVolume);
+	                gp.getSoundManager().setSoundVolume(soundVolume);
 	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
 	            }
 	        case 2: // Back
