@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable{
     private KeyHandler keyH = new KeyHandler(this);                         // Creazione di un gestore degli eventi della tastiera
     public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
     public AssetSetter aSetter = new AssetSetter(this);   					// Creazione di un gestore per le entità
-    public Sound soundManager = new Sound(this);								// Creazione del gestore dei suoni
+    public Sound soundManager = new Sound();								// Creazione del gestore dei suoni
     private UiManager ui = new UiManager(this);								// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;										// Variabile booleana per settare circonfernza luce che circonda 
     																		// il player nella schermata iniziale
@@ -64,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable{
     public final int gameOverState = 4; 								// Schermata del game over
     public final int optionsControlState = 5; 							// Impostazioni
     public final int nextLevelState = 6;
+    public final int tutorialState = 7;
     public int levelNumber;												// Inizializziamo i livelli al primo
 
     // Costruttore della classe
@@ -212,14 +213,10 @@ public class GamePanel extends JPanel implements Runnable{
         if(gameState == titleState && flagTitle == false) {
         	
         	eManager.setLight(1200);
-        	//flagTitle = true;
-        	//flagPlay = false;
         }
         else if(gameState == playState && flagPlay == false) {
         	
         	eManager.setLight(400);
-        	//flagPlay = true;
-        	//flagTitle = false;
         }
         
         if(gameState == titleState) {

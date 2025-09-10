@@ -23,7 +23,9 @@ public class AssetSetter {
 
     // Metodo per posizionare gli oggetti di gioco
     public void setObject(){
-
+    	
+    	resetObject();
+    	
         // Chest
         for(int i = 0; i < 3; i++) {
     	
@@ -38,8 +40,14 @@ public class AssetSetter {
         gp.obj[3] = new ObjDoor(this.gp);
         gp.obj[3].setWorldX(gp.getTileSize() * spawnX);
         gp.obj[3].setWorldY(gp.getTileSize() * spawnY);
+       
     }
-
+    
+    private void resetObject() {
+    	for(int i = 0; i < gp.obj.length; i++) {
+    		gp.obj[i] = null;
+    	}
+    }
     // Metodo per posizionare i mostri
     public void setMonster() {
     	

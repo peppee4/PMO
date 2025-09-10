@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import entity.Player;
+import object.ObjDoor;
 import object.ObjHeart;
 import object.ObjKey;
 import object.SuperObject;
@@ -29,8 +30,8 @@ public class UiManager {
 	private int xMonster;
 	private int yMonster;
 	private int optionsCommandNum = 0;
-	public int soundVolume = 50; 
-	public int musicVolume = 50; 
+	public int soundVolume = 100; 
+	public int musicVolume = 100; 
 	
 	private int previousState = 0;
 	
@@ -76,39 +77,169 @@ public class UiManager {
 		} 
 		
 		// OPTIONS STATE
-		if(gp.getGameState() == gp.optionsState) {
+		else if(gp.getGameState() == gp.optionsState) {
 			drawOptionsScreen();
 		}
 		
 		// OPTIONS STATE
-		if(gp.getGameState() == gp.optionsControlState) {
+		else if(gp.getGameState() == gp.optionsControlState) {
 			drawOptionsControlScreen();
 		}
 		
 		// PLAY STATE
-		if(gp.getGameState() == gp.playState) {
+		else if(gp.getGameState() == gp.playState) {
 			drawPlayerLife();
 			drawKeys();
 		}
 		
 		// FINESTRA DIALOGHI
-		if(gp.getGameState() == gp.dialogueState) {
+		else if(gp.getGameState() == gp.dialogueState) {
 			drawDialogueScreen("Premi E per interagire");
 		}
 		// GAME OVER STATE
-		if(gp.getGameState() == gp.gameOverState) {
+		else if(gp.getGameState() == gp.gameOverState) {
 			drawGameOverScreen();
 		}
 		// NEXT LEVEL STATE
-		if(gp.getGameState() == gp.nextLevelState) {
+		else if(gp.getGameState() == gp.nextLevelState) {
 			drawNextLevelState();
+		}
+		// TUTORIAL STATE
+		else if(gp.getGameState() == gp.tutorialState) {
+			drawTutorialState();
 		}
 	}
 	
-	private void drawNextLevelState() {
-		// TODO Auto-generated method stub
-		g2.setColor(new Color(0, 0, 0, 150)); // Nero semitrasparente
+
+	private void drawTutorialState() {
+		
+		// Sfondo semi-trasparente
+		g2.setColor(Color.DARK_GRAY);
 		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+
+		int x = (gp.getTileSize() * 11) / 2;
+		int y = (gp.getTileSize() * 7) / 2;
+		int width = (gp.getScreenWidth() - (gp.getTileSize() * 2)) / 2;
+		int height = (gp.getTileSize() * 5);
+
+		drawSubWindow(x, y, width, height);
+
+    	// Font per il testo della descrizione
+    	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 20F));
+    	g2.setColor(Color.WHITE);
+
+    	// Testo della storia diviso in righe che si adattano alla finestra
+    	String[] textLines = {
+    			"Tre chiavi celate nell'oscurità attendono",
+    			"il prescelto. Solo chi le troverà tutte",
+    			"potrà varcare la porta ed abbandonare",
+    			"questo labirinto maledetto.",
+    			"",
+    			"Ma bada: i mostri non conoscono pietà,",
+    			"e la loro ombra ti seguirà ovunque…"
+    	};
+
+    	// Posizione iniziale del testo (con margine dalla finestra)
+    	int textY = y + 40; // Margine superiore
+    	int lineHeight = 25; // Spazio tra le righe
+
+    	// Disegna ogni riga di testo
+    	for (int i = 0; i < textLines.length; i++) {
+    		if (!textLines[i].isEmpty()) { // Salta le righe vuote (per gli spazi)
+    			g2.drawString(textLines[i], this.getXForCenteredText(textLines[i]), textY + (i * lineHeight));
+    		}
+    	}
+
+    	// Bottone BACK
+    	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
+    	String backText = "> BACK";
+    	int backX = this.getXForCenteredText(backText);
+    	int backY = y + height - 30; // Posiziona il bottone verso il basso della finestra
+    	g2.setColor(Color.YELLOW);
+    	g2.drawString(backText, backX, backY);
+	}
+
+	private void drawNextLevelState() {
+	    // Sfondo nero
+	    g2.setColor(Color.BLACK);
+	    g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
+
+	    // Posizione e dimensioni della finestra
+	    int x = (gp.getTileSize() * 11) / 2;
+	    int y = (gp.getTileSize() * 7) / 2;
+	    int width = (gp.getScreenWidth() - (gp.getTileSize() * 2)) / 2;
+	    int height = (gp.getTileSize() * 5);
+
+	    // Disegna la finestra di sfondo
+	    drawSubWindow(x, y, width, height);
+
+	    // Font per il testo principale
+	    g2.setFont(g2.getFont().deriveFont(Font.BOLD, 38F));
+
+	    // Testi basati sul livello completato
+	    String text1 = "";
+	    String text2 = "";
+
+	    if(gp.levelNumber == 2) {
+	        // Hai appena completato il livello 1
+	        text1 = "Complimenti hai superato";
+	        text2 = "il primo livello";
+	    } else if(gp.levelNumber == 3) {
+	        // Hai appena completato il livello 2
+	        text1 = "Complimenti hai superato";
+	        text2 = "il secondo livello";
+	    } else if(gp.levelNumber == 4) {
+	        // Hai appena completato il livello 3 (ultimo livello)
+	        text1 = "Complimenti hai superato";
+	        text2 = "il terzo livello";
+	    }
+
+	    // Disegna il primo testo
+	    g2.setColor(Color.WHITE);
+	    x = this.getXForCenteredText(text1);
+	    y = (int) (gp.getTileSize() * 4.5);
+	    g2.drawString(text1, x, y);
+
+	    // Disegna il secondo testo
+	    x = this.getXForCenteredText(text2);
+	    y += (int) (gp.getTileSize());
+	    g2.drawString(text2, x, y);
+
+	    // Font per le opzioni del menu
+	    g2.setFont(g2.getFont().deriveFont(30f));
+
+	    String text3 = "";
+	    
+	    // Se abbiamo completato tutti e 3 i livelli (levelNumber == 4), mostra solo "End Game"
+	    if(gp.levelNumber >= 4) {
+	        text3 = "End Game";
+	        x = getXForCenteredText(text3);
+	        y += gp.getTileSize() * 1.5;
+	        g2.drawString(text3, x, y);
+	        if(this.commandNum == 0) {
+	            g2.drawString(">", x - 40, y);
+	        }
+	    } else {
+	        // Ci sono ancora livelli da giocare, mostra entrambe le opzioni
+	        
+	        // NEXT LEVEL
+	        text3 = "Next Level";
+	        x = getXForCenteredText(text3);
+	        y += gp.getTileSize() * 1.5;
+	        g2.drawString(text3, x, y);
+	        if(this.commandNum == 0) {
+	            g2.drawString(">", x - 40, y);
+	        }
+	        
+	        // END GAME
+	        text3 = "End Game";
+	        x = getXForCenteredText(text3);
+	        y += 45;
+	        g2.drawString(text3, x, y);
+	        if(this.commandNum == 1) {
+	            g2.drawString(">", x - 40, y);
+	        }
+	    }
 	}
 
 	// Metodo per disegnare a schermo il numero di chiavi in possesso del player
@@ -160,7 +291,7 @@ public class UiManager {
 
 	private void drawOptionsControlScreen() {
 		// TODO Auto-generated method stub
-		g2.setColor(new Color(0, 0, 0, 150)); // Nero semitrasparente
+		g2.setColor(Color.DARK_GRAY); // Nero semitrasparente
 		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 		
 		int x = (int)(gp.getTileSize() * 14.5) / 2;
@@ -326,7 +457,7 @@ public class UiManager {
 		drawImageMonster();
 				
 		// MENU
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 48F));
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 38F));
 		
 		text = "NEW GAME";
 		x = this.getXForCenteredText(text);
@@ -344,7 +475,7 @@ public class UiManager {
 		
 		text = "OPTIONS";
 		x = this.getXForCenteredText(text);
-		y += gp.getTileSize() * 1;
+		y += gp.getTileSize() - 15;
 		g2.setColor(Color.black);
 		g2.drawString(text, x + 5, y + 5);
 		g2.setColor(Color.RED);
@@ -356,14 +487,28 @@ public class UiManager {
 			g2.drawString(">", x - gp.getTileSize(), y);
 		}
 		
-		text = "QUIT";
+		text = "TUTORIAL";
 		x = this.getXForCenteredText(text);
-		y += gp.getTileSize() * 1;
+		y += gp.getTileSize() - 15;
 		g2.setColor(Color.black);
 		g2.drawString(text, x + 5, y + 5);
 		g2.setColor(Color.RED);
 		g2.drawString(text, x, y);
 		if(this.commandNum == 2) {
+			g2.setColor(Color.black);
+			g2.drawString(">", x - gp.getTileSize() + 5, y + 5);
+			g2.setColor(Color.RED);
+			g2.drawString(">", x - gp.getTileSize(), y);
+		}
+		
+		text = "QUIT";
+		x = this.getXForCenteredText(text);
+		y += gp.getTileSize() - 15;
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+		g2.setColor(Color.RED);
+		g2.drawString(text, x, y);
+		if(this.commandNum == 3) {
 			g2.setColor(Color.black);
 			g2.drawString(">", x - gp.getTileSize() + 5, y + 5);
 			g2.setColor(Color.RED);
@@ -457,7 +602,7 @@ public class UiManager {
     	String text;
     	
     	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 15F));
-		text = "The Pyros Stone Alpha 0.1";
+		text = "The Pyros Stone Alpha 1.0";
 		x = 10; 
 		y = gp.getScreenHeight() - 10; 
 		g2.setColor(Color.white);
@@ -466,9 +611,9 @@ public class UiManager {
 	
 	// Schermata delle opzioni
 	public void drawOptionsScreen() {
-		// Sfondo semi-trasparente
 		
-		g2.setColor(new Color(0, 0, 0, 150)); // Nero semitrasparente
+		// Sfondo semi-trasparente
+		g2.setColor(Color.DARK_GRAY); // Nero semitrasparente
 		g2.fillRect(0, 0, gp.getScreenWidth(), gp.getScreenHeight());
 		
 		int x = (gp.getTileSize() * 11) / 2;
@@ -481,10 +626,10 @@ public class UiManager {
 		drawSubWindow(x, y, width, height);
 
 		// Titolo "OPTIONS"
-		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 72F));
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 42F));
 		String text = "OPTIONS";
 		 x = this.getXForCenteredText(text);
-		 y = (int) (gp.getTileSize() * 2);
+		 y = (int) (gp.getTileSize() * 4.5);
 
 		// Ombra del titolo
 		g2.setColor(Color.BLACK);
@@ -495,7 +640,7 @@ public class UiManager {
 
 		// Menu delle opzioni
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 30F));
-		int startY = y + (int)(gp.getTileSize() * 2.5);
+		int startY = y + (int)(gp.getTileSize() * 0.7);
 		int spacing = (int)(gp.getTileSize() * 0.8);
 
 		// VOLUME MUSICA
@@ -516,7 +661,7 @@ public class UiManager {
 		// BACK
 		text = "BACK";
 		x = this.getXForCenteredText(text);
-		drawOptionItem(text, x, startY + spacing * 4, 3);
+		drawOptionItem(text, x, startY + spacing * 3, 3);
 
 		// Istruzioni in basso
 		g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 14F));
@@ -551,25 +696,25 @@ public class UiManager {
 	        case 0: // Music Volume
 	            if(increase && musicVolume < 100) {
 	                musicVolume += 10;
-	                // AGGIUNGI QUESTA RIGA: applica il nuovo volume
+	                // applica il nuovo volume
 	                gp.soundManager.setMusicVolume(musicVolume);
 	            }
 	            else if(!increase && musicVolume > 0) {
 	                musicVolume -= 10;
-	                // AGGIUNGI QUESTA RIGA: applica il nuovo volume
+	                // applica il nuovo volume
 	                gp.soundManager.setMusicVolume(musicVolume);
 	            }
 	            break;
 	        case 1: // Sound Volume
 	        	if(increase && soundVolume < 100) {
 	                soundVolume += 10;
-	                // AGGIUNGI QUESTE RIGHE: applica il volume e riproduci suono di test
+	                // applica il volume e riproduci suono di test
 	                gp.soundManager.setSoundVolume(soundVolume);
 	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
 	            }
 	            else if(!increase && soundVolume > 0) {
 	                soundVolume -= 10;
-	                // AGGIUNGI QUESTE RIGHE: applica il volume e riproduci suono di test
+	                // applica il volume e riproduci suono di test
 	                gp.soundManager.setSoundVolume(soundVolume);
 	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
 	            }

@@ -13,7 +13,6 @@ import main.GamePanel;
 
 public class PlayerLighting {
 
-	GamePanel gp;
 	BufferedImage darknessFilter; // immagine usata come filtro di oscurità
 	
 	public PlayerLighting(GamePanel gp, int circleSize) {

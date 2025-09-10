@@ -37,13 +37,13 @@ public class KeyHandler implements KeyListener{
         		gp.playSoundEffect(0);
                 gp.getUi().minusCommandNum();
                 if(gp.getUi().getCommandNum() < 0) {
-                	gp.getUi().setCommandNum(2);
+                	gp.getUi().setCommandNum(3);
                 }
             }
             if(code == KeyEvent.VK_S){
             	gp.playSoundEffect(0);
             	gp.getUi().plusCommandNum();
-            	if(gp.getUi().getCommandNum() > 2) {
+            	if(gp.getUi().getCommandNum() > 3) {
                 	gp.getUi().setCommandNum(0);
                 }
             }
@@ -56,6 +56,9 @@ public class KeyHandler implements KeyListener{
                 	gp.setGameState(gp.optionsState);
                 }
         		if(gp.getUi().getCommandNum() == 2) {
+                	gp.setGameState(gp.tutorialState);
+                }
+        		if(gp.getUi().getCommandNum() == 3) {
                 	System.exit(0);
                 }
             }
@@ -147,7 +150,7 @@ public class KeyHandler implements KeyListener{
                 	gp.setGameState(gp.playState);
                 }else if(gp.getUi().getCommandNum() == 1) {
                 	gp.setFlagTitle(false);
-                	
+                	gp.levelNumber = 1;
                 	gp.reset();
                 	gp.setGameState(gp.titleState);
                 }
@@ -155,7 +158,54 @@ public class KeyHandler implements KeyListener{
         }
         // NEXT LEVEL STATE
         else if(gp.getGameState() == gp.nextLevelState) {
-        	
+            // Se abbiamo completato tutti i 3 livelli (levelNumber == 4), c'è solo "End Game"
+            if(gp.levelNumber >= 4) {
+                // Non c'è navigazione nel menu, c'è solo una opzione
+                if(code == KeyEvent.VK_ENTER) {
+                    // End Game (torna al menu principale)
+                    gp.setFlagPlay(false);
+                    gp.levelNumber = 1; // Riporta al livello 1 per il prossimo gioco
+                    gp.reset();
+                    gp.setGameState(gp.titleState);
+                }
+            } else {
+                // Menu normale con "Next Level" e "End Game" 
+                if(code == KeyEvent.VK_W){
+                    gp.getUi().minusCommandNum();
+                    if(gp.getUi().getCommandNum() < 0) {
+                        gp.getUi().setCommandNum(1);
+                    }
+                    gp.playSoundEffect(0);
+                }
+                if(code == KeyEvent.VK_S){
+                    gp.getUi().plusCommandNum();
+                    if(gp.getUi().getCommandNum() > 1) {
+                        gp.getUi().setCommandNum(0);
+                    }
+                    gp.playSoundEffect(0);
+                }
+                if(code == KeyEvent.VK_ENTER) {
+                    if(gp.getUi().getCommandNum() == 0) {
+                        // Next Level
+                        gp.setFlagPlay(false);
+                        gp.reset();
+                        gp.setGameState(gp.playState);
+                    }
+                    if(gp.getUi().getCommandNum() == 1) {
+                        // End Game
+                        gp.setFlagPlay(false);
+                        gp.levelNumber = 1; // Riporta al livello 1 per il prossimo gioco
+                        gp.reset();
+                        gp.setGameState(gp.titleState);
+                    }
+                }
+            }
+        }
+        // TUTORIAL STATE
+        else if(gp.getGameState() == gp.tutorialState) {
+        	if(code == KeyEvent.VK_ENTER) {
+        		gp.setGameState(gp.titleState); // Gestisce il BACK
+        	}
         }
     }
 

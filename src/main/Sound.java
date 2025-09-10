@@ -14,7 +14,6 @@ import javax.sound.sampled.FloatControl;
 
 public class Sound {
 
-	private GamePanel gp;
 	// Clip rappresenta il file audio attualmente caricato e pronto per la riproduzione
 	Clip clip;
 	
@@ -24,8 +23,8 @@ public class Sound {
     private FloatControl musicVolumeControl;
     private FloatControl soundVolumeControl;
     
-    private int currentMusicVolume = 50;  // Volume default 50%
-    private int currentSoundVolume = 50;  // Volume default 50%
+    private int currentMusicVolume = 100;  // Volume default 50%
+    private int currentSoundVolume = 100;  // Volume default 50%
 	
 	// Array di URL che contiene i percorsi ai file audio del gioco
     // Dimensione fissa di 25 elementi per contenere diversi suoni
@@ -33,7 +32,7 @@ public class Sound {
 	
 	// Costruttore che inizializza i percorsi dei file audio.
     // Carica i riferimenti ai file audio nelle risorse del progetto.
-	public Sound(GamePanel gp) {
+	public Sound() {
 		
 		soundURL[0] = getClass().getResource("/sounds/cursor.wav");
 		soundURL[1] = getClass().getResource("/sounds/dooropen.wav");
@@ -48,7 +47,6 @@ public class Sound {
 		soundURL[10] = getClass().getResource("/sounds/explosion.wav");
 		soundURL[11] = getClass().getResource("/sounds/ambient_dungeon.wav");
 		
-		this.gp = gp;
 	}
 	
 	// Carica un file audio specifico nel Clip per la riproduzione

@@ -204,8 +204,8 @@ public class Monsters extends Entity {
 
 		int[] nextStep = getNextStep(monsterTileX, monsterTileY, playerTileX, playerTileY);
 
-		// Se il player è entro 16 tile, il mostro inizia a inseguirlo
-		if(distance <= 16 && nextStep != null) {
+		// Se il player è entro 8s tile, il mostro inizia a inseguirlo
+		if(distance <= 8 && nextStep != null) {
 			if(nextStep != null) {	
 				int nextCol = nextStep[0];
 				int nextRow = nextStep[1];
