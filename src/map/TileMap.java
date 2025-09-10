@@ -11,26 +11,31 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.ImageScaler;
 
+//Classe che rappresenta la mappa del mondo e gestisce le tile
 public class TileMap {
 
-	GamePanel gp;
-	public Tile[] tile;
-	public int mapTileNumber[][];
-	private double zoom = 2.0;	
+	GamePanel gp;						// Riferimento al pannello di gioco
+	public Tile[] tile;					// Array contenente tutti i tipi di tile disponibili
+	public int mapTileNumber[][];		// Matrice 2D che rappresenta la mappa del mondo
+	private double zoom = 2.0;			// Zoom della visualizzazione
 	
+	// Costruttore
 	public TileMap(GamePanel gp) {
 		
 		this.gp = gp;
 		
-		tile = new Tile[20];                                                 /* Numero di tiles utilizzabili */
-		mapTileNumber = new int [gp.getMaxWorldCol()][gp.getMaxWorldRow()];  /* Crea una matrice 2D di interi 50×50, 
-																	            che rappresenta la mappa del mondo.
-																	  			Ogni cella della matrice indica quale tile 
-																	  			si trova in quella posizione. */
+		// Inizializza il umero di tiles utilizzabili 
+		tile = new Tile[20];
 		
+		// Crea una matrice 2D di interi 50×50, che rappresenta la mappa del mondo.
+		// Ogni cella della matrice indica quale tile si trova in quella posizione. 
+		mapTileNumber = new int [gp.getMaxWorldCol()][gp.getMaxWorldRow()];  
+		
+		// Carica le immagini dei tile
 		getTileImage();
 		
-		switch(gp.levelNumber) {
+		// Carica la mappa in base al livello attuale
+		switch(gp.getLevelNumber()) {
     		case 1:
     			loadMap("/maps/finalMap1.txt");
     			break;
@@ -43,6 +48,7 @@ public class TileMap {
 		}
 	}
 	
+	// Metodo per configurare un singolo tile
 	public void setup(int index, String imageName, boolean collision) {
 		ImageScaler iScaler = new ImageScaler();
 		
@@ -65,15 +71,17 @@ public class TileMap {
 		}
 	}
 	
+	// Metodo che crea i tile principali della mappa
 	public void getTileImage() {
 		
-		setup(0, "earth", false); // EARTH
-		setup(1, "wall", true); 	// WALL
+		setup(0, "earth", false); 	// Tile che rappresenta il pavimento
+		setup(1, "wall", true); 	// tile che rappresenta il muro
 	}
 	
+	// Metodo per disegnare la mappa sullo schermo
 	public void draw(Graphics2D g2) {
 		g2.translate(gp.getWidth()/2, gp.getHeight()/2); 	// Trasla il sistema di coordinate al centro dello schermo
-		g2.scale(zoom, zoom);
+		g2.scale(zoom, zoom);								// Applica lo zoom
 		g2.translate(-gp.getWidth()/2, -gp.getHeight()/2); 	// Riporta il sistema di coordinate all'angolo in alto a sinistra
 
 		// Variabili di appoggio
@@ -115,6 +123,7 @@ public class TileMap {
 		}
 	}
 	
+	// Metodo per caricare una mappa da un file di testo
 	public void loadMap(String filePath) {
 		
 		try {

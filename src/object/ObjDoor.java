@@ -46,14 +46,14 @@ public class ObjDoor extends SuperObject{
     		if(this.gp.getKeyH().isePressed() == true) {
     			this.objStatus = true;
     			gp.playSoundEffect(1);
-    			if(this.gp.levelNumber < 3) {
+    			if(this.gp.getLevelNumber() < 3) {
     				this.gp.setGameState(this.gp.getNextLevelState());
-    				this.gp.levelNumber++;
+    				this.gp.setLevelNumber(this.gp.getLevelNumber() + 1);
         			this.gp.reset();
         			
     			} else {
     				this.gp.setGameState(this.gp.getNextLevelState());
-    				this.gp.levelNumber++;
+    				this.gp.setLevelNumber(this.gp.getLevelNumber() + 1);
     			}
     		}
     	}

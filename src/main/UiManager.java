@@ -17,38 +17,40 @@ import object.SuperObject;
 
 public class UiManager {
 
-	GamePanel gp;
-	Graphics2D g2;
-	Font arial_40, arial_80B;
-	BufferedImage heart_full, heart_half, heart_blank, key_image;
+	GamePanel gp;               									// Riferimento al pannello di gioco
+    Graphics2D g2;              									// Oggetto grafico per il disegno
+    Font arial_40, arial_80B;   									// Font usati nella UI
+    BufferedImage heart_full, heart_half, heart_blank, key_image; 	// Immagini UI
+     
+    // Variabili di stato della UI
+    private int commandNum = 0;       					// Menu selezione principale
+    private int spriteCounter = 0;    					// Contatore per animazione sprite
+    private int spriteNum = 1;        					// Sprite attuale (1 o 2)
+    private int xPlayer, yPlayer;     					// Posizione animazione player nel menu
+    private int xMonster, yMonster;   					// Posizione animazione mostro nel menu
+    private int optionsCommandNum = 0;					// Opzione selezionata nel menu opzioni
+    private int soundVolume = 100;    					// Volume suoni
+    private int musicVolume = 100;    					// Volume musica
+    private int previousState = 0;    					// Salva stato precedente (es. per tornare da opzioni)
+
+    private BufferedImage monsterImage1, monsterImage2; // Immagini sprite mostro
 	
-	private int commandNum = 0;
-	private int spriteCounter = 0;
-	private int spriteNum = 1;
-	private int xPlayer;
-	private int yPlayer;
-	private int xMonster;
-	private int yMonster;
-	private int optionsCommandNum = 0;
-	public int soundVolume = 100; 
-	public int musicVolume = 100; 
-	
-	private int previousState = 0;
-	
-	
-	private BufferedImage monsterImage1, monsterImage2; // Immagini del mostro
-	
+    // Costruttore
 	public UiManager(GamePanel gp) {
 		this.gp = gp;
 		
+		// Inizializza i font
 		arial_40 = new Font("Arial", Font.PLAIN, 40);
 		arial_80B = new Font("Arial", Font.BOLD, 80);
 		
+		// Carica le immagini del mostro
 		loadMonsterImages();
 		
+		// Posizione iniziale animazione player
 		setxPlayer(gp.getScreenWidth()/2 - (gp.getTileSize()*2)/2);
 		setyPlayer((int) ((gp.getTileSize()* 2) +  (gp.getTileSize()* 3.35)));
 		
+		// Posizione iniziale animazione mostro
 		setxMonster((int) (gp.getScreenWidth()/3.5 - (gp.getTileSize()*2)/2));
 		setyMonster((int) ((gp.getTileSize()* 2) +  (gp.getTileSize()* 2.5)));
 		
@@ -64,6 +66,7 @@ public class UiManager {
 		key_image = key.getImage1();
 	}
 	
+	// Metodo principale per disegnare la UI in base allo stato di gioco
 	public void draw(Graphics2D g2) {
 		
 		this.g2 = g2;
@@ -110,7 +113,7 @@ public class UiManager {
 		}
 	}
 	
-
+	// Disegna la schermata del tutorial
 	private void drawTutorialState() {
 		
 		// Sfondo semi-trasparente
@@ -159,6 +162,7 @@ public class UiManager {
     	g2.drawString(backText, backX, backY);
 	}
 
+	// Disegna la schermata di fine livello
 	private void drawNextLevelState() {
 	    // Sfondo nero
 	    g2.setColor(Color.BLACK);
@@ -180,15 +184,15 @@ public class UiManager {
 	    String text1 = "";
 	    String text2 = "";
 
-	    if(gp.levelNumber == 2) {
+	    if(gp.getLevelNumber() == 2) {
 	        // Hai appena completato il livello 1
 	        text1 = "Complimenti hai superato";
 	        text2 = "il primo livello";
-	    } else if(gp.levelNumber == 3) {
+	    } else if(gp.getLevelNumber() == 3) {
 	        // Hai appena completato il livello 2
 	        text1 = "Complimenti hai superato";
 	        text2 = "il secondo livello";
-	    } else if(gp.levelNumber == 4) {
+	    } else if(gp.getLevelNumber() == 4) {
 	        // Hai appena completato il livello 3 (ultimo livello)
 	        text1 = "Complimenti hai superato";
 	        text2 = "il terzo livello";
@@ -211,7 +215,7 @@ public class UiManager {
 	    String text3 = "";
 	    
 	    // Se abbiamo completato tutti e 3 i livelli (levelNumber == 4), mostra solo "End Game"
-	    if(gp.levelNumber >= 4) {
+	    if(gp.getLevelNumber() >= 4) {
 	        text3 = "End Game";
 	        x = getXForCenteredText(text3);
 	        y += gp.getTileSize() * 1.5;
@@ -289,6 +293,7 @@ public class UiManager {
 	    }
 	}
 
+	// Disegna la schermata dei controlli
 	private void drawOptionsControlScreen() {
 		// TODO Auto-generated method stub
 		g2.setColor(Color.DARK_GRAY); // Nero semitrasparente
@@ -374,6 +379,7 @@ public class UiManager {
 
 	}
 
+	// Disegna la schermata del GameOver
 	private void drawGameOverScreen() {
 		// TODO Auto-generated method stub
 		// Sfondo semi-trasparente
@@ -415,6 +421,7 @@ public class UiManager {
 		}
 	}
 
+	// Disegna la schermata del menu principale
 	public void drawTitleScreen(){
 		
 		// TITLE NAME
@@ -516,6 +523,7 @@ public class UiManager {
 		}
 	}
 	
+	// Metodo per centrare il testo a schermo
 	public int getXForCenteredText(String text) {
 		
 		int length = (int)g2.getFontMetrics().getStringBounds(text, g2).getWidth();
@@ -524,6 +532,7 @@ public class UiManager {
 		return x;
 	}
 	
+	// Metodo per disegnare l'immagine del player nel menu
 	public void drawImagePlayer() {
 		
 		// Animazione sprite
@@ -555,6 +564,7 @@ public class UiManager {
 		}
 	}
 	
+	// Metodo per disegnare l'immagine del mostro nel menu
 	public void drawImageMonster() {
 		
 		// Animazione sprite
@@ -644,12 +654,12 @@ public class UiManager {
 		int spacing = (int)(gp.getTileSize() * 0.8);
 
 		// VOLUME MUSICA
-		text = "MUSIC VOLUME: " + musicVolume + "%";
+		text = "MUSIC VOLUME: " + getMusicVolume() + "%";
 		x = this.getXForCenteredText(text);
 		drawOptionItem(text, x, startY, 0);
 
 		// VOLUME SUONI
-		text = "SOUND VOLUME: " + soundVolume + "%";
+		text = "SOUND VOLUME: " + getSoundVolume() + "%";
 		x = this.getXForCenteredText(text);
 		drawOptionItem(text, x, startY + spacing, 1);
 
@@ -671,6 +681,7 @@ public class UiManager {
 		g2.drawString(text, x, (int)((gp.getTileSize()* 2) + (gp.getTileSize()* 6.8)));
 	}
 	
+	// Metodo per disegnare in base alla voce selezionata
 	private void drawOptionItem(String text, int x, int y, int itemIndex) {
 		// Ombra
 		g2.setColor(Color.BLACK);
@@ -694,28 +705,28 @@ public class UiManager {
 	public void changeOptionValue(boolean increase) {
 	    switch(optionsCommandNum) {
 	        case 0: // Music Volume
-	            if(increase && musicVolume < 100) {
-	                musicVolume += 10;
+	            if(increase && getMusicVolume() < 100) {
+	                musicVolume = getMusicVolume() + 10;
 	                // applica il nuovo volume
-	                gp.getSoundManager().setMusicVolume(musicVolume);
+	                gp.getSoundManager().setMusicVolume(getMusicVolume());
 	            }
-	            else if(!increase && musicVolume > 0) {
-	                musicVolume -= 10;
+	            else if(!increase && getMusicVolume() > 0) {
+	                musicVolume = getMusicVolume() - 10;
 	                // applica il nuovo volume
-	                gp.getSoundManager().setMusicVolume(musicVolume);
+	                gp.getSoundManager().setMusicVolume(getMusicVolume());
 	            }
 	            break;
 	        case 1: // Sound Volume
-	        	if(increase && soundVolume < 100) {
-	                soundVolume += 10;
+	        	if(increase && getSoundVolume() < 100) {
+	                soundVolume = getSoundVolume() + 10;
 	                // applica il volume e riproduci suono di test
-	                gp.getSoundManager().setSoundVolume(soundVolume);
+	                gp.getSoundManager().setSoundVolume(getSoundVolume());
 	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
 	            }
-	            else if(!increase && soundVolume > 0) {
-	                soundVolume -= 10;
+	            else if(!increase && getSoundVolume() > 0) {
+	                soundVolume = getSoundVolume() - 10;
 	                // applica il volume e riproduci suono di test
-	                gp.getSoundManager().setSoundVolume(soundVolume);
+	                gp.getSoundManager().setSoundVolume(getSoundVolume());
 	                gp.playSoundEffect(0); // Suono di test (cursor.wav)
 	            }
 	        case 2: // Back
@@ -755,7 +766,7 @@ public class UiManager {
 	    }
 	}
 	
-	//
+	// Metodo per disegnare una finestra a schermo
 	public void drawSubWindow(int x, int y, int width, int height) {
 		Color c = new Color(0,0,0,220);
 		g2.setColor(c);
@@ -766,6 +777,26 @@ public class UiManager {
 		g2.setStroke(new BasicStroke(5));
 		g2.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
 	}
+	
+	// Metodo per scorrere il menu
+	public void plusOptionsCommandNum() {
+		this.optionsCommandNum++;
+		if(this.optionsCommandNum > 3) { // 4 opzioni totali (0-3)
+			this.optionsCommandNum = 0;
+		}
+		gp.playSoundEffect(0);
+	}
+	
+	// Metodo per scorrere il menu
+	public void minusOptionsCommandNum() {
+		this.optionsCommandNum--;
+		if(this.optionsCommandNum < 0) {
+			this.optionsCommandNum = 3;
+		}
+		gp.playSoundEffect(0);
+	}
+	
+	// --- GETTER AND SETTER ---
 	
 	public int getPreviousState() {
 	    return previousState;
@@ -781,22 +812,6 @@ public class UiManager {
 		
 	public void setOptionsCommandNum(int optionsCommandNum) {
 		this.optionsCommandNum = optionsCommandNum;
-	}
-		
-	public void plusOptionsCommandNum() {
-		this.optionsCommandNum++;
-		if(this.optionsCommandNum > 3) { // 4 opzioni totali (0-3)
-			this.optionsCommandNum = 0;
-		}
-		gp.playSoundEffect(0);
-	}
-	
-	public void minusOptionsCommandNum() {
-		this.optionsCommandNum--;
-		if(this.optionsCommandNum < 0) {
-			this.optionsCommandNum = 3;
-		}
-		gp.playSoundEffect(0);
 	}
 	
 	public int getCommandNum() {
@@ -846,6 +861,14 @@ public class UiManager {
 
 	public void setyMonster(int yMonster) {
 		this.yMonster = yMonster;
+	}
+
+	public int getSoundVolume() {
+		return soundVolume;
+	}
+
+	public int getMusicVolume() {
+		return musicVolume;
 	}
 	
 }
