@@ -47,7 +47,7 @@ public class InvisibleMonster extends Monsters{
 		height = 50;
 
         // Impostiamo il danno
-		damage = 0.5;
+		damage = 1.0;
 
         // Imposta l'area solida per la collisione
 		setSolidAreaX(0);

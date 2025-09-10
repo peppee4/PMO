@@ -602,7 +602,7 @@ public class UiManager {
     	String text;
     	
     	g2.setFont(g2.getFont().deriveFont(Font.BOLD, 15F));
-		text = "The Pyros Stone Alpha 1.0";
+		text = "The Pyros Stone Alpha 1.1";
 		x = 10; 
 		y = gp.getScreenHeight() - 10; 
 		g2.setColor(Color.white);

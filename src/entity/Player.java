@@ -28,7 +28,7 @@ public class Player extends Entity{
 	private int soundCount = 0;						// Contatore per la riproduzione corretta del suono
 
 	
-	// Chiavi 
+	// Cwhiavi 
     private int key = 0;												// Chiavi per aprire la porta
 
     public boolean isInvincible = false;

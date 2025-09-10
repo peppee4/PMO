@@ -47,6 +47,10 @@ public class AssetSetter {
     	for(int i = 0; i < gp.obj.length; i++) {
     		gp.obj[i] = null;
     	}
+    	
+    	for(int i = 0; i < gp.slime.length; i++) {
+    		gp.slime[i] = null;
+    	}
     }
     // Metodo per posizionare i mostri
     public void setMonster() {
