@@ -129,7 +129,7 @@ public class Monsters extends Entity {
 				
 				this.lifeCounter = 0;
 
-				gp.getPlayer().takeDamage(this.damage);
+				gp.getPlayer().takeDamage(this.getDamage());
 			    gp.playSoundEffect(3);
 			    this.lifeCounter = 0;
 				
@@ -233,7 +233,7 @@ public class Monsters extends Entity {
 	}
 
 	// Calcola la distanza in tile tra due punti usando la ricerca in ampiezza (BFS)
-	protected int getTileDistance(int col1, int row1, int col2, int row2) {
+	public int getTileDistance(int col1, int row1, int col2, int row2) {
 		int width = gp.getMaxWorldCol();					// Larghezza della mappa in tile
 		int height = gp.getMaxWorldRow();					// Altezza della mappa in tile	
 		boolean[][] visited = new boolean[width][height];	// Matrice per tracciare i tile visitati
@@ -342,11 +342,11 @@ public class Monsters extends Entity {
 		return null;
 	}
 
-	private boolean alignedToTile() {
+	public boolean alignedToTile() {
 		return this.getWorldX() % gp.getTileSize() <= 2 && this.getWorldY() % gp.getTileSize() <= 2;
 	}
 
-	private void randomDirection(){
+	public void randomDirection(){
 		// Cambia direzione ogni 60 frame o se c'è una collisione
 		if(this.actionCounter >= 120 || collisionOn) {
 			int random = (int)(Math.random() * 60) + 1; // Numero casuale tra 1 e 100
@@ -460,5 +460,9 @@ public class Monsters extends Entity {
 
 	public boolean isAlive() {
 		return alive;
+	}
+
+	public double getDamage() {
+		return damage;
 	}
 }
