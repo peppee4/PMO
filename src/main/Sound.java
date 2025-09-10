@@ -17,14 +17,16 @@ public class Sound {
 	// Clip rappresenta il file audio attualmente caricato e pronto per la riproduzione
 	Clip clip;
 	
+	// Clip separata per la musica di sottofondo
 	Clip music;
 	
-	// Controlli del volume
+	// Controlli del volume della musica e degli effetti sonori
     private FloatControl musicVolumeControl;
     private FloatControl soundVolumeControl;
     
-    private int currentMusicVolume = 100;  // Volume default 50%
-    private int currentSoundVolume = 100;  // Volume default 50%
+    // Valori di default del volume (percentuali)
+    private int currentMusicVolume = 100;  // Volume default 100%
+    private int currentSoundVolume = 100;  // Volume default 100%
 	
 	// Array di URL che contiene i percorsi ai file audio del gioco
     // Dimensione fissa di 25 elementi per contenere diversi suoni
@@ -60,10 +62,13 @@ public class Sound {
 			 // Apre il Clip con i dati audio dall'AudioInputStream
 			clip.open(ais);
 			
-			 if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-		            soundVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		            setSoundVolume(currentSoundVolume); // Riapplica il volume memorizzato
-		        }
+			// Se il Clip supporta il controllo del volume, inizializza soundVolumeControl
+			if (clip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+				soundVolumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				
+				// Riapplica il volume memorizzato
+		        setSoundVolume(currentSoundVolume); 
+		    }
 			
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -73,27 +78,25 @@ public class Sound {
 	// Avvia la riproduzione del suono caricato
 	// Il suono viene riprodotto una sola volta
 	public void play() {
-		
 		clip.start();
 		
 	}
 	
 	// Avvia la riproduzione in loop continuo del suono caricato
     // Utile per musica di sottofondo o effetti ambientali
-	public void loop() {
-		
+	public void loop() {	
 		music.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 	
 	// Ferma la riproduzione del suono corrente
     // Il Clip può essere riavviato con play() o loop()
 	public void stop() {
-		
 		clip.stop();
 		
 	}
 	
-	// Metodo per ripulire la traccia in esecuzione
+	// Ferma e ripulisce il Clip corrente
+	// Chiude le risorse e lo rende null per evitare memory leak
 	public void stopAndReset() {
 	    if (clip != null) {
 	        clip.stop();
@@ -103,31 +106,33 @@ public class Sound {
 	    }
 	}
 	
-	// Metodo per settare la musica da riprodurre
+	// Carica un file audio specifico per la musica di sottofondo
 	public void setMusic(int i) {
 	    try {
+	    	// Se c'è già un Clip musicale aperto, fermalo e liberalo
 	        if (music != null && music.isOpen()) {
-	        	//int tmp = gp.getUi().musicVolume;
 	        	music.stop();
 	        	music.flush();
 	        	music.close();
-	        	
-	        	//gp.getUi().musicVolume = tmp;
 	        }
 
+	        // Crea un nuovo AudioInputStream per la musica selezionata
 	        AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);
 	        music = AudioSystem.getClip();
 	        music.open(ais);
 	        
+	        // Se il Clip supporta il controllo del volume, inizializza musicVolumeControl
 	        if (music.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
                 musicVolumeControl = (FloatControl) music.getControl(FloatControl.Type.MASTER_GAIN);
-                setMusicVolume(currentMusicVolume); // Riapplica il volume memorizzato
+                // Riapplica il volume memorizzato
+                setMusicVolume(currentMusicVolume); 
             }
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 	}
 	
+	// Converte il volume percentuale (0-100) in decibel per FloatControl
 	private float convertVolumeToDecibels(int volumePercent) {
         if (volumePercent <= 0) {
             return -80.0f; // Silenzio
@@ -135,6 +140,7 @@ public class Sound {
         if (volumePercent >= 100) {
             return 6.0f; // Volume massimo
         }
+        // Formula logaritmica per una conversione lineare percepita in decibel
         return (float) (Math.log(volumePercent / 100.0) * 20);
     }
     
@@ -145,18 +151,20 @@ public class Sound {
             float decibels = convertVolumeToDecibels(volumePercent);
             float min = musicVolumeControl.getMinimum();
             float max = musicVolumeControl.getMaximum();
+            // Assicura che il valore rimanga entro i limiti supportati dal Clip
             decibels = Math.max(min, Math.min(max, decibels));
             musicVolumeControl.setValue(decibels);
         }
     }
     
-    // Imposta il volume dei sound effects (0-100)
+    // Imposta il volume degli effetti sonori (0-100)
 	public void setSoundVolume(int volumePercent) {
 	    currentSoundVolume = volumePercent; // Memorizza il volume
 	    if (soundVolumeControl != null) {
 	        float decibels = convertVolumeToDecibels(volumePercent);
 	        float min = soundVolumeControl.getMinimum();
 	        float max = soundVolumeControl.getMaximum();
+	        // Limita il valore entro i minimi e massimi del Clip
 	        decibels = Math.max(min, Math.min(max, decibels));
 	        soundVolumeControl.setValue(decibels);
 	    }

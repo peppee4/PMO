@@ -65,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable{
 	protected final int optionsControlState = 5; 						// Impostazioni
 	protected final int nextLevelState = 6;								// Schermata fine livello
 	protected final int tutorialState = 7;								// Schermata tutorial
-    public int levelNumber;												// Inizializziamo i livelli al primo
+    private int levelNumber;												// Inizializziamo i livelli al primo
 
     // Costruttore della classe
     public GamePanel() {
@@ -81,15 +81,15 @@ public class GamePanel extends JPanel implements Runnable{
     // Metodo per impostare gli oggetti di gioco
     public void setupGame() {
     	
-    	this.levelNumber = 1; 									// Inizializza il numero di livello a 1
+    	this.setLevelNumber(1); 									// Inizializza il numero di livello a 1
     	
     	this.tileM = new TileMap(this);							// Inizializzazione della mappa
     	
     	aSetter.setObject();    								// Posizioniamo gli oggetti
         aSetter.setMonster();   								// Posizioniamo i mostri
         
-        this.soundManager.setMusicVolume(ui.musicVolume);		// Imposta il volume della musica in base al valore scelto nell'interfaccia utente
-        this.soundManager.setSoundVolume(ui.soundVolume);		// Imposta il volume degli effetti sonori in base al valore scelto nell'interfaccia utente
+        this.soundManager.setMusicVolume(ui.getMusicVolume());		// Imposta il volume della musica in base al valore scelto nell'interfaccia utente
+        this.soundManager.setSoundVolume(ui.getSoundVolume());		// Imposta il volume degli effetti sonori in base al valore scelto nell'interfaccia utente
         
         this.gameState = titleState;        					// Imposta lo stato iniziale del gioco sul schermata del titolo (schermata del titolo/menù principale)
     }
@@ -423,5 +423,13 @@ public class GamePanel extends JPanel implements Runnable{
 
 	public Slime[] getSlime() {
 		return slime;
+	}
+
+	public int getLevelNumber() {
+		return levelNumber;
+	}
+
+	public void setLevelNumber(int levelNumber) {
+		this.levelNumber = levelNumber;
 	}
 }

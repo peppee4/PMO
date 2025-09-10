@@ -3,18 +3,21 @@ package main;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+// Classe che implementa KeyListener per gestire gli input da tastiera
 public class KeyHandler implements KeyListener{
 	
+	// Riferimento al pannello di gioco
 	GamePanel gp;
 	
+	// Flag per tenere traccia dei tasti premuti
     private boolean upPressed,
                    downPressed,
                    leftPressed,
                    rightPressed,
                    ePressed;
 
+    // Costruttore: riceve il pannello di gioco per poter interagire con lo stato del gioco
     public KeyHandler(GamePanel gp) {
-    	
     	this.gp = gp;
     }
 
@@ -30,9 +33,9 @@ public class KeyHandler implements KeyListener{
     	
         int code = e.getKeyCode();
         
-        // TITLE STATE
+        // --- TITLE STATE (menu principale) ---
         if(gp.getGameState() == gp.titleState) {
-        	
+        	// Navigazione su/giù nel menu
         	if(code == KeyEvent.VK_W){
         		gp.playSoundEffect(0);
                 gp.getUi().minusCommandNum();
@@ -47,6 +50,7 @@ public class KeyHandler implements KeyListener{
                 	gp.getUi().setCommandNum(0);
                 }
             }
+            // Metodo per selezionare una voce
         	if(code == KeyEvent.VK_ENTER){
         		if(gp.getUi().getCommandNum() == 0) {
                 	gp.setGameState(gp.playState);
@@ -59,11 +63,12 @@ public class KeyHandler implements KeyListener{
                 	gp.setGameState(gp.tutorialState);
                 }
         		if(gp.getUi().getCommandNum() == 3) {
+        			// Termina il gioco chiudendo l'applicazione
                 	System.exit(0);
                 }
             }
         }
-        // OPTIONS STATE 
+        // --- OPTIONS STATE (menu principale) ---
         else if(gp.getGameState() == gp.optionsState) {
             
             if(code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
@@ -85,7 +90,8 @@ public class KeyHandler implements KeyListener{
             }
             
             if(code == KeyEvent.VK_ENTER) {
-                gp.getUi().selectOption(); // Gestisce il BACK
+            	// Gestisce il BACK
+                gp.getUi().selectOption(); 
             }
             
             if(code == KeyEvent.VK_ESCAPE) {
@@ -94,12 +100,14 @@ public class KeyHandler implements KeyListener{
                 gp.getUi().setOptionsCommandNum(0);
             }          
         }
+        // --- OPTIONS CONTROL STATE (gestione controlli) ---
         else if(gp.getGameState() == gp.optionsControlState) {
         	if(code == KeyEvent.VK_ENTER) {
-                gp.setGameState(gp.optionsState); // Gestisce il BACK
+        		// Gestisce il BACK
+                gp.setGameState(gp.optionsState); 
             }
         }
-        // PLAY STATE
+        // --- PLAY STATE (gioco attivo) ---
         else if(gp.getGameState() == gp.playState) {
         	
         	if(code == KeyEvent.VK_W){
@@ -114,19 +122,20 @@ public class KeyHandler implements KeyListener{
             else if(code == KeyEvent.VK_D){
                 rightPressed = true;
             }
+        	// Torna al menu opzioni
             else if(code == KeyEvent.VK_ESCAPE){
             	gp.getUi().setPreviousState(gp.playState);
             	gp.setGameState(gp.optionsState);
             }
         }
-        // DIALOGUE STATE -> Per quando dobbiamo interagire con un oggetto
+        // --- DIALOGUE STATE (interazione oggetti) ---
         else if(gp.getGameState() == gp.dialogueState){
         	
         	if(code == KeyEvent.VK_E){
         		ePressed = true;
              }
         }
-        // GAME OVER STATE
+        // --- GAME OVER STATE ---
         else if(gp.getGameState() == gp.gameOverState){
         	
         	if(code == KeyEvent.VK_W){
@@ -144,27 +153,28 @@ public class KeyHandler implements KeyListener{
                 gp.playSoundEffect(0);
             }
             if(code == KeyEvent.VK_ENTER) {
-                if(gp.getUi().getCommandNum() == 0) {
+                if(gp.getUi().getCommandNum() == 0) { 			// Restarta il game
                 	gp.setFlagPlay(false);
                 	gp.reset();
                 	gp.setGameState(gp.playState);
-                }else if(gp.getUi().getCommandNum() == 1) {
+                }else if(gp.getUi().getCommandNum() == 1) {     // Torna al menu principale
                 	gp.setFlagTitle(false);
-                	gp.levelNumber = 1;
+                	gp.setLevelNumber(1);							// Riporta al livello 1 per il prossimo gioco
                 	gp.reset();
                 	gp.setGameState(gp.titleState);
                 }
             }
         }
-        // NEXT LEVEL STATE
+        // --- NEXT LEVEL STATE ---
         else if(gp.getGameState() == gp.nextLevelState) {
             // Se abbiamo completato tutti i 3 livelli (levelNumber == 4), c'è solo "End Game"
-            if(gp.levelNumber >= 4) {
+            if(gp.getLevelNumber() >= 4) {
                 // Non c'è navigazione nel menu, c'è solo una opzione
                 if(code == KeyEvent.VK_ENTER) {
                     // End Game (torna al menu principale)
                     gp.setFlagPlay(false);
-                    gp.levelNumber = 1; // Riporta al livello 1 per il prossimo gioco
+                    // Riporta al livello 1 per il prossimo gioco
+                    gp.setLevelNumber(1); 
                     gp.reset();
                     gp.setGameState(gp.titleState);
                 }
@@ -194,14 +204,14 @@ public class KeyHandler implements KeyListener{
                     if(gp.getUi().getCommandNum() == 1) {
                         // End Game
                         gp.setFlagPlay(false);
-                        gp.levelNumber = 1; // Riporta al livello 1 per il prossimo gioco
+                        gp.setLevelNumber(1); // Riporta al livello 1 per il prossimo gioco
                         gp.reset();
                         gp.setGameState(gp.titleState);
                     }
                 }
             }
         }
-        // TUTORIAL STATE
+        // --- TUTORIAL STATE ---
         else if(gp.getGameState() == gp.tutorialState) {
         	if(code == KeyEvent.VK_ENTER) {
         		gp.setGameState(gp.titleState); // Gestisce il BACK

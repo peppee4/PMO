@@ -3,41 +3,52 @@ package main;
 import entity.Entity;
 import object.SuperObject;
 
+//Classe per controllare le collisioni tra il player e le altre entita' presenti nel gioco
 public class CollisionChecker {
 
+	// Riferimento al pannello di gioco
 	private GamePanel gp;
 	
+	// Coordinate dei bordi dell'entità nel mondo
 	private int entityLeftWorldX = 0;
 	private int entityRightWorldX = 0;
 	private int entityTopWorldY = 0;
 	private int entityBottomWorldY = 0;
-		
+	
+	// Coordinate dei tile su cui si trovano i bordi dell'entità
 	private int entityLeftCol = 0;
 	private int entityRightCol = 0;
 	private int entityTopRow = 0;
 	private int entityBottomRow = 0;
 	
+	// Costruttore: prende il GamePanel per accedere alla mappa e ai tile
 	public CollisionChecker(GamePanel gp) {
 		
 		this.gp = gp;
 	}
 	
+	// Metodo principale per controllare le collisioni con le tile
 	public void checkTile(Entity entity) {
 		
-		// Calcola i bordi dell'entity
+		// Calcola i bordi dell'entity in coordinate del mondo
 		checkObject(entity);
 		
-		// Numero delle tile in cui si trova l'entity
+		// Numero dei tile in cui si trova l'entity
 		int tileNum1, tileNum2;
 		
-		// Controlla la direzione dell'entity e verifica se la prossima tile è "solida"
-		// Se è "solida" attiva la collisione
+		// Controlla la direzione dell'entity e verifica se il prossimo tile è "solido"
+		// Se è "solido" attiva la collisione
 		switch(entity.getDirection()) {
 		case "up":
+			// Calcola la riga superiore dove si muoverà l'entità
 			entityTopRow = (entityTopWorldY - (int)entity.getSpeed())/gp.getTileSize();
+			
+			 // Recupera i numeri dei due tile che l'entità copre (sinistra e destra)
 			tileNum1 = gp.getMap().mapTileNumber[entityLeftCol][entityTopRow];
 			tileNum2 = gp.getMap().mapTileNumber[entityRightCol][entityTopRow];
-			if(gp.getMap().tile[tileNum1].collision == true || gp.getMap().tile[tileNum2].collision == true) {
+			
+			// Se almeno uno dei due tile è solido, attiva collisione
+			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;
@@ -45,7 +56,7 @@ public class CollisionChecker {
 			entityBottomRow = (entityBottomWorldY + (int)entity.getSpeed())/gp.getTileSize();
 			tileNum1 = gp.getMap().mapTileNumber[entityLeftCol][entityBottomRow];
 			tileNum2 = gp.getMap().mapTileNumber[entityRightCol][entityBottomRow];
-			if(gp.getMap().tile[tileNum1].collision == true || gp.getMap().tile[tileNum2].collision == true) {
+			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;
@@ -53,7 +64,7 @@ public class CollisionChecker {
 			entityLeftCol = (entityLeftWorldX - (int)entity.getSpeed())/gp.getTileSize();
 			tileNum1 = gp.getMap().mapTileNumber[entityLeftCol][entityTopRow];
 			tileNum2 = gp.getMap().mapTileNumber[entityLeftCol][entityBottomRow];
-			if(gp.getMap().tile[tileNum1].collision == true || gp.getMap().tile[tileNum2].collision == true) {
+			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;
@@ -61,7 +72,7 @@ public class CollisionChecker {
 			entityRightCol = (entityRightWorldX + (int)entity.getSpeed())/gp.getTileSize();
 			tileNum1 = gp.getMap().mapTileNumber[entityRightCol][entityTopRow];
 			tileNum2 = gp.getMap().mapTileNumber[entityRightCol][entityBottomRow];
-			if(gp.getMap().tile[tileNum1].collision == true || gp.getMap().tile[tileNum2].collision == true) {
+			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;

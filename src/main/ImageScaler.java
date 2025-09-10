@@ -3,8 +3,10 @@ package main;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+//Classe che gestisce il ridimensionamento delle immagini
 public class ImageScaler {
 
+	// Metodo per ridimensionare un'immagine BufferedImage a larghezza e altezza specificate
 	public BufferedImage scaleImage(BufferedImage original, int width, int height) {
 		
 		// Crea una nuova immagine con le dimensioni target
@@ -21,8 +23,7 @@ public class ImageScaler {
 		// Libera le risorse native del contesto grafico
 		g2.dispose();
 		
-		g2.dispose();
-		
+		// Restituisce l'immagine ridimensionata
 		return scaledImage;
 	}
 }

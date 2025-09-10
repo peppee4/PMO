@@ -56,7 +56,7 @@ public class AssetSetter {
     // Metodo per posizionare i mostri
     public void setMonster() {
     	
-        switch(gp.levelNumber) {
+        switch(gp.getLevelNumber()) {
         	case 1:
         		for(int i = 0; i < 12; i++){
                     this.findTile();
@@ -125,7 +125,7 @@ public class AssetSetter {
             tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
 
             // Controlla se la tile non è solida
-            if(!gp.getMap().tile[tileNum].collision){
+            if(!gp.getMap().tile[tileNum].isCollision()){
             	this.validPosition = true;
             }
         }
@@ -147,7 +147,7 @@ public class AssetSetter {
             tileBelowNum = gp.getMap().mapTileNumber[spawnX][spawnY + 1];
 
             boolean isWall = (tileNum == 1);
-            boolean isBelowWalkable = !gp.getMap().tile[tileBelowNum].collision;
+            boolean isBelowWalkable = !gp.getMap().tile[tileBelowNum].isCollision();
 
             if (isWall && isBelowWalkable) {
                 this.validPosition = true;
