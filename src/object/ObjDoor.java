@@ -11,7 +11,7 @@ public class ObjDoor extends SuperObject{
     // Costruttore
     public ObjDoor(GamePanel gp) {
     	super(gp);
-        name = "Cassa";     // Nome dell'oggetto
+        name = "Door";     // Nome dell'oggetto
         collision = false;  // La cassa non ha una collisione attiva
         
         // Carica l'immagine della cassa
@@ -40,10 +40,10 @@ public class ObjDoor extends SuperObject{
     
     @Override
     public void update() {
-    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false) && this.gp.getPlayer().getNumberOfKey() == 3) {
+    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.objStatus == false) && this.gp.getPlayer().getNumberOfKey() == 3) {
     		this.gp.setGameState(this.gp.getDialogueState());
     		
-    		if(this.gp.getKeyH().ePressed == true) {
+    		if(this.gp.getKeyH().isePressed() == true) {
     			this.objStatus = true;
     			gp.playSoundEffect(1);
     			if(this.gp.levelNumber < 3) {

@@ -26,7 +26,7 @@ public class Monsters extends Entity {
 	protected double damage;					// Danno inflitto
 	private int soundCooldown = 0;				// Tempo di riproduzione del suono
 	protected ArrayList<Clip> clips;			// Suoni del mostro
-	public boolean alive;						// Variabile per capire se stampare o meno il mostro
+	protected boolean alive;					// Variabile per capire se stampare o meno il mostro
 	
 	private boolean invincibleTime = false;     // Tempo in cui il player è invincibile
 	
@@ -91,7 +91,7 @@ public class Monsters extends Entity {
 	public void update() {
 		// Collisione con i tile
 		collisionOn = false;
-		gp.cChecker.checkTile(this);
+		gp.getCChecker().checkTile(this);
 
 		setAction();
 
@@ -118,9 +118,10 @@ public class Monsters extends Entity {
 		}
 		
 		// Se c'è collisione con il player
-		if((gp.cChecker.checkPlayer(this) == true && this.lifeCounter == 200) && !gp.getPlayer().isInvincible) {
+		if((gp.getCChecker().checkPlayer(this) == true && this.lifeCounter == 200) && !gp.getPlayer().isInvincible) {
 			if(gp.getPlayer().life > 0){
 				
+				// Caso speciale per i mostri esplosivi
 				if(this instanceof ExplosiveMonster) {
 					ExplosiveMonster e = (ExplosiveMonster) this;
 					e.explosion();
@@ -455,5 +456,9 @@ public class Monsters extends Entity {
 
 	public void setInvincibleTime(boolean invincibleTime) {
 		this.invincibleTime = invincibleTime;
+	}
+
+	public boolean isAlive() {
+		return alive;
 	}
 }

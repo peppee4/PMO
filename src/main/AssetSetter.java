@@ -43,13 +43,14 @@ public class AssetSetter {
        
     }
     
+    // Metodo per ripulire le strutture dati
     private void resetObject() {
     	for(int i = 0; i < gp.obj.length; i++) {
     		gp.obj[i] = null;
     	}
     	
-    	for(int i = 0; i < gp.slime.length; i++) {
-    		gp.slime[i] = null;
+    	for(int i = 0; i < gp.getSlime().length; i++) {
+    		gp.getSlime()[i] = null;
     	}
     }
     // Metodo per posizionare i mostri

@@ -10,13 +10,10 @@ import main.KeyHandler;
 
 public class ObjKey extends SuperObject{
 	
-	private GamePanel gp;
-	
 	public ObjKey(GamePanel gp) {
 		super(gp);
 		// TODO Auto-generated constructor stub
 		name = "Key";
-		this.gp = gp;
 		
 		// Carica l'immagine della chiave
 	    try {

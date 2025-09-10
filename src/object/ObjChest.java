@@ -11,7 +11,7 @@ public class ObjChest extends SuperObject{
     // Costruttore
     public ObjChest(GamePanel gp) {
     	super(gp);
-        name = "Cassa";     // Nome dell'oggetto
+        name = "Chest";     // Nome dell'oggetto
         collision = false;  // La cassa non ha una collisione attiva
         
         // Carica l'immagine della cassa
@@ -41,10 +41,10 @@ public class ObjChest extends SuperObject{
     
     @Override
     public void update() {
-    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
+    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.objStatus == false)) {
     		this.gp.setGameState(this.gp.getDialogueState());
     		
-    		if(this.gp.getKeyH().ePressed == true) {
+    		if(this.gp.getKeyH().isePressed() == true) {
     			this.objStatus = true;
     			this.gp.setGameState(this.gp.getPlayState());
     			this.gp.getPlayer().setNumberOfKey(this.gp.getPlayer().getNumberOfKey() + 1);

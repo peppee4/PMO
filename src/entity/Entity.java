@@ -3,113 +3,116 @@ package entity;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-
-
 /**
  * Entità di base del gioco.
  * Definisce posizione, velocità, direzione e riferimenti ai frame sprite
  * per l’animazione nelle quattro direzioni.
  */
-
 public class Entity {
-	
-	protected int worldX;		    // Coordinata verticale
-	protected int worldY;
-	private double speed;	    // Velocità di movimento
-	
-	protected Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione/
-	protected int solidAreaDefaultX,
-				  solidAreaDefaultY;											// Posizione di default dell'area solida
-	protected boolean collisionOn = false;										// Flag per la collisione
-	
-	// Frame dell’animazione per ciascuna direzione
-	protected BufferedImage up1, 
-					        up2, 
-					        down1, 
-					        down2, 
-					        left1, 
-					        left2, 
-					        right1, 
-					      	right2,
-					      	stop;
-	private String direction;			// Direzione corrente
-	protected int spriteCounter = 0;	// Contatore per avanzare l’animazione
-	protected int spriteNum = 1;		// Indice del frame corrente
-	
-	// Getter e Setter 
-	public int getWorldX() {
-		
-		return this.worldX;
-	}
-	
-	public int getWorldY() {
-		
-		return this.worldY;
-	}
-	
-	public void setWorldY(int value) {
-		
-		this.worldY = value;
-	}
-	
-	public void setWorldX(int value) {
-		
-		this.worldX = value;
-	}
 
-	public void setSpeed(double value) {
-		
-		this.speed = value;
-	}
- 
-	public double getSpeed() {
-		
-		return this.speed;
-	}
+    // Coordinate nel mondo di gioco (non relative allo schermo)
+    protected int worldX;           // Posizione orizzontale
+    protected int worldY;           // Posizione verticale
 
-	public String getDirection() {
-		
-		return this.direction;
-	}
+    // Velocità di movimento dell'entità
+    private double speed;
 
-	public void setDirection(String direction) {
-		
-		this.direction = direction;
-	}
+    // Area solida usata per rilevare collisioni con altri oggetti o entità
+    protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
 
-	public int getSolidAreaX() {
-	    return solidArea.x;
-	}
+    // Posizione di default dell'area solida (usata per il reset)
+    protected int solidAreaDefaultX;
+    protected int solidAreaDefaultY;
 
-	public void setSolidAreaX(int x) {
-	    solidArea.x = x;
-	}
+    // Flag che indica se l'entità è attualmente in collisione
+    protected boolean collisionOn = false;
 
-	public int getSolidAreaY() {
-	    return solidArea.y;
-	}
+    // Frame dell’animazione per ogni direzione di movimento
+    protected BufferedImage up1, up2;
+    protected BufferedImage down1, down2;
+    protected BufferedImage left1, left2;
+    protected BufferedImage right1, right2;
+    protected BufferedImage stop; 				// Frame statico (es. quando l'entità è ferma)
 
-	public void setSolidAreaY(int y) {
-	    solidArea.y = y;
-	}
-	 
-	public int getSolidAreaWidth() {
-	    return solidArea.width;
-	}
+    // Direzione corrente dell'entità (es. "up", "down", "left", "right")
+    private String direction;
 
-	public void setSolidAreaWidth(int width) {
-	    solidArea.width = width;
-	}
+    // Contatore per gestire il tempo tra i cambi di frame animati
+    protected int spriteCounter = 0;
 
-	public int getSolidAreaHeight() {
-	    return solidArea.height;
-	}
+    // Numero del frame corrente (1 o 2, per alternare le immagini)
+    protected int spriteNum = 1;
 
-	public void setSolidAreaHeight(int height) {
-	    solidArea.height = height;
-	}
+    // ---- Getter e Setter -----
 
-	public void setCollisionOn(boolean collisionOn) {
-	    this.collisionOn = collisionOn;
-	}
+    public int getWorldX() {
+        return this.worldX;
+    }
+
+    public int getWorldY() {
+        return this.worldY;
+    }
+
+    public void setWorldY(int value) {
+        this.worldY = value;
+    }
+
+    public void setWorldX(int value) {
+        this.worldX = value;
+    }
+
+    public void setSpeed(double value) {
+        this.speed = value;
+    }
+
+    public double getSpeed() {
+        return this.speed;
+    }
+
+    public String getDirection() {
+        return this.direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    // Metodi per gestire l'area solida (collision box)
+
+    public int getSolidAreaX() {
+        return solidArea.x;
+    }
+
+    public void setSolidAreaX(int x) {
+        solidArea.x = x;
+    }
+
+    public int getSolidAreaY() {
+        return solidArea.y;
+    }
+
+    public void setSolidAreaY(int y) {
+        solidArea.y = y;
+    }
+
+    public int getSolidAreaWidth() {
+        return solidArea.width;
+    }
+
+    public void setSolidAreaWidth(int width) {
+        solidArea.width = width;
+    }
+
+    public int getSolidAreaHeight() {
+        return solidArea.height;
+    }
+
+    public void setSolidAreaHeight(int height) {
+        solidArea.height = height;
+    }
+
+    // Imposta lo stato di collisione
+    public void setCollisionOn(boolean collisionOn) {
+        this.collisionOn = collisionOn;
+    }
 }

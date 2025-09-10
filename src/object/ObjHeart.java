@@ -9,13 +9,11 @@ import main.GamePanel;
 
 public class ObjHeart extends SuperObject{
 	
-	GamePanel gp;
-	
 	public ObjHeart(GamePanel gp) {
 		super(gp);
 		// TODO Auto-generated constructor stub
 		name = "Heart";
-		this.gp = gp;
+		
 		// Carica le immagini dei cuori 
         try {
             image1 = ImageIO.read(getClass().getResourceAsStream("/objects/heart_full.png"));

@@ -55,10 +55,10 @@ public abstract class SuperObject {
     
     // Metodo per l'interazione con il player
     public void update() {
-    	if((this != null && this.gp.cChecker.isPlayerNearObject(this)) && (this.objStatus == false)) {
+    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.objStatus == false)) {
     		this.gp.setGameState(this.gp.getDialogueState());
     		
-    		if(this.gp.getKeyH().ePressed) {
+    		if(this.gp.getKeyH().isePressed()) {
     			this.objStatus = true;
     			this.gp.setGameState(this.gp.getPlayState());
     		}
@@ -67,7 +67,7 @@ public abstract class SuperObject {
 
     
     
-    // Getter e Setter
+    // ---- Getter e Setter ----
     public int getWorldX() {
     	return this.worldX;
     }

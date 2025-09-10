@@ -29,7 +29,7 @@ public class Player extends Entity{
 
 	
 	// Cwhiavi 
-    private int key = 0;												// Chiavi per aprire la porta
+    private int key = 0;							// Chiavi per aprire la porta
 
     public boolean isInvincible = false;
     public int invincibilityCounter = 0;
@@ -103,23 +103,23 @@ public class Player extends Entity{
 		int worldX = getWorldX();
 		int worldY = getWorldY();
 		
-		if(keyH.upPressed == true || keyH.downPressed == true 
-				|| keyH.leftPressed == true || keyH.rightPressed == true) {
+		if(keyH.isUpPressed() == true || keyH.isDownPressed() == true 
+				|| keyH.isLeftPressed() == true || keyH.isRightPressed() == true) {
 			
 			// Gestione dell'input
-			if(keyH.upPressed == true){
+			if(keyH.isUpPressed() == true){
 				this.setDirection("up");
-			}else if(keyH.downPressed == true){
+			}else if(keyH.isDownPressed() == true){
 				this.setDirection("down");
-			}else if(keyH.leftPressed == true){
+			}else if(keyH.isLeftPressed() == true){
 				this.setDirection("left");
-			}else if(keyH.rightPressed == true){
+			}else if(keyH.isRightPressed() == true){
 				this.setDirection("right");
 			}
 			
 			// Controllo per la collisione con i tile della mappa(muri)
 			collisionOn = false;
-			gp.cChecker.checkTile(this);
+			gp.getCChecker().checkTile(this);
 			
 			// Se il player non tocca Nessun tile "solido può muoversi
 			if(collisionOn == false) {
@@ -264,7 +264,7 @@ public class Player extends Entity{
 		this.key = 0;
 	}
 	
-	// Getter e Setter
+	// ---- Getter e Setter ----
 	public int getCenterX() {
 		return this.centerX;
 	}

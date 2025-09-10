@@ -7,7 +7,7 @@ public class KeyHandler implements KeyListener{
 	
 	GamePanel gp;
 	
-    public boolean upPressed,
+    private boolean upPressed,
                    downPressed,
                    leftPressed,
                    rightPressed,
@@ -226,5 +226,31 @@ public class KeyHandler implements KeyListener{
         	ePressed = false;
         }   
     }
+
+    // ---- Getter ----
+
+	public boolean isePressed() {
+		return ePressed;
+	}
+
+
+	public boolean isUpPressed() {
+		return upPressed;
+	}
+
+
+	public boolean isDownPressed() {
+		return downPressed;
+	}
+
+
+	public boolean isLeftPressed() {
+		return leftPressed;
+	}
+
+
+	public boolean isRightPressed() {
+		return rightPressed;
+	}
     
 }

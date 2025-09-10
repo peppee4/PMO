@@ -29,15 +29,15 @@ public class GamePanel extends JPanel implements Runnable{
 	
 	private TileMap tileM;						                          	// Creazione della mappa
     private KeyHandler keyH = new KeyHandler(this);                         // Creazione di un gestore degli eventi della tastiera
-    public CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
-    public AssetSetter aSetter = new AssetSetter(this);   					// Creazione di un gestore per le entità
+    private CollisionChecker cChecker = new CollisionChecker(this);      	// Creazione del controllore delle collisioni
+    private AssetSetter aSetter = new AssetSetter(this);   					// Creazione di un gestore per le entità
     private Sound soundManager = new Sound();								// Creazione del gestore dei suoni
     private UiManager ui = new UiManager(this);								// Creazione della classe per la gestione della luce che circonda il player
     private boolean flagTitle = false;										// Variabile booleana per settare circonfernza luce che circonda 
     																		// il player nella schermata iniziale
     private boolean flagPlay = false;										// Variabile booleana per settare circonfernza luce che circonda 
     																		// il player nel gioco
-    private EnvironmentManager eManager = new EnvironmentManager(this);      // Creazione del posizionatore degli oggetti 
+    private EnvironmentManager eManager = new EnvironmentManager(this);     // Creazione del posizionatore degli oggetti 
     
     // Creiamo il Thread per il flusso del gioco
 	private Thread gameThread;			
@@ -46,13 +46,13 @@ public class GamePanel extends JPanel implements Runnable{
 	private Player player = new Player(this,getKeyH());                 // Creazione del player
 
     // Creiamo gli oggetti
-    public SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
+    protected SuperObject obj[] = new SuperObject[10];                     // Array di oggetti di gioco
 
     // Creiamo i mostri
-    public Monsters mons[] = new Monsters[30];                          // Array di mostri
+    protected Monsters mons[] = new Monsters[30];                          // Array di mostri
     
     // Creiamo gli slime
-    public Slime slime[] = new Slime[30];                               // Array di slime   
+    protected Slime slime[] = new Slime[30];                               // Array di slime   
 
     // Stati del gioco
     private boolean gameStatus = true;                          		// Stato del gioco (true = in corso, false = terminato)
@@ -193,7 +193,7 @@ public class GamePanel extends JPanel implements Runnable{
 	                this.mons[i].update();  			// Logica di movimento/attacco del mostro
 	                
 	                // Se il mostro è morto, lo rimuove dall'array
-	                if(!this.mons[i].alive) {
+	                if(!this.mons[i].isAlive()) {
 	                	this.mons[i] = null;
 	                }
 	            }
@@ -207,12 +207,12 @@ public class GamePanel extends JPanel implements Runnable{
 	        }
 
 	        // Gestione degli slime (es. effetti o proiettili degli SlimeMonster)
-            for(int i = 0; i < this.slime.length; i++){
+            for(int i = 0; i < this.getSlime().length; i++){
                 int count = 0;
 
-                if(this.slime[i] != null){
+                if(this.getSlime()[i] != null){
                 	// Controlla collisione tra slime e giocatore
-                    if(this.cChecker.checkPlayer(this.slime[i])){
+                    if(this.cChecker.checkPlayer(this.getSlime()[i])){
                         count++;
                     }
                 }
@@ -282,15 +282,15 @@ public class GamePanel extends JPanel implements Runnable{
             }
 
             // Slime
-            for(int i = 0; i < this.slime.length; i++){
-                if(this.slime[i] != null){
-                    this.slime[i].draw(g2);
+            for(int i = 0; i < this.getSlime().length; i++){
+                if(this.getSlime()[i] != null){
+                    this.getSlime()[i].draw(g2);
                 }
             }
 
             // Mostri
             for(int i = 0; i < this.mons.length; i++){
-                if(this.mons[i] != null && this.mons[i].alive){
+                if(this.mons[i] != null && this.mons[i].isAlive()){
                     this.mons[i].draw(g2, this);
                 }
             } 
@@ -319,6 +319,10 @@ public class GamePanel extends JPanel implements Runnable{
 	}
 	
 	// ----- GETTER AND SETTER -----
+	
+	public CollisionChecker getCChecker() {
+		return this.cChecker;
+	}
 	
 	public int getMaxWorldCol() {
 		
@@ -415,5 +419,9 @@ public class GamePanel extends JPanel implements Runnable{
     
 	public int getGameOverState() {
 		return this.gameOverState;
+	}
+
+	public Slime[] getSlime() {
+		return slime;
 	}
 }
