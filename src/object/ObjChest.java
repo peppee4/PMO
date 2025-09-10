@@ -12,7 +12,7 @@ public class ObjChest extends SuperObject{
     public ObjChest(GamePanel gp) {
     	super(gp);
         name = "Chest";     // Nome dell'oggetto
-        collision = false;  // La cassa non ha una collisione attiva
+        setCollision(false);  // La cassa non ha una collisione attiva
         
         // Carica l'immagine della cassa
         try {
@@ -31,21 +31,21 @@ public class ObjChest extends SuperObject{
      	setSolidAreaHeight(45);
 
      	// Impostiamo le dimensioni
-        width = 35;
-		height = 35;
+        setWidth(35);
+		setHeight(35);
      	
      	// Posizione di default dell'area solida
-     	solidAreaDefaultX = solidArea.x;
-     	solidAreaDefaultY = solidArea.y;
+     	setSolidAreaDefaultX(getSolidArea().x);
+     	setSolidAreaDefaultY(getSolidArea().y);
     }
     
     @Override
     public void update() {
-    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.objStatus == false)) {
+    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.isObjStatus() == false)) {
     		this.gp.setGameState(this.gp.getDialogueState());
     		
     		if(this.gp.getKeyH().isePressed() == true) {
-    			this.objStatus = true;
+    			this.setObjStatus(true);
     			this.gp.setGameState(this.gp.getPlayState());
     			this.gp.getPlayer().setNumberOfKey(this.gp.getPlayer().getNumberOfKey() + 1);
     			gp.playSoundEffect(7);

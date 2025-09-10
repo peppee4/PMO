@@ -18,19 +18,19 @@ public abstract class SuperObject {
     						image2,
     						image3;         					// Immagine dell'oggetto
     protected String name;                 						// Nome dell'oggetto 
-    protected boolean collision = false;   						// Indica se l'oggetto ha una collisione attiva
+    private boolean collision = false;   						// Indica se l'oggetto ha una collisione attiva
     private int worldX, worldY;          						// Posizione dell'oggetto nel mondo di gioco
-    protected Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione
-    protected int solidAreaDefaultX,
-	  			  solidAreaDefaultY;							// Posizione di default dell'area solida
-    protected boolean objStatus = false;						// Stato dell'oggetto
-    protected ImageScaler iScaler;
-    protected int width,										// Larghezza dell'oggetto
-	  			  height;										// Altezza dell'oggetto
+    private Rectangle solidArea = new Rectangle(0,0,48,48);	// Area solida per la collisione
+    private int solidAreaDefaultX;							// Posizione di default dell'area solida
+	private int solidAreaDefaultY;
+    private boolean objStatus = false;						// Stato dell'oggetto
+    private ImageScaler iScaler;
+    private int width;										// Altezza dell'oggetto
+	private int height;
     
     public SuperObject(GamePanel gp){
     	this.gp = gp;
-    	this.iScaler = new ImageScaler();
+    	this.setiScaler(new ImageScaler());
     }
     
     // Metodo per disegnare l'oggetto
@@ -45,21 +45,21 @@ public abstract class SuperObject {
            worldY - this.gp.getTileSize() < this.gp.getPlayer().getWorldY() + this.gp.getPlayer().getCenterY()) {
 				
 			// Disegna l’immagine della tile sullo schermo
-		    if(objStatus == false) {
-		    	g2.drawImage(this.image1, screenX, screenY, width, height, null);
+		    if(isObjStatus() == false) {
+		    	g2.drawImage(this.image1, screenX, screenY, getWidth(), getHeight(), null);
 		    }else {
-		    	g2.drawImage(this.image2, screenX, screenY, width, height, null);
+		    	g2.drawImage(this.image2, screenX, screenY, getWidth(), getHeight(), null);
 		    }
 		}
     }
     
     // Metodo per l'interazione con il player
     public void update() {
-    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.objStatus == false)) {
+    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.isObjStatus() == false)) {
     		this.gp.setGameState(this.gp.getDialogueState());
     		
     		if(this.gp.getKeyH().isePressed()) {
-    			this.objStatus = true;
+    			this.setObjStatus(true);
     			this.gp.setGameState(this.gp.getPlayState());
     		}
     	}
@@ -85,35 +85,35 @@ public abstract class SuperObject {
     }
     
     public int getSolidAreaX() {
-	    return solidArea.x;
+	    return getSolidArea().x;
 	}
 
 	public void setSolidAreaX(int x) {
-	    solidArea.x = x;
+	    getSolidArea().x = x;
 	}
 
 	public int getSolidAreaY() {
-	    return solidArea.y;
+	    return getSolidArea().y;
 	}
 
 	public void setSolidAreaY(int y) {
-	    solidArea.y = y;
+	    getSolidArea().y = y;
 	}
 	 
 	public int getSolidAreaWidth() {
-	    return solidArea.width;
+	    return getSolidArea().width;
 	}
 
 	public void setSolidAreaWidth(int width) {
-	    solidArea.width = width;
+	    getSolidArea().width = width;
 	}
 
 	public int getSolidAreaHeight() {
-	    return solidArea.height;
+	    return getSolidArea().height;
 	}
 
 	public void setSolidAreaHeight(int height) {
-	    solidArea.height = height;
+	    getSolidArea().height = height;
 	}
 	
 	public void setObjStatus(boolean value) {
@@ -130,6 +130,70 @@ public abstract class SuperObject {
 
 	public BufferedImage getImage3() {
 		return image3;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Rectangle getSolidArea() {
+		return solidArea;
+	}
+
+	public void setSolidArea(Rectangle solidArea) {
+		this.solidArea = solidArea;
+	}
+
+	public boolean isObjStatus() {
+		return objStatus;
+	}
+
+	public boolean isCollision() {
+		return collision;
+	}
+
+	public void setCollision(boolean collision) {
+		this.collision = collision;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getSolidAreaDefaultX() {
+		return solidAreaDefaultX;
+	}
+
+	public void setSolidAreaDefaultX(int solidAreaDefaultX) {
+		this.solidAreaDefaultX = solidAreaDefaultX;
+	}
+
+	public int getSolidAreaDefaultY() {
+		return solidAreaDefaultY;
+	}
+
+	public void setSolidAreaDefaultY(int solidAreaDefaultY) {
+		this.solidAreaDefaultY = solidAreaDefaultY;
+	}
+
+	public ImageScaler getiScaler() {
+		return iScaler;
+	}
+
+	public void setiScaler(ImageScaler iScaler) {
+		this.iScaler = iScaler;
 	}
 	
 	

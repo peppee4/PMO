@@ -12,7 +12,7 @@ public class ObjDoor extends SuperObject{
     public ObjDoor(GamePanel gp) {
     	super(gp);
         name = "Door";     // Nome dell'oggetto
-        collision = false;  // La cassa non ha una collisione attiva
+        setCollision(false);  // La cassa non ha una collisione attiva
         
         // Carica l'immagine della cassa
         try {
@@ -31,20 +31,20 @@ public class ObjDoor extends SuperObject{
      	setSolidAreaHeight(45);
 
      	// Impostiamo le dimensioni
-        width = 60;
-		height = 60;     	
+        setWidth(60);
+		setHeight(60);     	
      	// Posizione di default dell'area solida
-     	solidAreaDefaultX = solidArea.x;
-     	solidAreaDefaultY = solidArea.y;
+     	setSolidAreaDefaultX(getSolidArea().x);
+     	setSolidAreaDefaultY(getSolidArea().y);
     }
     
     @Override
     public void update() {
-    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.objStatus == false) && this.gp.getPlayer().getNumberOfKey() == 3) {
+    	if((this != null && this.gp.getCChecker().isPlayerNearObject(this)) && (this.isObjStatus() == false) && this.gp.getPlayer().getNumberOfKey() == 3) {
     		this.gp.setGameState(this.gp.getDialogueState());
     		
     		if(this.gp.getKeyH().isePressed() == true) {
-    			this.objStatus = true;
+    			this.setObjStatus(true);
     			gp.playSoundEffect(1);
     			if(this.gp.getLevelNumber() < 3) {
     				this.gp.setGameState(this.gp.getNextLevelState());

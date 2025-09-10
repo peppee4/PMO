@@ -18,7 +18,7 @@ public class ObjKey extends SuperObject{
 		// Carica l'immagine della chiave
 	    try {
 	        image1 = ImageIO.read(getClass().getResourceAsStream("/objects/key.png"));
-	        image1 = iScaler.scaleImage(image1, gp.getTileSize() - 30, gp.getTileSize() - 30);
+	        image1 = getiScaler().scaleImage(image1, gp.getTileSize() - 30, gp.getTileSize() - 30);
 	        
 	    } catch (IOException e) {
 	        System.out.println(e);
