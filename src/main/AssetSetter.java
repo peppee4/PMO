@@ -122,10 +122,10 @@ public class AssetSetter {
         while(!this.validPosition){
         	this.spawnX = rdm.nextInt(gp.getMaxWorldCol());
             this.spawnY = rdm.nextInt(gp.getMaxWorldRow());
-            tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
+            tileNum = gp.getMap().getMapTileNumber()[spawnX][spawnY];
 
             // Controlla se la tile non è solida
-            if(!gp.getMap().tile[tileNum].isCollision()){
+            if(!gp.getMap().getTile()[tileNum].isCollision()){
             	this.validPosition = true;
             }
         }
@@ -143,11 +143,11 @@ public class AssetSetter {
             this.spawnX = rdm.nextInt(gp.getMaxWorldCol());
             this.spawnY = rdm.nextInt(gp.getMaxWorldRow() - 1); // -1 per evitare IndexOutOfBounds
 
-            tileNum = gp.getMap().mapTileNumber[spawnX][spawnY];
-            tileBelowNum = gp.getMap().mapTileNumber[spawnX][spawnY + 1];
+            tileNum = gp.getMap().getMapTileNumber()[spawnX][spawnY];
+            tileBelowNum = gp.getMap().getMapTileNumber()[spawnX][spawnY + 1];
 
             boolean isWall = (tileNum == 1);
-            boolean isBelowWalkable = !gp.getMap().tile[tileBelowNum].isCollision();
+            boolean isBelowWalkable = !gp.getMap().getTile()[tileBelowNum].isCollision();
 
             if (isWall && isBelowWalkable) {
                 this.validPosition = true;

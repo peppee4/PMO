@@ -44,35 +44,35 @@ public class CollisionChecker {
 			entityTopRow = (entityTopWorldY - (int)entity.getSpeed())/gp.getTileSize();
 			
 			 // Recupera i numeri dei due tile che l'entità copre (sinistra e destra)
-			tileNum1 = gp.getMap().mapTileNumber[entityLeftCol][entityTopRow];
-			tileNum2 = gp.getMap().mapTileNumber[entityRightCol][entityTopRow];
+			tileNum1 = gp.getMap().getMapTileNumber()[entityLeftCol][entityTopRow];
+			tileNum2 = gp.getMap().getMapTileNumber()[entityRightCol][entityTopRow];
 			
 			// Se almeno uno dei due tile è solido, attiva collisione
-			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
+			if(gp.getMap().getTile()[tileNum1].isCollision() == true || gp.getMap().getTile()[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;
 		case "down":
 			entityBottomRow = (entityBottomWorldY + (int)entity.getSpeed())/gp.getTileSize();
-			tileNum1 = gp.getMap().mapTileNumber[entityLeftCol][entityBottomRow];
-			tileNum2 = gp.getMap().mapTileNumber[entityRightCol][entityBottomRow];
-			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
+			tileNum1 = gp.getMap().getMapTileNumber()[entityLeftCol][entityBottomRow];
+			tileNum2 = gp.getMap().getMapTileNumber()[entityRightCol][entityBottomRow];
+			if(gp.getMap().getTile()[tileNum1].isCollision() == true || gp.getMap().getTile()[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;
 		case "left":
 			entityLeftCol = (entityLeftWorldX - (int)entity.getSpeed())/gp.getTileSize();
-			tileNum1 = gp.getMap().mapTileNumber[entityLeftCol][entityTopRow];
-			tileNum2 = gp.getMap().mapTileNumber[entityLeftCol][entityBottomRow];
-			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
+			tileNum1 = gp.getMap().getMapTileNumber()[entityLeftCol][entityTopRow];
+			tileNum2 = gp.getMap().getMapTileNumber()[entityLeftCol][entityBottomRow];
+			if(gp.getMap().getTile()[tileNum1].isCollision() == true || gp.getMap().getTile()[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;
 		case "right":
 			entityRightCol = (entityRightWorldX + (int)entity.getSpeed())/gp.getTileSize();
-			tileNum1 = gp.getMap().mapTileNumber[entityRightCol][entityTopRow];
-			tileNum2 = gp.getMap().mapTileNumber[entityRightCol][entityBottomRow];
-			if(gp.getMap().tile[tileNum1].isCollision() == true || gp.getMap().tile[tileNum2].isCollision() == true) {
+			tileNum1 = gp.getMap().getMapTileNumber()[entityRightCol][entityTopRow];
+			tileNum2 = gp.getMap().getMapTileNumber()[entityRightCol][entityBottomRow];
+			if(gp.getMap().getTile()[tileNum1].isCollision() == true || gp.getMap().getTile()[tileNum2].isCollision() == true) {
 				entity.setCollisionOn(true);
 			}
 			break;

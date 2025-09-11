@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
  * Definisce posizione, velocità, direzione e riferimenti ai frame sprite
  * per l’animazione nelle quattro direzioni.
  */
-public class Entity {
+public abstract class Entity {
 
     // Coordinate nel mondo di gioco (non relative allo schermo)
     protected int worldX;           // Posizione orizzontale

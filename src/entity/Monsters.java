@@ -14,7 +14,8 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class Monsters extends Entity {
+public abstract class Monsters extends Entity {
+	
     private BufferedImage image;        		// Immagine del mostro
 	private int actionCounter = 0;				// Contatore per gestire le azioni del mostro
     protected GamePanel gp;             		// Riferimento al GamePanel
@@ -118,7 +119,7 @@ public class Monsters extends Entity {
 		}
 		
 		// Se c'è collisione con il player
-		if((gp.getCChecker().checkPlayer(this) == true && this.lifeCounter == 200) && !gp.getPlayer().isInvincible) {
+		if((gp.getCChecker().checkPlayer(this) == true && this.lifeCounter == 200) && !gp.getPlayer().isInvincible()) {
 			if(gp.getPlayer().life > 0){
 				
 				// Caso speciale per i mostri esplosivi
@@ -267,7 +268,7 @@ public class Monsters extends Entity {
 				int newRow = currRow + dir[1];
 
 				if(newCol >= 0 && newCol < width && newRow >= 0 && newRow < height) {
-					if(!visited[newCol][newRow] && gp.getMap().mapTileNumber[newCol][newRow] == 0) {
+					if(!visited[newCol][newRow] && gp.getMap().getMapTileNumber()[newCol][newRow] == 0) {
 						visited[newCol][newRow] = true;
 						distance[newCol][newRow] = distance[currCol][currRow] + 1;
 						queue.add(new int[]{newCol, newRow});
@@ -329,7 +330,7 @@ public class Monsters extends Entity {
 				int newRow = currRow + dir[1];
 
 				if(newCol >= 0 && newCol < width && newRow >= 0 && newRow < height) {
-					if(!visited[newCol][newRow] && gp.getMap().mapTileNumber[newCol][newRow] == 0) {
+					if(!visited[newCol][newRow] && gp.getMap().getMapTileNumber()[newCol][newRow] == 0) {
 						visited[newCol][newRow] = true;
 						parentCol[newCol][newRow] = currCol;
 						parentRow[newCol][newRow] = currRow;

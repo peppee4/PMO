@@ -24,16 +24,14 @@ public class Player extends Entity{
 	protected double life;  						// Vita del player
 	private static final double MAX_LIFE = 3.0; 	// Valore massimo della vita che il player possiede
 	private double startSpeed;						// Velocità iniziale del player
-	public boolean walk;							// Variabile per controllare il movimento del Player
-	private int soundCount = 0;						// Contatore per la riproduzione corretta del suono
 
 	
 	// Cwhiavi 
     private int key = 0;							// Chiavi per aprire la porta
 
-    public boolean isInvincible = false;
-    public int invincibilityCounter = 0;
-    public final int INVINCIBILITY_DURATION = 200;
+    private boolean isInvincible = false;
+    private int invincibilityCounter = 0;
+    private final int INVINCIBILITY_DURATION = 200;
 	
 	// Costruttore della classe Player
 	public Player(GamePanel gp, KeyHandler keyH) {
@@ -154,10 +152,10 @@ public class Player extends Entity{
 			this.setDirection("stop");
 		}
 		
-		if (isInvincible) {
+		if (isInvincible()) {
             invincibilityCounter--;
             if (invincibilityCounter <= 0) {
-                isInvincible = false;
+                setInvincible(false);
             }
         }
 	}
@@ -203,7 +201,7 @@ public class Player extends Entity{
 		
 		
 		// Imposta la trasparenza se invincibile
-        if (isInvincible) {
+        if (isInvincible()) {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f)); // 50% trasparente
         }
         
@@ -211,15 +209,15 @@ public class Player extends Entity{
         g2.drawImage(image, centerX, centerY,30, 30, null);
         
         // Ripristina l'opacità normale
-        if (isInvincible) {
+        if (isInvincible()) {
             g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1.0f));
         }
 	}
 	
 	public void takeDamage(double damage) {
-	    if (!isInvincible && life > 0) {
+	    if (!isInvincible() && life > 0) {
 	        life -= damage;  // o life -= (int)damage se life è int
-	        isInvincible = true;
+	        setInvincible(true);
 	        invincibilityCounter = INVINCIBILITY_DURATION;
 	    }
 	}
@@ -257,7 +255,7 @@ public class Player extends Entity{
 		this.life = MAX_LIFE;
 		this.setWorldX(gp.getTileSize() * 23); 		// Coordinata x iniziale del Player
 		this.setWorldY(gp.getTileSize() * 24); 		// Coordinata y iniziale del Player
-		this.isInvincible = false;
+		this.setInvincible(false);
 	    this.invincibilityCounter = 0;
 		this.setDirection("right");
 		this.setSpeed(3.5);
@@ -291,6 +289,14 @@ public class Player extends Entity{
 	
 	public void setNumberOfKey(int value) {
 		this.key = value;
+	}
+
+	public boolean isInvincible() {
+		return isInvincible;
+	}
+
+	public void setInvincible(boolean isInvincible) {
+		this.isInvincible = isInvincible;
 	}
 
 }

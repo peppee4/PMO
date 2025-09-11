@@ -34,7 +34,7 @@ class PlayerTest {
         double initialLife = player.getLife();
         player.takeDamage(1.0);
         assertTrue(player.getLife() < initialLife);
-        assertTrue(player.isInvincible);
+        assertTrue(player.isInvincible());
     }
 
     @Test
@@ -42,7 +42,7 @@ class PlayerTest {
         player.takeDamage(1.0);
         player.restorePlayerValues();
         assertEquals(3.0, player.getLife());
-        assertFalse(player.isInvincible);
+        assertFalse(player.isInvincible());
         assertEquals(0, player.getNumberOfKey());
     }
 }

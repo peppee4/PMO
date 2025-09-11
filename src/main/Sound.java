@@ -15,10 +15,10 @@ import javax.sound.sampled.FloatControl;
 public class Sound {
 
 	// Clip rappresenta il file audio attualmente caricato e pronto per la riproduzione
-	Clip clip;
+	private Clip clip;
 	
 	// Clip separata per la musica di sottofondo
-	Clip music;
+	private Clip music;
 	
 	// Controlli del volume della musica e degli effetti sonori
     private FloatControl musicVolumeControl;
@@ -30,7 +30,7 @@ public class Sound {
 	
 	// Array di URL che contiene i percorsi ai file audio del gioco
     // Dimensione fissa di 25 elementi per contenere diversi suoni
-	URL soundURL[] = new URL[25];
+	private URL soundURL[] = new URL[12];
 	
 	// Costruttore che inizializza i percorsi dei file audio.
     // Carica i riferimenti ai file audio nelle risorse del progetto.
@@ -54,6 +54,11 @@ public class Sound {
 	// Carica un file audio specifico nel Clip per la riproduzione
 	public void setFile(int i) {
 		
+		// Se l'indice dell'audio non e' valido o non inizializzato esce.
+		if (i < 0 || i >= soundURL.length || soundURL[i] == null) {
+		    return;
+		}
+		 
 		try {
 			// Crea un AudioInputStream dal file audio specificato
 			AudioInputStream ais = AudioSystem.getAudioInputStream(soundURL[i]);

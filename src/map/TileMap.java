@@ -15,8 +15,8 @@ import main.ImageScaler;
 public class TileMap {
 
 	GamePanel gp;						// Riferimento al pannello di gioco
-	public Tile[] tile;					// Array contenente tutti i tipi di tile disponibili
-	public int mapTileNumber[][];		// Matrice 2D che rappresenta la mappa del mondo
+	private Tile[] tile;					// Array contenente tutti i tipi di tile disponibili
+	private int mapTileNumber[][];		// Matrice 2D che rappresenta la mappa del mondo
 	private double zoom = 2.0;			// Zoom della visualizzazione
 	
 	// Costruttore
@@ -25,11 +25,11 @@ public class TileMap {
 		this.gp = gp;
 		
 		// Inizializza il umero di tiles utilizzabili 
-		tile = new Tile[20];
+		setTile(new Tile[20]);
 		
 		// Crea una matrice 2D di interi 50×50, che rappresenta la mappa del mondo.
 		// Ogni cella della matrice indica quale tile si trova in quella posizione. 
-		mapTileNumber = new int [gp.getMaxWorldCol()][gp.getMaxWorldRow()];  
+		setMapTileNumber(new int [gp.getMaxWorldCol()][gp.getMaxWorldRow()]);  
 		
 		// Carica le immagini dei tile
 		getTileImage();
@@ -54,17 +54,17 @@ public class TileMap {
 		
 		try {
 			// Crea un nuovo Tile e lo inserisce nell’array
-			tile[index] = new Tile();
+			getTile()[index] = new Tile();
 			
 			// Carica l’immagine del tile dalla cartella /tiles
 	        // Esempio: se imageName = "grass" -> carica /tiles/grass.png
-			tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
+			getTile()[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
 			
 			// Scala l’immagine alla dimensione standard del gioco (gp.tileSize × gp.tileSize)
-			tile[index].image = iScaler.scaleImage(tile[index].image, gp.getTileSize(), gp.getTileSize());
+			getTile()[index].image = iScaler.scaleImage(getTile()[index].image, gp.getTileSize(), gp.getTileSize());
 			
 			// Imposta se questa tile è solida o attraversabile
-			tile[index].collision = collision;
+			getTile()[index].collision = collision;
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -92,7 +92,7 @@ public class TileMap {
 		while(worldCol < gp.getMaxWorldCol() && worldRow < gp.getMaxWorldRow()) {
 			
 			// Ottieni il numero del tile da disegnare in questa cella
-			int tileNum = mapTileNumber[worldCol][worldRow];
+			int tileNum = getMapTileNumber()[worldCol][worldRow];
 			
 			// Coordinate della tile nel mondo (coordinate assolute)
 			int worldX = worldCol * gp.getTileSize();
@@ -109,7 +109,7 @@ public class TileMap {
 			   worldY - gp.getTileSize() < gp.getPlayer().getWorldY() + gp.getPlayer().getCenterY()) {
 				
 				// Disegna l’immagine della tile sullo schermo
-			    g2.drawImage(tile[tileNum].image, screenX, screenY, null);
+			    g2.drawImage(getTile()[tileNum].image, screenX, screenY, null);
 			}
 			
 			// Passa alla prossima colonna
@@ -148,7 +148,7 @@ public class TileMap {
 					// Converte il numero (stringa -> int)
 					int num = Integer.parseInt(numbers[col]); // USE COL AS AN INDEX FOR NUMBERS[] ARRAY
 					// Salva il numero nella matrice della mappa
-					mapTileNumber[col][row] = num;
+					getMapTileNumber()[col][row] = num;
 					col++;
 				}
 				// Completata una riga, resetta col e va alla prossima riga
@@ -162,5 +162,22 @@ public class TileMap {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	
+	public int[][] getMapTileNumber() {
+		return mapTileNumber;
+	}
+
+	public void setMapTileNumber(int mapTileNumber[][]) {
+		this.mapTileNumber = mapTileNumber;
+	}
+
+	public Tile[] getTile() {
+		return tile;
+	}
+
+	public void setTile(Tile[] tile) {
+		this.tile = tile;
 	}
 }
